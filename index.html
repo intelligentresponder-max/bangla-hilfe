@@ -1,0 +1,987 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BanglaHilfe Deutschland – Deine Brücke nach Deutschland</title>
+  <meta name="description" content="Wir helfen Menschen aus Bangladesch, in Deutschland Fuß zu fassen. Visa, FSJ, BFD, Anmeldung – alles auf Deutsch und Bangla."/>
+  <meta name="keywords" content="Bangladesch Deutschland Visum, FSJ Bangladesch, BFD Bangladesh, বাংলাদেশ জার্মানি ভিসা, Freiwilligendienst Frankfurt"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,700;1,9..144,400&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    /* ── RESET & BASE ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; font-size: 16px; }
+
+    /* ── DESIGN TOKENS ── */
+    :root {
+      --green:      #006a4e;   /* Bangladesh Green */
+      --green-dark: #004d38;
+      --green-light:#e8f5f0;
+      --gold:       #f4a300;   /* Bengali gold */
+      --gold-light: #fff8e1;
+      --red:        #cc0000;   /* Germany Red */
+      --navy:       #1a2e44;
+      --slate:      #4a5568;
+      --light:      #f7faf8;
+      --white:      #ffffff;
+      --border:     #d1e8de;
+      --shadow:     0 4px 24px rgba(0,106,78,.10);
+      --shadow-lg:  0 12px 48px rgba(0,106,78,.18);
+      --radius:     16px;
+      --radius-sm:  10px;
+      --font-head:  'Fraunces', Georgia, serif;
+      --font-body:  'Plus Jakarta Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--white);
+      color: var(--navy);
+      line-height: 1.65;
+      overflow-x: hidden;
+    }
+
+    /* ── LANGUAGE HIDDEN ── */
+    [data-lang] { display: block; }
+    body.bn [data-lang="de"] { display: none; }
+    body.bn [data-lang="bn"] { display: block; }
+    body:not(.bn) [data-lang="bn"] { display: none; }
+    body:not(.bn) [data-lang="de"] { display: block; }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      background: rgba(255,255,255,.97);
+      border-bottom: 2px solid var(--border);
+      backdrop-filter: blur(8px);
+      display: flex; align-items: center; justify-content: space-between;
+      padding: .9rem 2rem;
+      box-shadow: 0 2px 16px rgba(0,106,78,.08);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: .7rem;
+      text-decoration: none; color: var(--green-dark);
+    }
+    .nav-logo-flag { font-size: 1.5rem; }
+    .nav-logo-text {
+      font-family: var(--font-head);
+      font-size: 1.25rem; font-weight: 700;
+      color: var(--green-dark); line-height: 1.1;
+    }
+    .nav-logo-sub { font-size: .7rem; color: var(--slate); font-weight: 500; letter-spacing: .04em; }
+    .nav-right { display: flex; align-items: center; gap: 1rem; }
+    .nav-links { display: flex; gap: 1.5rem; list-style: none; }
+    .nav-links a {
+      text-decoration: none; color: var(--navy); font-weight: 600; font-size: .9rem;
+      transition: color .2s;
+    }
+    .nav-links a:hover { color: var(--green); }
+    .lang-toggle {
+      display: flex; border-radius: 99px; overflow: hidden;
+      border: 2px solid var(--green); cursor: pointer;
+    }
+    .lang-btn {
+      padding: .3rem .8rem; font-size: .8rem; font-weight: 700;
+      background: none; border: none; cursor: pointer; transition: all .2s;
+      color: var(--green);
+    }
+    .lang-btn.active { background: var(--green); color: var(--white); }
+    .nav-wa {
+      background: #25d366; color: white; text-decoration: none;
+      padding: .45rem 1.1rem; border-radius: 99px; font-weight: 700;
+      font-size: .85rem; display: flex; align-items: center; gap: .4rem;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 2px 12px rgba(37,211,102,.3);
+    }
+    .nav-wa:hover { transform: translateY(-2px); box-shadow: 0 4px 20px rgba(37,211,102,.4); }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      background: linear-gradient(155deg, var(--green-dark) 0%, var(--green) 55%, #1a8a60 100%);
+      display: flex; flex-direction: column; justify-content: center;
+      padding: 7rem 2rem 4rem;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    }
+    .hero-flags {
+      font-size: 3.5rem; margin-bottom: 1.5rem;
+      animation: fadeUp .8s ease both;
+    }
+    .hero-tag {
+      display: inline-block;
+      background: var(--gold); color: var(--navy);
+      font-weight: 700; font-size: .8rem; letter-spacing: .08em;
+      text-transform: uppercase; padding: .3rem .9rem; border-radius: 99px;
+      margin-bottom: 1.2rem;
+      animation: fadeUp .8s .1s ease both;
+    }
+    .hero h1 {
+      font-family: var(--font-head);
+      font-size: clamp(2.4rem, 6vw, 4rem);
+      color: var(--white); line-height: 1.15; font-weight: 700;
+      max-width: 700px; margin-bottom: 1rem;
+      animation: fadeUp .8s .2s ease both;
+    }
+    .hero h1 em { color: var(--gold); font-style: normal; }
+    .hero-sub {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: rgba(255,255,255,.88); max-width: 580px;
+      margin-bottom: 2.5rem;
+      animation: fadeUp .8s .3s ease both;
+    }
+    .hero-bn {
+      font-size: .95rem; color: rgba(255,255,255,.7);
+      font-style: italic; margin-bottom: 2rem;
+      animation: fadeUp .8s .35s ease both;
+    }
+    .hero-btns {
+      display: flex; gap: 1rem; flex-wrap: wrap;
+      animation: fadeUp .8s .4s ease both;
+    }
+    .btn-primary {
+      background: var(--gold); color: var(--navy);
+      padding: .9rem 2rem; border-radius: 99px; text-decoration: none;
+      font-weight: 700; font-size: 1rem; display: inline-flex; align-items: center; gap: .5rem;
+      transition: transform .2s, box-shadow .2s;
+      box-shadow: 0 4px 20px rgba(244,163,0,.4);
+    }
+    .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 8px 32px rgba(244,163,0,.5); }
+    .btn-ghost {
+      background: rgba(255,255,255,.15); color: var(--white);
+      padding: .9rem 2rem; border-radius: 99px; text-decoration: none;
+      font-weight: 700; font-size: 1rem; border: 2px solid rgba(255,255,255,.4);
+      transition: all .2s; display: inline-flex; align-items: center; gap: .5rem;
+    }
+    .btn-ghost:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.7); }
+    .hero-stats {
+      display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap;
+      animation: fadeUp .8s .5s ease both;
+    }
+    .hero-stat { color: var(--white); }
+    .hero-stat-num {
+      font-family: var(--font-head); font-size: 2rem; font-weight: 700;
+      color: var(--gold); display: block; line-height: 1;
+    }
+    .hero-stat-label { font-size: .8rem; opacity: .8; margin-top: .2rem; }
+
+    /* ── SECTIONS ── */
+    section { padding: 5rem 2rem; }
+    .container { max-width: 1100px; margin: 0 auto; }
+    .section-tag {
+      display: inline-block; background: var(--green-light); color: var(--green);
+      font-weight: 700; font-size: .75rem; letter-spacing: .1em;
+      text-transform: uppercase; padding: .3rem .9rem; border-radius: 99px;
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: var(--font-head); font-size: clamp(1.8rem, 4vw, 2.8rem);
+      color: var(--navy); line-height: 1.2; margin-bottom: .5rem;
+    }
+    .section-title em { color: var(--green); font-style: normal; }
+    .section-sub { color: var(--slate); font-size: 1.05rem; max-width: 580px; }
+    .section-bn { color: var(--slate); font-size: .9rem; font-style: italic; margin-top: .3rem; }
+
+    /* ── HOW IT WORKS ── */
+    .how { background: var(--light); }
+    .steps {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 2rem; margin-top: 3rem;
+    }
+    .step {
+      background: var(--white); border-radius: var(--radius);
+      padding: 2rem; border: 2px solid var(--border);
+      position: relative; transition: transform .25s, box-shadow .25s;
+    }
+    .step:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .step-num {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--green); color: var(--white);
+      font-family: var(--font-head); font-size: 1.4rem; font-weight: 700;
+      display: flex; align-items: center; justify-content: center;
+      margin-bottom: 1.2rem;
+    }
+    .step-icon { font-size: 1.8rem; margin-bottom: .8rem; }
+    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
+    .step p { color: var(--slate); font-size: .95rem; }
+    .step p em { color: var(--green); font-style: italic; font-size: .85rem; display: block; margin-top: .3rem; }
+
+    /* ── PRODUCTS ── */
+    .products { background: var(--white); }
+    .products-grid {
+      display: grid; grid-template-columns: repeat(auto-fill, minmax(310px,1fr));
+      gap: 1.8rem; margin-top: 3rem;
+    }
+    .product-card {
+      border: 2px solid var(--border); border-radius: var(--radius);
+      overflow: hidden; transition: transform .25s, box-shadow .25s;
+      display: flex; flex-direction: column;
+    }
+    .product-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-lg); }
+    .product-card.featured { border-color: var(--gold); }
+    .product-top {
+      background: var(--green-light); padding: 1.5rem 1.5rem 1rem;
+      position: relative;
+    }
+    .product-card.featured .product-top { background: var(--gold-light); }
+    .product-badge {
+      position: absolute; top: 1rem; right: 1rem;
+      background: var(--gold); color: var(--navy);
+      font-size: .7rem; font-weight: 700; padding: .2rem .6rem;
+      border-radius: 99px; letter-spacing: .05em;
+    }
+    .product-icon { font-size: 2.2rem; margin-bottom: .7rem; }
+    .product-title { font-weight: 700; font-size: 1.1rem; color: var(--navy); }
+    .product-title-bn { font-size: .85rem; color: var(--slate); font-style: italic; }
+    .product-body { padding: 1.2rem 1.5rem; flex: 1; }
+    .product-features { list-style: none; margin-bottom: 1rem; }
+    .product-features li {
+      font-size: .9rem; color: var(--slate); padding: .3rem 0;
+      display: flex; align-items: flex-start; gap: .5rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .product-features li:last-child { border: none; }
+    .product-features li::before { content: '✓'; color: var(--green); font-weight: 700; flex-shrink: 0; }
+    .product-footer {
+      padding: 1rem 1.5rem 1.5rem;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .product-price {
+      font-family: var(--font-head); font-size: 1.9rem; font-weight: 700;
+      color: var(--green);
+    }
+    .product-price span { font-size: .9rem; color: var(--slate); font-family: var(--font-body); font-weight: 400; }
+    .product-card.featured .product-price { color: var(--red); }
+    .btn-buy {
+      background: var(--green); color: var(--white);
+      padding: .65rem 1.3rem; border-radius: 99px;
+      text-decoration: none; font-weight: 700; font-size: .85rem;
+      display: inline-flex; align-items: center; gap: .4rem;
+      transition: all .2s;
+    }
+    .product-card.featured .btn-buy { background: var(--red); }
+    .btn-buy:hover { filter: brightness(1.15); transform: scale(1.04); }
+
+    /* ── ABOUT ── */
+    .about { background: var(--light); }
+    .about-inner {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 4rem;
+      align-items: center;
+    }
+    @media(max-width:768px){ .about-inner{ grid-template-columns:1fr; } }
+    .about-visual {
+      background: linear-gradient(135deg, var(--green), var(--green-dark));
+      border-radius: var(--radius); padding: 3rem;
+      text-align: center; color: var(--white);
+    }
+    .about-visual-flags { font-size: 4rem; margin-bottom: 1rem; }
+    .about-visual-title {
+      font-family: var(--font-head); font-size: 1.6rem; font-weight: 700;
+      margin-bottom: .5rem;
+    }
+    .about-visual-sub { opacity: .85; font-size: .95rem; }
+    .about-pills { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: 1.5rem; justify-content: center; }
+    .about-pill {
+      background: rgba(255,255,255,.15); color: var(--white);
+      padding: .35rem .8rem; border-radius: 99px; font-size: .8rem; font-weight: 600;
+    }
+    .about-text h2 {
+      font-family: var(--font-head); font-size: 2rem; color: var(--navy);
+      margin-bottom: 1rem; line-height: 1.2;
+    }
+    .about-text p { color: var(--slate); margin-bottom: 1rem; font-size: 1rem; }
+    .about-text p em { color: var(--green); font-style: italic; }
+    .about-team { margin-top: 1.5rem; }
+    .team-member {
+      display: flex; align-items: center; gap: 1rem;
+      padding: .8rem; border-radius: var(--radius-sm);
+      background: var(--white); border: 2px solid var(--border);
+      margin-bottom: .8rem;
+    }
+    .team-avatar {
+      width: 52px; height: 52px; border-radius: 50%;
+      background: var(--green); display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; flex-shrink: 0;
+    }
+    .team-name { font-weight: 700; font-size: .95rem; }
+    .team-role { font-size: .82rem; color: var(--slate); }
+
+    /* ── TRUST ── */
+    .trust { background: var(--white); }
+    .trust-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px,1fr));
+      gap: 1.5rem; margin-top: 3rem;
+    }
+    .trust-card {
+      text-align: center; padding: 2rem 1.5rem;
+      border: 2px solid var(--border); border-radius: var(--radius);
+      transition: border-color .2s;
+    }
+    .trust-card:hover { border-color: var(--green); }
+    .trust-icon { font-size: 2.5rem; margin-bottom: .8rem; }
+    .trust-title { font-weight: 700; font-size: 1rem; color: var(--navy); margin-bottom: .4rem; }
+    .trust-text { font-size: .88rem; color: var(--slate); }
+
+    /* ── CONTACT / CTA ── */
+    .cta {
+      background: linear-gradient(135deg, var(--green-dark), var(--green));
+      text-align: center; position: relative; overflow: hidden;
+    }
+    .cta::before {
+      content: ''; position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23ffffff' fill-opacity='0.04'%3E%3Ccircle cx='30' cy='30' r='20'/%3E%3C/g%3E%3C/svg%3E");
+    }
+    .cta h2 {
+      font-family: var(--font-head); font-size: clamp(1.8rem,4vw,2.8rem);
+      color: var(--white); margin-bottom: .8rem; position: relative;
+    }
+    .cta p { color: rgba(255,255,255,.85); max-width: 520px; margin: 0 auto 2rem; position: relative; }
+    .cta-cards {
+      display: flex; gap: 1.5rem; flex-wrap: wrap;
+      justify-content: center; margin-top: 2.5rem; position: relative;
+    }
+    .cta-card {
+      background: rgba(255,255,255,.12); border: 2px solid rgba(255,255,255,.25);
+      border-radius: var(--radius); padding: 1.5rem 2rem;
+      color: var(--white); text-align: center; min-width: 200px;
+    }
+    .cta-card-icon { font-size: 2rem; margin-bottom: .6rem; }
+    .cta-card-title { font-weight: 700; margin-bottom: .2rem; }
+    .cta-card-text { font-size: .85rem; opacity: .85; }
+    .cta-card a {
+      color: var(--gold); text-decoration: none; font-weight: 700;
+    }
+    .wa-big {
+      display: inline-flex; align-items: center; gap: .7rem;
+      background: #25d366; color: white; text-decoration: none;
+      padding: 1.1rem 2.4rem; border-radius: 99px;
+      font-weight: 700; font-size: 1.1rem; margin-top: 2rem;
+      box-shadow: 0 4px 24px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+      position: relative;
+    }
+    .wa-big:hover { transform: translateY(-3px) scale(1.04); box-shadow: 0 8px 40px rgba(37,211,102,.6); }
+    .wa-big-icon { font-size: 1.5rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      background: var(--navy); color: rgba(255,255,255,.75);
+      padding: 3rem 2rem 2rem; text-align: center;
+    }
+    .footer-logo {
+      font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
+      color: var(--white); margin-bottom: .5rem;
+    }
+    .footer-flags { font-size: 1.8rem; margin-bottom: .5rem; }
+    .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 1.2rem 0; flex-wrap: wrap; }
+    .footer-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .88rem; transition: color .2s; }
+    .footer-links a:hover { color: var(--gold); }
+    .footer-legal { font-size: .78rem; color: rgba(255,255,255,.4); margin-top: 1.5rem; }
+
+    /* ── FLOATING WA BUTTON ── */
+    .float-wa {
+      position: fixed; bottom: 2rem; right: 2rem; z-index: 999;
+      width: 60px; height: 60px; border-radius: 50%;
+      background: #25d366; color: white; text-decoration: none;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; box-shadow: 0 4px 24px rgba(37,211,102,.5);
+      transition: transform .2s, box-shadow .2s;
+      animation: pulse 2.5s infinite;
+    }
+    .float-wa:hover { transform: scale(1.12); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(28px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%,100% { box-shadow: 0 4px 24px rgba(37,211,102,.5); }
+      50%      { box-shadow: 0 4px 40px rgba(37,211,102,.8); }
+    }
+
+    /* ── RESPONSIVE ── */
+    @media(max-width: 768px) {
+      nav { padding: .8rem 1rem; }
+      .nav-links { display: none; }
+      .hero { padding: 6rem 1.2rem 3rem; }
+      .hero-stats { gap: 1.5rem; }
+      section { padding: 3.5rem 1.2rem; }
+      .products-grid { grid-template-columns: 1fr; }
+    }
+
+    /* ── SCROLL REVEAL ── */
+    .reveal {
+      opacity: 0; transform: translateY(32px);
+      transition: opacity .6s ease, transform .6s ease;
+    }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+  </style>
+</head>
+<body>
+
+  <!-- FLOATING WHATSAPP -->
+  <a href="https://wa.me/491634692255" target="_blank" class="float-wa" title="WhatsApp">💬</a>
+
+  <!-- NAV -->
+  <nav>
+    <a href="#" class="nav-logo">
+      <span class="nav-logo-flag">🇧🇩🇩🇪</span>
+      <div>
+        <div class="nav-logo-text">BanglaHilfe</div>
+        <div class="nav-logo-sub">Deutschland</div>
+      </div>
+    </a>
+    <ul class="nav-links">
+      <li><a href="#wie" data-lang="de">Wie es läuft</a><a href="#wie" data-lang="bn">কীভাবে কাজ করে</a></li>
+      <li><a href="#produkte" data-lang="de">Produkte</a><a href="#produkte" data-lang="bn">পণ্য</a></li>
+      <li><a href="#ueber-uns" data-lang="de">Über uns</a><a href="#ueber-uns" data-lang="bn">আমাদের সম্পর্কে</a></li>
+      <li><a href="#kontakt" data-lang="de">Kontakt</a><a href="#kontakt" data-lang="bn">যোগাযোগ</a></li>
+    </ul>
+    <div class="nav-right">
+      <div class="lang-toggle">
+        <button class="lang-btn active" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" onclick="setLang('bn')">বাং</button>
+      </div>
+      <a href="https://wa.me/491634692255" target="_blank" class="nav-wa">
+        💬 <span data-lang="de">WhatsApp</span><span data-lang="bn">হোয়াটসঅ্যাপ</span>
+      </a>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-flags">🇧🇩 ✈️ 🇩🇪</div>
+
+      <div class="hero-tag" data-lang="de">Frankfurt am Main · Hessen · Deutschland</div>
+      <div class="hero-tag" data-lang="bn">ফ্রাঙ্কফুর্ট · হেসেন · জার্মানি</div>
+
+      <h1 data-lang="de">
+        Dein Weg nach<br/>
+        <em>Deutschland</em> –<br/>
+        wir zeigen dir, wie.
+      </h1>
+      <h1 data-lang="bn">
+        জার্মানিতে তোমার পথ –<br/>
+        <em>আমরা দেখাই কীভাবে।</em>
+      </h1>
+
+      <p class="hero-sub" data-lang="de">
+        Visum, Freiwilligendienst (FSJ/BFD), Anmeldung, Familienzusammenführung –
+        wir erklären alles auf Bangla <strong>und</strong> Deutsch.
+        Klar, ehrlich, ohne Fachchinesisch.
+      </p>
+      <p class="hero-sub" data-lang="bn">
+        ভিসা, স্বেচ্ছাসেবী সেবা (FSJ/BFD), নিবন্ধন, পারিবারিক পুনর্মিলন –
+        আমরা সবকিছু বাংলায় <strong>এবং</strong> জার্মানে ব্যাখ্যা করি।
+        সহজ, সৎ, কোনো জটিল শব্দ ছাড়া।
+      </p>
+
+      <div class="hero-btns">
+        <a href="#produkte" class="btn-primary">
+          📦 <span data-lang="de">Pakete ansehen</span>
+              <span data-lang="bn">প্যাকেজ দেখুন</span>
+        </a>
+        <a href="https://wa.me/491634692255" target="_blank" class="btn-ghost">
+          💬 <span data-lang="de">Jetzt fragen</span>
+              <span data-lang="bn">এখনই জিজ্ঞেস করুন</span>
+        </a>
+      </div>
+
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="hero-stat-num">100%</span>
+          <span class="hero-stat-label" data-lang="de">Zweisprachig DE + বাংলা</span>
+          <span class="hero-stat-label" data-lang="bn">দ্বিভাষিক DE + বাংলা</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">48h</span>
+          <span class="hero-stat-label" data-lang="de">Antwortzeit</span>
+          <span class="hero-stat-label" data-lang="bn">উত্তরের সময়</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">0 €</span>
+          <span class="hero-stat-label" data-lang="de">Versteckte Kosten</span>
+          <span class="hero-stat-label" data-lang="bn">লুকানো খরচ</span>
+        </div>
+        <div class="hero-stat">
+          <span class="hero-stat-num">FFM</span>
+          <span class="hero-stat-label" data-lang="de">Vor Ort in Frankfurt</span>
+          <span class="hero-stat-label" data-lang="bn">ফ্রাঙ্কফুর্টে সরাসরি</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- HOW IT WORKS -->
+  <section class="how" id="wie">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-tag" data-lang="de">So einfach geht's</span>
+        <span class="section-tag" data-lang="bn">এত সহজ এটি</span>
+        <h2 class="section-title" data-lang="de">3 Schritte – und du bist <em>startklar</em></h2>
+        <h2 class="section-title" data-lang="bn">৩টি ধাপ – এবং তুমি <em>প্রস্তুত</em></h2>
+        <p class="section-sub" data-lang="de">Stell dir vor, du willst nach Deutschland. Du weißt nicht, wo du anfangen sollst. Genau da kommen wir ins Spiel.</p>
+        <p class="section-sub" data-lang="bn">কল্পনা করো, তুমি জার্মানিতে যেতে চাও। কোথা থেকে শুরু করবে জানো না। ঠিক সেখানেই আমরা আসি।</p>
+      </div>
+
+      <div class="steps">
+        <div class="step reveal">
+          <div class="step-num">1</div>
+          <div class="step-icon">📞</div>
+          <h3 data-lang="de">Schreib uns auf WhatsApp</h3>
+          <h3 data-lang="bn">WhatsApp-এ লেখো</h3>
+          <p data-lang="de">Erzähl uns kurz, was du brauchst – auf Bangla oder Deutsch, ganz wie du magst. Kein Bürokraten-Deutsch, versprochen!
+            <em>যা দরকার বাংলায় বলো – ঠিক আছে!</em>
+          </p>
+          <p data-lang="bn">সংক্ষেপে বলো তোমার কী দরকার – বাংলায় বা জার্মানে, যেটা চাও। কোনো জটিল ভাষা নয়, প্রতিশ্রুতি!
+            <em>Tell us what you need – in any language!</em>
+          </p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">2</div>
+          <div class="step-icon">📦</div>
+          <h3 data-lang="de">Hol dir dein Paket</h3>
+          <h3 data-lang="bn">তোমার প্যাকেজ নাও</h3>
+          <p data-lang="de">Du bekommst sofort deine PDF-Dokumente – fertig, zweisprachig, zum Ausdrucken oder Weiterleiten. Kein Warten, kein Termin.
+            <em>সাথে সাথে PDF পাবে – প্রিন্ট করো বা ফরোয়ার্ড করো!</em>
+          </p>
+          <p data-lang="bn">তুমি সাথে সাথে তোমার PDF দলিল পাবে – প্রস্তুত, দ্বিভাষিক, প্রিন্ট বা ফরোয়ার্ড করার জন্য। কোনো অপেক্ষা নেই।
+            <em>Sofort per WhatsApp – kein Warten!</em>
+          </p>
+        </div>
+        <div class="step reveal">
+          <div class="step-num">3</div>
+          <div class="step-icon">🚀</div>
+          <h3 data-lang="de">Du legst los – wir bleiben dran</h3>
+          <h3 data-lang="bn">তুমি শুরু করো – আমরা পাশে থাকি</h3>
+          <p data-lang="de">Fragen tauchen auf? Einfach melden. Wir sind echte Menschen in Frankfurt – kein Chatbot, keine Warteschleife.
+            <em>প্রশ্ন আসলে লিখো – আমরা মানুষ, রোবট নই!</em>
+          </p>
+          <p data-lang="bn">প্রশ্ন আসলে? শুধু লেখো। আমরা ফ্রাঙ্কফুর্টে সত্যিকারের মানুষ – কোনো চ্যাটবট নয়, কোনো অপেক্ষা নেই।
+            <em>Fragen? Einfach schreiben – wir sind echte Menschen!</em>
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- PRODUCTS -->
+  <section class="products" id="produkte">
+    <div class="container">
+      <div class="reveal">
+        <span class="section-tag" data-lang="de">Unsere Pakete</span>
+        <span class="section-tag" data-lang="bn">আমাদের প্যাকেজ</span>
+        <h2 class="section-title" data-lang="de">Alles, was du brauchst – <em>fertig verpackt</em></h2>
+        <h2 class="section-title" data-lang="bn">তোমার যা দরকার – <em>প্রস্তুত প্যাকেজে</em></h2>
+        <p class="section-sub" data-lang="de">Kauf per WhatsApp – du schreibst uns, wir schicken dir die Datei. Fertig. Keine Anmeldung, kein Schnickschnack.</p>
+        <p class="section-sub" data-lang="bn">WhatsApp-এ কেনো – তুমি লেখো, আমরা ফাইল পাঠাই। শেষ। কোনো নিবন্ধন নেই, কোনো ঝামেলা নেই।</p>
+      </div>
+
+      <div class="products-grid">
+
+        <!-- Product 1 -->
+        <div class="product-card reveal">
+          <div class="product-top">
+            <div class="product-icon">📋</div>
+            <div class="product-title" data-lang="de">Visum-Starter-Paket</div>
+            <div class="product-title" data-lang="bn">ভিসা স্টার্টার প্যাকেজ</div>
+            <div class="product-title-bn" data-lang="de">ভিসা স্টার্টার প্যাকেজ</div>
+            <div class="product-title-bn" data-lang="bn">Visum Starter-Paket</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Komplette Visum-Checkliste (7 Punkte)</li>
+              <li data-lang="bn">সম্পূর্ণ ভিসা চেকলিস্ট (৭টি পয়েন্ট)</li>
+              <li data-lang="de">Musterbrief auf Deutsch + Bangla</li>
+              <li data-lang="bn">মুসবর চিঠি জার্মান + বাংলায়</li>
+              <li data-lang="de">Kontakte Botschaft Dhaka</li>
+              <li data-lang="bn">ঢাকা দূতাবাসের যোগাযোগ</li>
+              <li data-lang="de">Sofort per WhatsApp geliefert</li>
+              <li data-lang="bn">সাথে সাথে WhatsApp-এ পাঠানো</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">9,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Visum-Starter-Paket%20f%C3%BCr%209%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 2 - FEATURED -->
+        <div class="product-card featured reveal">
+          <div class="product-top">
+            <div class="product-badge" data-lang="de">⭐ Bestseller</div>
+            <div class="product-badge" data-lang="bn">⭐ সেরা বিক্রয়</div>
+            <div class="product-icon">🎯</div>
+            <div class="product-title" data-lang="de">FSJ / BFD Komplettpaket</div>
+            <div class="product-title" data-lang="bn">FSJ / BFD সম্পূর্ণ প্যাকেজ</div>
+            <div class="product-title-bn" data-lang="de">FSJ / BFD সম্পূর্ণ প্যাকেজ</div>
+            <div class="product-title-bn" data-lang="bn">FSJ / BFD Komplettpaket</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Checkliste + Musterbrief (DE + Bangla)</li>
+              <li data-lang="bn">চেকলিস্ট + মুসবর চিঠি (DE + বাংলা)</li>
+              <li data-lang="de">Liste der besten Träger in Frankfurt</li>
+              <li data-lang="bn">ফ্রাঙ্কফুর্টের সেরা সংস্থার তালিকা</li>
+              <li data-lang="de">Anlage-Checkliste zum Abhaken</li>
+              <li data-lang="bn">সংযুক্তি চেকলিস্ট</li>
+              <li data-lang="de">Für FSJ (bis 26 J.) & BFD (ab 27 J.)</li>
+              <li data-lang="bn">FSJ (২৬ পর্যন্ত) এবং BFD (২৭+)</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">19,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20FSJ%2FBFD%20Komplettpaket%20f%C3%BCr%2019%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 3 -->
+        <div class="product-card reveal">
+          <div class="product-top">
+            <div class="product-icon">👨‍👩‍👧</div>
+            <div class="product-title" data-lang="de">Familienzusammenführung</div>
+            <div class="product-title" data-lang="bn">পারিবারিক পুনর্মিলন</div>
+            <div class="product-title-bn" data-lang="de">পারিবারিক পুনর্মিলন প্যাকেজ</div>
+            <div class="product-title-bn" data-lang="bn">Familienzusammenführung Paket</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Formularführer Schritt für Schritt</li>
+              <li data-lang="bn">ধাপে ধাপে ফর্ম গাইড</li>
+              <li data-lang="de">Checkliste alle nötigen Dokumente</li>
+              <li data-lang="bn">প্রয়োজনীয় সব দলিলের চেকলিস্ট</li>
+              <li data-lang="de">Musterbriefe Ehepartner & Kinder</li>
+              <li data-lang="bn">স্বামী/স্ত্রী ও শিশুদের জন্য মুসবর চিঠি</li>
+              <li data-lang="de">Auf Deutsch + Bangla</li>
+              <li data-lang="bn">জার্মান + বাংলায়</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">12,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Familienzusammenf%C3%BChrung-Paket%20f%C3%BCr%2012%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 4 -->
+        <div class="product-card reveal">
+          <div class="product-top">
+            <div class="product-icon">🏛️</div>
+            <div class="product-title" data-lang="de">Anmeldung & Behörden</div>
+            <div class="product-title" data-lang="bn">নিবন্ধন ও কর্তৃপক্ষ</div>
+            <div class="product-title-bn" data-lang="de">নিবন্ধন গাইড</div>
+            <div class="product-title-bn" data-lang="bn">Anmeldung Guide</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Schritt-für-Schritt Anmeldeguide</li>
+              <li data-lang="bn">ধাপে ধাপে নিবন্ধন গাইড</li>
+              <li data-lang="de">Welches Amt, wann, warum</li>
+              <li data-lang="bn">কোন অফিস, কখন, কেন</li>
+              <li data-lang="de">Tipps für Ausländerbehörde Frankfurt</li>
+              <li data-lang="bn">ফ্রাঙ্কফুর্ট বিদেশী নাগরিক অফিসের টিপস</li>
+              <li data-lang="de">Auf Deutsch + Bangla</li>
+              <li data-lang="bn">জার্মান + বাংলায়</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">9,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Anmeldung-Beh%C3%B6rden-Paket%20f%C3%BCr%209%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Product 5 -->
+        <div class="product-card reveal">
+          <div class="product-top">
+            <div class="product-icon">🎓</div>
+            <div class="product-title" data-lang="de">Studium in Deutschland</div>
+            <div class="product-title" data-lang="bn">জার্মানিতে পড়াশোনা</div>
+            <div class="product-title-bn" data-lang="de">জার্মানিতে পড়াশোনা গাইড</div>
+            <div class="product-title-bn" data-lang="bn">Studium in Deutschland Guide</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Bewerbungsguide deutsche Universitäten</li>
+              <li data-lang="bn">জার্মান বিশ্ববিদ্যালয়ে ভর্তির গাইড</li>
+              <li data-lang="de">Musteranschreiben Uni-Bewerbung</li>
+              <li data-lang="bn">বিশ্ববিদ্যালয় আবেদনের মুসবর চিঠি</li>
+              <li data-lang="de">Visum Studium Checkliste</li>
+              <li data-lang="bn">পড়াশোনার ভিসা চেকলিস্ট</li>
+              <li data-lang="de">Auf Deutsch + Bangla</li>
+              <li data-lang="bn">জার্মান + বাংলায়</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">14,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Studium-Paket%20f%C3%BCr%2014%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Bundle -->
+        <div class="product-card featured reveal">
+          <div class="product-top">
+            <div class="product-badge" data-lang="de">🔥 Bestes Angebot</div>
+            <div class="product-badge" data-lang="bn">🔥 সেরা অফার</div>
+            <div class="product-icon">👑</div>
+            <div class="product-title" data-lang="de">KOMPLETT-BUNDLE (alle 5 Pakete)</div>
+            <div class="product-title" data-lang="bn">সম্পূর্ণ বান্ডেল (সব ৫টি প্যাকেজ)</div>
+            <div class="product-title-bn" data-lang="de">সব একসাথে – সাশ্রয়ী!</div>
+            <div class="product-title-bn" data-lang="bn">Alles zusammen – günstig!</div>
+          </div>
+          <div class="product-body">
+            <ul class="product-features">
+              <li data-lang="de">Alle 5 Pakete in einem</li>
+              <li data-lang="bn">সব ৫টি প্যাকেজ একসাথে</li>
+              <li data-lang="de">1 Jahr kostenlose Updates</li>
+              <li data-lang="bn">১ বছর বিনামূল্যে আপডেট</li>
+              <li data-lang="de">Normalpreis: 67,95 €</li>
+              <li data-lang="bn">স্বাভাবিক মূল্য: ৬৭.৯৫ €</li>
+              <li data-lang="de">Du sparst über 26 €!</li>
+              <li data-lang="bn">তুমি ২৬ € এরও বেশি সাশ্রয় করো!</li>
+            </ul>
+          </div>
+          <div class="product-footer">
+            <div class="product-price">49,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></div>
+            <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20KOMPLETT-BUNDLE%20f%C3%BCr%2049%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">
+              💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span>
+            </a>
+          </div>
+        </div>
+
+      </div><!-- /products-grid -->
+
+      <!-- Personal services note -->
+      <div style="margin-top:2.5rem; background:var(--green-light); border-radius:var(--radius); padding:1.5rem 2rem; border:2px solid var(--border);" class="reveal">
+        <p style="font-weight:700; color:var(--green); margin-bottom:.5rem;" data-lang="de">🤝 Brauchst du persönliche Hilfe?</p>
+        <p style="font-weight:700; color:var(--green); margin-bottom:.5rem;" data-lang="bn">🤝 ব্যক্তিগত সাহায্য দরকার?</p>
+        <p style="color:var(--slate); font-size:.95rem;" data-lang="de">
+          Wir begleiten dich auch persönlich: Motivationsschreiben nach deinem Lebenslauf (49,99 €) · Dokument-Check (29,99 €) · Behördenbegleitung Frankfurt (79,99 €) · Rundum-Visum-Betreuung (149,99 €).
+          Schreib uns einfach auf WhatsApp!
+        </p>
+        <p style="color:var(--slate); font-size:.95rem;" data-lang="bn">
+          আমরা তোমাকে ব্যক্তিগতভাবেও সাহায্য করি: তোমার CV অনুযায়ী অনুপ্রেরণামূলক চিঠি (৪৯.৯৯ €) · দলিল পরীক্ষা (২৯.৯৯ €) · ফ্রাঙ্কফুর্টে অফিস সহায়তা (৭৯.৯৯ €)।
+          শুধু WhatsApp-এ লেখো!
+        </p>
+        <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20brauche%20pers%C3%B6nliche%20Hilfe." target="_blank" style="display:inline-flex;align-items:center;gap:.4rem;margin-top:1rem;background:var(--green);color:white;padding:.6rem 1.4rem;border-radius:99px;text-decoration:none;font-weight:700;font-size:.9rem;">
+          💬 <span data-lang="de">WhatsApp schreiben</span><span data-lang="bn">WhatsApp লেখো</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ABOUT -->
+  <section class="about" id="ueber-uns">
+    <div class="container">
+      <div class="about-inner">
+        <div class="about-visual reveal">
+          <div class="about-visual-flags">🇧🇩 🤝 🇩🇪</div>
+          <div class="about-visual-title" data-lang="de">Wir kennen beide Welten.</div>
+          <div class="about-visual-title" data-lang="bn">আমরা দুই জগত জানি।</div>
+          <div class="about-visual-sub" data-lang="de">Bangladesch in der Seele, Deutschland im Alltag.</div>
+          <div class="about-visual-sub" data-lang="bn">মনে বাংলাদেশ, জীবনে জার্মানি।</div>
+          <div class="about-pills">
+            <span class="about-pill">Frankfurt 🏙️</span>
+            <span class="about-pill">Hessen 🌿</span>
+            <span class="about-pill">বাংলা 🗣️</span>
+            <span class="about-pill">Deutsch 🗣️</span>
+            <span class="about-pill">English 🗣️</span>
+          </div>
+        </div>
+        <div class="about-text reveal">
+          <span class="section-tag" data-lang="de">Über uns</span>
+          <span class="section-tag" data-lang="bn">আমাদের সম্পর্কে</span>
+          <h2 data-lang="de">Wir sind kein Amt.<br/>Wir sind <em>Menschen wie du.</em></h2>
+          <h2 data-lang="bn">আমরা কোনো অফিস নই।<br/>আমরা <em>তোমার মতো মানুষ।</em></h2>
+          <p data-lang="de">
+            Wir sind ein kleines deutsch-bangladeschisches Team, das selbst weiß, wie es sich anfühlt,
+            in Deutschland von vorne anzufangen. Wir haben die Zettelwirtschaft, die komischen Formulare
+            und das schlechte Bauchgefühl vor einem Behördentermin alle selbst erlebt.
+          </p>
+          <p data-lang="bn">
+            আমরা একটি ছোট জার্মান-বাংলাদেশী দল, যারা নিজেরাই জানে জার্মানিতে নতুন করে শুরু করা কেমন লাগে।
+            আমরা নিজেরাই সব কাগজপত্রের ঝামেলা, অদ্ভুত ফর্ম আর সরকারি অফিসের আগে নার্ভাস অনুভূতি অনুভব করেছি।
+          </p>
+          <p data-lang="de">
+            Genau deshalb machen wir das hier. <em>Damit du es leichter hast als wir damals.</em>
+            Unser Angebot ist fair, klar und auf Augenhöhe – nicht von oben herab.
+          </p>
+          <p data-lang="bn">
+            ঠিক সেজন্যই আমরা এটা করি। <em>যাতে তোমার পথ আমাদের চেয়ে সহজ হয়।</em>
+            আমাদের সেবা সৎ, স্পষ্ট এবং সমকক্ষ – উপর থেকে নয়।
+          </p>
+          <div class="about-team">
+            <div class="team-member">
+              <div class="team-avatar">👨</div>
+              <div>
+                <div class="team-name" data-lang="de">Dein Ansprechpartner in Frankfurt</div>
+                <div class="team-name" data-lang="bn">ফ্রাঙ্কফুর্টে তোমার যোগাযোগের ব্যক্তি</div>
+                <div class="team-role" data-lang="de">Deutsch-bangladeschisches Team · Vor Ort verfügbar</div>
+                <div class="team-role" data-lang="bn">জার্মান-বাংলাদেশী দল · সরাসরি উপলব্ধ</div>
+              </div>
+            </div>
+            <div class="team-member">
+              <div class="team-avatar">📱</div>
+              <div>
+                <div class="team-name">WhatsApp: 0163 4692255</div>
+                <div class="team-role" data-lang="de">Wir antworten innerhalb von 48 Stunden – auf Bangla oder Deutsch</div>
+                <div class="team-role" data-lang="bn">আমরা ৪৮ ঘণ্টার মধ্যে উত্তর দিই – বাংলায় বা জার্মানে</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TRUST -->
+  <section class="trust">
+    <div class="container">
+      <div class="reveal" style="text-align:center;">
+        <span class="section-tag" data-lang="de">Warum wir?</span>
+        <span class="section-tag" data-lang="bn">কেন আমরা?</span>
+        <h2 class="section-title" data-lang="de">Was uns <em>anders macht</em></h2>
+        <h2 class="section-title" data-lang="bn">যা আমাদের <em>আলাদা করে</em></h2>
+      </div>
+      <div class="trust-grid">
+        <div class="trust-card reveal">
+          <div class="trust-icon">🗣️</div>
+          <div class="trust-title" data-lang="de">Echtes Bangla</div>
+          <div class="trust-title" data-lang="bn">আসল বাংলা</div>
+          <div class="trust-text" data-lang="de">Kein Google-Übersetzer. Wir schreiben und sprechen echtes Bangla – so wie du es zuhause redest.</div>
+          <div class="trust-text" data-lang="bn">কোনো গুগল অনুবাদ নয়। আমরা আসল বাংলা লিখি এবং বলি – ঠিক যেভাবে তুমি বাড়িতে কথা বলো।</div>
+        </div>
+        <div class="trust-card reveal">
+          <div class="trust-icon">📍</div>
+          <div class="trust-title" data-lang="de">Vor Ort in Frankfurt</div>
+          <div class="trust-title" data-lang="bn">ফ্রাঙ্কফুর্টে সরাসরি</div>
+          <div class="trust-text" data-lang="de">Wir kennen die Ämter, die Buslinien und die besten Einsatzstellen hier vor Ort. Kein Ferndienstleister.</div>
+          <div class="trust-text" data-lang="bn">আমরা এখানকার অফিস, বাস লাইন এবং সেরা কর্মস্থান জানি। কোনো দূরবর্তী সেবা প্রদানকারী নই।</div>
+        </div>
+        <div class="trust-card reveal">
+          <div class="trust-icon">⚖️</div>
+          <div class="trust-title" data-lang="de">Ehrlich & fair</div>
+          <div class="trust-title" data-lang="bn">সৎ ও ন্যায্য</div>
+          <div class="trust-text" data-lang="de">Wir versprechen keine Wunder. Wir sagen dir klar, was möglich ist und was nicht. Immer fair.</div>
+          <div class="trust-text" data-lang="bn">আমরা অলৌকিক কিছু প্রতিশ্রুতি দিই না। আমরা স্পষ্টভাবে বলি কী সম্ভব এবং কী নয়। সবসময় ন্যায্য।</div>
+        </div>
+        <div class="trust-card reveal">
+          <div class="trust-icon">⚡</div>
+          <div class="trust-title" data-lang="de">Schnell & direkt</div>
+          <div class="trust-title" data-lang="bn">দ্রুত ও সরাসরি</div>
+          <div class="trust-text" data-lang="de">Kein langer Briefwechsel. Kauf per WhatsApp, bekomm dein Dokument – fertig. So soll's sein.</div>
+          <div class="trust-text" data-lang="bn">কোনো দীর্ঘ চিঠি বিনিময় নেই। WhatsApp-এ কেনো, দলিল পাও – শেষ। এভাবেই হওয়া উচিত।</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CTA / KONTAKT -->
+  <section class="cta" id="kontakt">
+    <div class="container">
+      <div class="reveal">
+        <h2 data-lang="de">Bereit? Dann schreib uns einfach. 👋</h2>
+        <h2 data-lang="bn">প্রস্তুত? তাহলে শুধু লেখো। 👋</h2>
+        <p data-lang="de">Kein langes Formular. Kein Termin. Einfach WhatsApp öffnen und losschreiben – auf Bangla oder Deutsch, ganz wie du willst.</p>
+        <p data-lang="bn">কোনো দীর্ঘ ফর্ম নেই। কোনো অ্যাপয়েন্টমেন্ট নেই। শুধু WhatsApp খোলো এবং লিখতে শুরু করো – বাংলায় বা জার্মানে, যেটা চাও।</p>
+        <a href="https://wa.me/491634692255" target="_blank" class="wa-big">
+          <span class="wa-big-icon">💬</span>
+          <span data-lang="de">WhatsApp: 0163 4692255</span>
+          <span data-lang="bn">WhatsApp: 0163 4692255</span>
+        </a>
+        <div class="cta-cards">
+          <div class="cta-card">
+            <div class="cta-card-icon">📧</div>
+            <div class="cta-card-title">E-Mail</div>
+            <div class="cta-card-text"><a href="mailto:info@bangla-hilfe.de">info@bangla-hilfe.de</a></div>
+          </div>
+          <div class="cta-card">
+            <div class="cta-card-icon">📍</div>
+            <div class="cta-card-title">Standort</div>
+            <div class="cta-card-text">Frankfurt am Main<br/>Hessen, Deutschland</div>
+          </div>
+          <div class="cta-card">
+            <div class="cta-card-icon">⏰</div>
+            <div class="cta-card-title" data-lang="de">Antwortzeit</div>
+            <div class="cta-card-title" data-lang="bn">উত্তরের সময়</div>
+            <div class="cta-card-text" data-lang="de">Innerhalb 48 Stunden<br/>Mo–Sa, 9–20 Uhr</div>
+            <div class="cta-card-text" data-lang="bn">৪৮ ঘণ্টার মধ্যে<br/>সোম–শনি, ৯–২০ টা</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="footer-flags">🇧🇩 🤝 🇩🇪</div>
+    <div class="footer-logo">BanglaHilfe Deutschland</div>
+    <p style="font-size:.88rem; max-width:480px; margin:.5rem auto 0;">
+      <span data-lang="de">Deine Brücke zwischen Bangladesch und Deutschland. Frankfurt am Main.</span>
+      <span data-lang="bn">বাংলাদেশ ও জার্মানির মধ্যে তোমার সেতু। ফ্রাঙ্কফুর্ট আম মাইন।</span>
+    </p>
+    <div class="footer-links">
+      <a href="#wie" data-lang="de">Wie es läuft</a>
+      <a href="#wie" data-lang="bn">কীভাবে কাজ করে</a>
+      <a href="#produkte" data-lang="de">Pakete</a>
+      <a href="#produkte" data-lang="bn">প্যাকেজ</a>
+      <a href="#ueber-uns" data-lang="de">Über uns</a>
+      <a href="#ueber-uns" data-lang="bn">আমাদের সম্পর্কে</a>
+      <a href="https://wa.me/491634692255" target="_blank">WhatsApp</a>
+      <a href="#" data-lang="de">Impressum</a>
+      <a href="#" data-lang="bn">ইম্প্রেসুম</a>
+      <a href="#" data-lang="de">Datenschutz</a>
+      <a href="#" data-lang="bn">গোপনীয়তা</a>
+    </div>
+    <div class="footer-legal">
+      <span data-lang="de">Wir sind kein Rechtsanwalt und keine Behörde. Unsere Dokumente dienen zur Orientierung und ersetzen keine offizielle Rechtsberatung.</span>
+      <span data-lang="bn">আমরা আইনজীবী বা সরকারি সংস্থা নই। আমাদের দলিল শুধু নির্দেশিকা এবং সরকারি আইনি পরামর্শের বিকল্প নয়।</span>
+      <br/>© 2025 BanglaHilfe Deutschland · Frankfurt am Main
+    </div>
+  </footer>
+
+  <script>
+    // ── LANGUAGE SWITCHER ──
+    function setLang(lang) {
+      document.body.classList.toggle('bn', lang === 'bn');
+      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+      document.querySelector(`.lang-btn:${lang==='de'?'first':'last'}-child`).classList.add('active');
+      document.documentElement.lang = lang === 'bn' ? 'bn' : 'de';
+      localStorage.setItem('bh-lang', lang);
+    }
+    // Restore language preference
+    const saved = localStorage.getItem('bh-lang');
+    if (saved) setLang(saved);
+
+    // ── SCROLL REVEAL ──
+    const observer = new IntersectionObserver(entries => {
+      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // ── SMOOTH NAV ACTIVE ──
+    const sections = document.querySelectorAll('section[id]');
+    window.addEventListener('scroll', () => {
+      let current = '';
+      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
+    });
+  </script>
+</body>
+</html>
