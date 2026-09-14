@@ -830,3 +830,78 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   align-self: flex-end; background: none; border: none;
   font-size: 1.6rem; cursor: pointer; color: var(--navy); margin-bottom: .5rem;
 }
+
+/* ── BLOG-ARTIKEL (blog/chancenkarte-2025-26.html) ── */
+.blog-post {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 3rem 1.5rem 4rem;
+}
+.blog-post__header { margin-bottom: 2rem; }
+.blog-post__tag {
+  display: inline-block; background: var(--green-light); color: var(--green);
+  font-weight: 700; font-size: .8rem; letter-spacing: .06em; text-transform: uppercase;
+  padding: .3rem .9rem; border-radius: 99px; margin-bottom: 1rem;
+}
+.blog-post__header h1 {
+  font-family: var(--font-head); font-size: clamp(1.9rem, 4vw, 2.6rem);
+  color: var(--navy); line-height: 1.2; margin-bottom: 1rem;
+}
+.blog-post__intro { color: var(--slate); font-size: 1.1rem; }
+.blog-post section { margin: 2.5rem 0; }
+.blog-post section h2 {
+  font-family: var(--font-head); font-size: 1.5rem; color: var(--navy); margin-bottom: .8rem;
+}
+.blog-post section h3 { font-size: 1.1rem; color: var(--navy); margin: 1.5rem 0 .6rem; }
+.blog-post p { color: var(--slate); margin-bottom: 1rem; }
+
+.icon-list, .product-list { list-style: none; padding: 0; margin: 1rem 0; }
+.icon-list li, .product-list li {
+  display: flex; align-items: center; gap: .5rem;
+  padding: .6rem 0; border-bottom: 1px solid var(--border);
+}
+.product-list li { justify-content: space-between; flex-wrap: wrap; }
+
+.process-steps {
+  list-style: none; margin: 1.5rem 0; padding: 0;
+  display: flex; flex-direction: column; gap: .75rem;
+}
+.process-steps__step {
+  display: flex; align-items: center; gap: .75rem;
+  padding: .75rem 1rem; border-left: 3px solid var(--green);
+  background: var(--light); border-radius: var(--radius-sm);
+}
+.process-steps__icon { font-size: 1.4rem; flex-shrink: 0; }
+
+.blog-post__cta {
+  text-align: center; background: var(--green-light);
+  border-radius: var(--radius); padding: 2rem; margin: 3rem 0 2rem;
+}
+.blog-post__cta h2 { margin-bottom: .5rem; }
+
+.blog-post__legal {
+  border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 2rem;
+  color: var(--slate);
+}
+
+/* ── BLOG-TEASER auf index.html (unterhalb Hero) ── */
+.blog-teaser { background: var(--white); }
+.blog-teaser-card {
+  max-width: 720px; margin: 0 auto; text-align: center;
+  background: var(--green-light);
+  border-radius: var(--radius);
+  padding: 2.5rem 2rem;
+}
+.blog-teaser-title {
+  font-family: var(--font-head); font-weight: 700;
+  font-size: clamp(1.4rem, 3vw, 1.9rem);
+  line-height: 1.25; margin: .75rem 0 1rem;
+}
+.blog-teaser-title a { color: var(--navy); text-decoration: none; }
+.blog-teaser-title a:hover { color: var(--green); }
+.blog-teaser-excerpt { color: var(--slate); font-size: 1rem; margin-bottom: 1.2rem; }
+.blog-teaser-link {
+  display: inline-flex; align-items: center; gap: .4rem;
+  color: var(--green); font-weight: 700; text-decoration: none; font-size: .95rem;
+}
+.blog-teaser-link:hover { text-decoration: underline; }
