@@ -7,6 +7,7 @@
 
     /* ── DESIGN TOKENS ── */
     :root {
+      --banner-h: 2.6rem;
       --green:      #006a4e;   /* Bangladesh Green */
       --green-dark: #004d38;
       --green-light:#e8f5f0;
@@ -43,7 +44,7 @@
 
     /* ── NAV ── */
     nav {
-      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+      position: fixed; top: var(--banner-h); left: 0; right: 0; z-index: 1000;
       background: rgba(255,255,255,.97);
       border-bottom: 2px solid var(--border);
       backdrop-filter: blur(8px);
@@ -93,7 +94,7 @@
       min-height: 100vh;
       background: linear-gradient(155deg, var(--green-dark) 0%, var(--green) 55%, #1a8a60 100%);
       display: flex; flex-direction: column; justify-content: center;
-      padding: 7rem 2rem 4rem;
+      padding: calc(7rem + var(--banner-h)) 2rem 4rem;
       position: relative; overflow: hidden;
     }
     .hero::before {
@@ -732,3 +733,14 @@
 .lektion3-page .footer-copy{margin-top:.4rem;font-size:.75rem}
 .lektion3-page .mt-05{margin-top:.5rem}
 .lektion3-page .mt-1{margin-top:1rem}
+
+/* ── PROMO BANNER ── */
+.promo-banner {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1001;
+  background: var(--red); color: var(--white);
+  text-align: center; padding: .55rem 1rem;
+  font-size: .82rem; font-weight: 700;
+  text-decoration: none;
+  display: flex; align-items: center; justify-content: center; gap: .4rem;
+}
+.promo-banner:hover { background: #a30000; }
