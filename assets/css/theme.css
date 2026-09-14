@@ -127,34 +127,35 @@
       .hero-grid { grid-template-columns: 1.15fr .85fr; }
     }
     .hero-flags {
-      font-size: 3.5rem; margin-bottom: 1.5rem;
+      font-size: clamp(2.2rem, 7vw, 3.5rem); margin-bottom: clamp(.8rem, 4vw, 1.5rem);
       animation: fadeUp .8s ease both;
     }
     .hero-tag {
       display: inline-block;
       background: var(--gold); color: var(--navy);
-      font-weight: 700; font-size: .8rem; letter-spacing: .08em;
-      text-transform: uppercase; padding: .3rem .9rem; border-radius: 99px;
-      margin-bottom: 1.2rem;
+      font-weight: 700; font-size: clamp(.68rem, 2.6vw, .8rem); letter-spacing: .08em;
+      text-transform: uppercase; padding: clamp(.25rem, 1vw, .3rem) clamp(.65rem, 3vw, .9rem);
+      border-radius: 99px;
+      margin-bottom: clamp(.8rem, 3vw, 1.2rem);
       animation: fadeUp .8s .1s ease both;
     }
     .hero h1 {
       font-family: var(--font-head);
-      font-size: clamp(2.4rem, 6vw, 4rem);
+      font-size: clamp(2.1rem, 6vw, 4rem);
       color: var(--white); line-height: 1.15; font-weight: 700;
-      max-width: 700px; margin-bottom: 1rem;
+      max-width: 700px; margin-bottom: clamp(.6rem, 2vw, 1rem);
       animation: fadeUp .8s .2s ease both;
     }
     .hero h1 em { color: var(--gold); font-style: normal; }
     .hero-sub {
       font-size: clamp(1rem, 2.5vw, 1.2rem);
       color: rgba(255,255,255,.88); max-width: 580px;
-      margin-bottom: 2.5rem;
+      margin-bottom: clamp(1.2rem, 5vw, 2.5rem);
       animation: fadeUp .8s .3s ease both;
     }
     .hero-bn {
       font-size: .95rem; color: rgba(255,255,255,.7);
-      font-style: italic; margin-bottom: 2rem;
+      font-style: italic; margin-bottom: clamp(1rem, 4vw, 2rem);
       animation: fadeUp .8s .35s ease both;
     }
     .hero-btns {
@@ -180,7 +181,7 @@
        grosser Kacheln -- Zahl + Label in einer Zeile, abgerundet,
        nebeneinander auf dem dunklen Hero-Hintergrund (topwash-Stil). */
     .hero-badges {
-      display: flex; gap: .75rem; margin-top: 3rem; flex-wrap: wrap;
+      display: flex; gap: .75rem; margin-top: clamp(1.2rem, 5vw, 3rem); flex-wrap: wrap;
       animation: fadeUp .8s .5s ease both;
     }
     .hero-badge {
@@ -458,13 +459,31 @@
     @media(max-width: 768px) {
       nav { padding: .8rem 1rem; }
       .nav-links { display: none; }
-      .hero { padding: 6rem 1.2rem 3rem; }
+      /* Handy-Feedback: WhatsApp-Button in der Nav lief auf schmalen
+         Screens neben Hamburger + Sprachumschalter aus dem sichtbaren
+         Bereich -- ueberfluessig, da der schwebende .float-wa-Button auf
+         jeder Seite ohnehin permanent erreichbar ist. */
+      .nav-wa { display: none; }
+      /* Handy-Feedback: Hero-Innenabstaende waren auf kleinen Screens
+         fix und liessen den gruenen Bereich groesser wirken als der Text
+         braucht. min-height:auto statt 100vh, damit die Boxhoehe sich am
+         Inhalt orientiert statt an der Bildschirmhoehe; die Abstaende der
+         Hero-Elemente selbst skalieren jetzt per clamp() (siehe oben). */
+      .hero { min-height: auto; padding: 5.5rem 1.2rem 2.5rem; }
       .hero-badges { gap: .5rem; }
       section { padding: 3.5rem 1.2rem; }
       .products-grid { grid-template-columns: 1fr; }
       .bottom-bar { display: flex; }
       .float-wa { bottom: 5rem; }
       body { padding-bottom: 3.4rem; }
+      footer { padding: 2rem 1.2rem 1.5rem; }
+      .footer-links { gap: 1rem; margin: 1rem 0; }
+    }
+    @media(max-width: 480px) {
+      /* Platzhalter-Foto traegt auf sehr kleinen Screens am meisten zur
+         gefuehlten Ueberlaenge des Hero-Bereichs bei und zeigt ohnehin
+         noch kein echtes Bild -- auf schmalen Handys ausblenden. */
+      .hero-photo { display: none; }
     }
 
     /* ── SCROLL REVEAL ── */
@@ -916,4 +935,41 @@ body.menu-open .mobile-menu { transform: translateX(0); }
 .page-main { padding-top: 6rem; }
 @media (max-width: 768px) {
   .page-main { padding-top: 5rem; }
+}
+
+/* ── LEKTIONEN-KARTEN (lektionen.html) ── */
+.lektionen-intro { max-width: 640px; margin-bottom: 3rem; }
+.lektionen-grid {
+  display: grid; grid-template-columns: 1fr; gap: 1.8rem;
+}
+@media (min-width: 700px) {
+  .lektionen-grid { grid-template-columns: 1fr 1fr; }
+}
+.lektion-card {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--white); border: 2px solid var(--border);
+  border-radius: var(--radius); padding: 1.8rem;
+  transition: transform .25s, box-shadow .25s, border-color .25s;
+}
+.lektion-card:hover {
+  transform: translateY(-6px); box-shadow: var(--shadow-lg);
+  border-color: var(--green);
+}
+.lektion-card-badge {
+  display: inline-block; background: var(--gold-light); color: var(--navy);
+  font-weight: 700; font-size: .75rem; letter-spacing: .06em; text-transform: uppercase;
+  padding: .3rem .8rem; border-radius: 99px; margin-bottom: 1rem;
+}
+.lektion-card-icon { display: block; font-size: 2.2rem; margin-bottom: .6rem; }
+.lektion-card-title {
+  font-family: var(--font-head); font-size: 1.3rem; font-weight: 700;
+  color: var(--navy); margin-bottom: .2rem;
+}
+.lektion-card-bn { font-size: .9rem; color: var(--green); font-style: italic; margin-bottom: .8rem; }
+.lektion-card-desc { color: var(--slate); font-size: .92rem; margin-bottom: 1.2rem; }
+.lektion-card-meta { display: flex; gap: .6rem; flex-wrap: wrap; }
+.lektion-card-meta span {
+  background: var(--light); color: var(--slate);
+  font-size: .78rem; font-weight: 600;
+  padding: .3rem .7rem; border-radius: 99px;
 }
