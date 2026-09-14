@@ -13,25 +13,19 @@
     <priority>0.7</priority>
   </url>
   <url>
-    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/danke.html</loc>
+    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektionen.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektion1.html</loc>
+    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektionen/lektion2.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
   </url>
   <url>
-    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektion2.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
-  </url>
-  <url>
-    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektion3.html</loc>
+    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/lektionen/lektion3.html</loc>
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.5</priority>
@@ -47,12 +41,6 @@
     <lastmod>2026-09-14</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.9</priority>
-  </url>
-  <url>
-    <loc>https://intelligentresponder-max.github.io/bangla-hilfe/qrcode.html</loc>
-    <lastmod>2026-09-14</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.5</priority>
   </url>
   <url>
     <loc>https://intelligentresponder-max.github.io/bangla-hilfe/ueber-uns.html</loc>
