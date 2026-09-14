@@ -516,3 +516,23 @@
   max-width: 480px;
   margin: .5rem auto 0;
 }
+
+/* ── AP 4: Teaser-Links auf index.html ── */
+.about-more-link { margin-top: 1.5rem; }
+
+/* ── AP 4: reine Preisgegenueberstellung (preise.html) ── */
+.price-table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1.5rem;
+}
+.price-table th,
+.price-table td {
+  text-align: left;
+  padding: .75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+.price-table th { font-weight: 700; color: var(--navy); }
+@media (max-width: 640px) {
+  .price-table { display: block; overflow-x: auto; }
+}
