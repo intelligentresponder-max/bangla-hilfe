@@ -22,6 +22,12 @@ rot()  { printf '  FEHLER  %s\n' "$1"; fehler=$((fehler+1)); }
 gelb() { printf '  HINWEIS %s\n' "$1"; warn=$((warn+1)); }
 ok()   { printf '  ok      %s\n' "$1"; }
 
+# Portable Temp-Datei statt hartcodiertem /tmp: existiert in Termux nicht
+# (dort ist $PREFIX/tmp beschreibbar), mktemp respektiert TMPDIR/-Umgebung
+# auf jedem System automatisch.
+tote_datei=$(mktemp)
+trap 'rm -f "$tote_datei"' EXIT
+
 htmls=$(find . -name '*.html' -type f -not -path './node_modules/*' -not -path './.git/*' | sort)
 anzahl=$(printf '%s\n' "$htmls" | grep -c . || true)
 echo "== $anzahl HTML-Dateien =="
@@ -41,10 +47,10 @@ for f in $htmls; do
     [ -z "$ziel" ] && continue
     [ -e "$dir/$ziel" ] || echo "TOT|$f|$href"
   done
-done > /tmp/_tote.txt
-tot=$(grep -c . /tmp/_tote.txt || true)
+done > "$tote_datei"
+tot=$(grep -c . "$tote_datei" || true)
 if [ "$tot" -gt 0 ]; then
-  while IFS='|' read -r _ f h; do rot "toter Link in $f -> $h"; done < /tmp/_tote.txt
+  while IFS='|' read -r _ f h; do rot "toter Link in $f -> $h"; done < "$tote_datei"
 else
   ok "keine toten internen Links"
 fi
@@ -130,7 +136,7 @@ echo
 echo "8) Doppelte Titles"
 dup=$(grep -ho '<title>[^<]*</title>' $htmls 2>/dev/null | sort | uniq -d)
 if [ -n "$dup" ]; then
-  printf '%s\n' "$dup" | while read -r d; do gelb "Title doppelt vergeben: $d"; done
+  while read -r d; do gelb "Title doppelt vergeben: $d"; done < <(printf '%s\n' "$dup")
 else
   ok "alle Titles eindeutig"
 fi
@@ -196,9 +202,9 @@ ext=$(grep -ho '<\(script\|link\|iframe\)[^>]*\(src\|href\)="https\?://[^"]*"' $
       | grep -o 'https\?://[^"]*' | sed 's|\(https\?://[^/]*\).*|\1|' | sort -u \
       | grep -v '^https://intelligentresponder-max.github.io$')
 if [ -n "$ext" ]; then
-  printf '%s\n' "$ext" | while read -r d; do
+  while read -r d; do
     gelb "laedt von $d -- ohne Einwilligung pruefen (Fonts besser selbst hosten)"
-  done
+  done < <(printf '%s\n' "$ext")
 else
   ok "keine externen Ressourcen"
 fi
