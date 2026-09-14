@@ -364,6 +364,61 @@ verallgemeinern.
 
 ---
 
+## Phase 4 (14.09.2026, Teil 1 von 9): erste 3 neue Redaktionsplan-Artikel
+
+Von den 10 Artikeln aus dem externen Redaktionsplan (AP 8) existierte
+bisher nur „Chancenkarte" (der schon vorhandene Blog-Artikel). Diese
+Runde: die 3 Artikel geschrieben, die die dünnste Wissen-Kategorie
+(Anerkennung & Ausbildung, vorher nur 1 Artikel) am meisten stärken, plus
+ein zweiter Visum-Artikel:
+
+- `ratgeber/eu-blue-card-beantragen.html` (Visum & Einreise)
+- `ratgeber/anabin-zab-abschluss-bewerten.html` (Anerkennung & Ausbildung)
+- `ratgeber/pflegekraft-anerkennung.html` (Anerkennung & Ausbildung)
+
+**Bewusste Abweichung von der reinen Trainingsdaten-Erinnerung:** Bei
+jährlich angepassten Zahlen (Blue-Card-Mindestgehalt, Sperrkonto-Betrag)
+wurde vor dem Schreiben per `WebSearch` der aktuelle Stand 2026 geprüft,
+statt sich auf möglicherweise veraltetes Wissen zu verlassen oder die
+Zahl vage zu umschreiben:
+- Blue Card 2026: 50.700 €/Jahr Standard, 45.934,20 €/Jahr für
+  Mangelberufe/Berufseinsteiger:innen; Niederlassungserlaubnis nach 27
+  Monaten (A1) bzw. 21 Monaten (B1).
+- ZAB-Zeugnisbewertung: 200 € erste, 100 € je weitere, 2–3 Monate
+  Bearbeitungszeit.
+- Pflegefachkraft-Anerkennung: i. d. R. B2-Deutschkenntnisse,
+  Anerkennungspartnerschaft ermöglicht Einreise während laufendem
+  Verfahren.
+Trotzdem in jedem Artikel im rechtlichen Hinweis „Stand September 2026,
+aktuellen Wert prüfen" ergänzt — diese Zahlen ändern sich jährlich per
+Verordnung, eine Websuche heute ist kein Ersatz für eine Prüfung zum
+Zeitpunkt des tatsächlichen Antrags.
+
+**Struktur-Ergänzungen** (aus der Übergabe übernommen, wo sinnvoll):
+neue `.aeo-box`-Klasse für eine kurze, zitierbare Antwort direkt unter der
+Einleitung (Antwort-Engine-Optimierung), plus `FAQPage`-JSON-LD +
+sichtbarer `.article-faq`-Abschnitt mit 2 Fragen pro Artikel. **Bewusst
+nicht übernommen:** ein Inhaltsverzeichnis — keiner der 19 bestehenden
+Artikel hat eines, das hätte nur bei den 3 neuen strukturell aus dem
+Rahmen gefallen.
+
+Alle 3 bleiben `noindex` (siehe Policy-Änderung oben: die Aufhebung galt
+nur für die 21 bereits bestehenden Seiten, nicht rückwirkend für heute neu
+geschriebene). `wissen.html` und die Cross-Links der bestehenden
+`zeugnisse-anerkennen-lassen.html` und `blog/chancenkarte-2025-26.html`
+aktualisiert, damit die neuen Artikel auffindbar sind. pruefen.sh: Fehler
+0. Lighthouse auf `eu-blue-card-beantragen.html`: 100/100/100/**66** (SEO-
+Abzug wieder nur wegen des beabsichtigten `noindex`).
+
+**Noch offen aus dem 10er-Redaktionsplan** (6 Artikel): IT-Jobs für
+bangladeschische Entwickler, Duale Ausbildung, Deutsch lernen in Dhaka,
+Sperrkonto & Visum-Kosten 2026 (Zahlen bereits recherchiert, siehe oben:
+992 €/Monat Studierende, 1.027 €/Monat Chancenkarte/Job-Seeker — noch
+nicht als Artikel geschrieben), Deutschland vs. Kanada, Leben in
+Frankfurt.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |

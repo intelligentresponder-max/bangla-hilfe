@@ -1083,3 +1083,20 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   transition: top .15s ease;
 }
 .skip-link:focus { top: 0; }
+
+/* ── AEO-BOX (Phase 4, kurze zitierbare Antwort direkt am Artikelanfang) ── */
+.aeo-box {
+  background: var(--green-light); border-left: 4px solid var(--green);
+  border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+  padding: 1.2rem 1.5rem; margin: 1.5rem 0 2rem;
+  font-size: 1rem; color: var(--navy);
+}
+.aeo-box strong { color: var(--green-dark); }
+
+/* ── ARTIKEL-FAQ (Phase 4, kurze Fragen am Artikelende) ── */
+.article-faq { margin: 2.5rem 0; }
+.article-faq h3 {
+  font-family: var(--font-head); font-size: 1.05rem; color: var(--navy);
+  margin: 1.2rem 0 .3rem;
+}
+.article-faq p { color: var(--slate); }
