@@ -419,6 +419,86 @@ Frankfurt.
 
 ---
 
+## Phase 4, Teil 2 (14.09.2026): externe "Batch 2"-Übergabe geprüft und angepasst
+
+Zweite externe Übergabe (`claude-code-uebergabe-batch2.md`) kam mit
+Artikel-Briefs für die restlichen 6 Artikel, aber wieder mit Annahmen, die
+der hier etablierten Architektur widersprechen und deshalb **nicht**
+übernommen wurden:
+
+- **Dateiformat/-pfad:** Übergabe wollte `.md`-Dateien unter
+  `/wissen/kategorie/slug.md` — genau die Ordner-pro-Kategorie-URL-Struktur,
+  die in AP 8 bereits geprüft und bewusst verworfen wurde (siehe dort).
+  Weiter wie bisher: `.html` in `ratgeber/`, Einsortierung nur über
+  `wissen.html`-Anker.
+- **EN/BN-Übersetzung "optional":** Verstößt gegen die Hard Rule „Bangla
+  nie anfassen" und gegen die Phase-3-Entscheidung, keine nicht
+  existierende EN-Version per hreflang vorzugaukeln. Weiterhin nur Deutsch,
+  weiterhin `noindex` bis Amir liefert.
+- **„Mind. 2 Bilder/Artikel":** Es existieren keine echten Fotos (Team,
+  Frankfurt, Dokumente) — das Projekt markiert genau das bisher immer
+  offen (`Foto folgt`-Platzhalter im Hero), statt Stock-Bilder
+  einzufügen. Für die neuen Artikel ebenso: keine Bilder erfunden oder
+  von irgendwoher bezogen.
+- **`keyword-database.md`-Backlog, „Google Rich Results Test":** nicht
+  Teil der bestehenden Werkzeuglandschaft (`pruefen.sh`,
+  `build-sitemap.sh`). Stattdessen wie gehabt: JSON-LD strukturell selbst
+  validiert (`json.loads` über alle Blöcke).
+
+**Zahlen aus der Übergabe waren teils veraltet oder unbestätigt** —
+deshalb vor dem Schreiben jedes Mal per `WebSearch` gegengeprüft, nicht
+blind übernommen:
+- Übergabe nannte Blue-Card-Schwellen von 48.300 €/43.759 € — das sind die
+  **2025er**-Werte (vor der ~5 %-Anhebung). Für 2026 gilt weiterhin
+  50.700 €/45.934,20 € (siehe oben, Phase 4 Teil 1) — im neuen IT-Jobs-
+  Artikel entsprechend konsistent verwendet, nicht die veralteten Zahlen
+  der Übergabe.
+- Übergabe nannte „149.000 offene IT-Stellen" — aktuelle Recherche zeigt
+  106.000–109.000 als die zitierfähigeren, aktuelleren Zahlen für 2026.
+  Verwendet.
+- Übergabe nannte „Ausbildung ~900 €/Monat Sperrkonto (oft niedriger)" —
+  Recherche zeigt das Gegenteil: der Referenzbetrag liegt mit ca. 1.091 €
+  eher **höher** als bei Studierenden, wird aber durch die
+  Ausbildungsvergütung angerechnet und dadurch in der Praxis oft
+  reduziert. Im Artikel entsprechend korrekt und nuanciert dargestellt,
+  nicht die vereinfachte (falsche) Übergabe-Aussage übernommen.
+- Goethe-Institut-Dhaka-Kurspreise (Übergabe: „15.000–25.000 BDT/Level")
+  ließen sich nicht verlässlich verifizieren — bewusst **nicht**
+  übernommen, stattdessen im Artikel auf goethe.de/ins/bd verwiesen statt
+  eine unbestätigte Zahl zu drucken.
+
+**Geschrieben (3 von 6):**
+- `ratgeber/sperrkonto-visum-kosten.html` (Kosten & Planung) — Tabelle mit
+  Quellenangabe Auswärtiges Amt, wie von der Übergabe explizit gefordert.
+- `ratgeber/deutsch-lernen-dhaka.html` (Sprache & Leben)
+- `ratgeber/it-jobs-bangladesch.html` (Job & Karriere)
+
+Alle 3 mit `.aeo-box`, FAQ-Sektion + `FAQPage`-JSON-LD, `Article` +
+`BreadcrumbList`-JSON-LD, `noindex` (siehe Policy-Änderung: gilt nicht
+rückwirkend für neue Artikel). `wissen.html` sowie Cross-Links in
+`sprachkurs-finden.html`, `krankenversicherung-waehlen.html` und
+`arbeitsvertrag-verstehen.html` aktualisiert. pruefen.sh: Fehler 0.
+
+**Bewusst zurückgestellt (3 von 6), nicht Teil dieser Runde:**
+- **Duale Ausbildung** — als eigenständiges Thema inhaltlich klar
+  abgrenzbar, aber noch nicht geschrieben.
+- **Deutschland vs. Kanada** — Vergleichsartikel, braucht eine sorgfältig
+  neutrale Formulierung (keine Wertung „X ist besser"), noch nicht
+  begonnen.
+- **Leben in Frankfurt als Bangladescher** — **bewusst zurückgehalten,
+  nicht nur aufgeschoben.** Sowohl die Übergabe als auch eine eigene
+  Recherche würden hier extrem konkrete lokale Behauptungen erfordern
+  (Community-Größe, Straßennamen für Halal-Restaurants, Namen von
+  Moscheen/Vereinen) — genau die Art von Detail, die ein Sprachmodell
+  plausibel klingend erfinden kann, ohne dass es stimmt. Das wäre ein
+  Verstoß gegen „Nichts erfinden" mit realem Schadenspotenzial (falsche
+  Adressen/Namen für eine Community, die sich darauf verlässt). Braucht
+  entweder eine verlässliche Quelle, die sich unabhängig verifizieren
+  lässt, oder Ortskenntnis von André/Amir — nicht einfach aus
+  Trainingswissen oder einer Web-Suche zusammenstellen.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
