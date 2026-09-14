@@ -85,8 +85,11 @@
       color: var(--green);
     }
     .lang-btn.active { background: var(--green); color: var(--white); }
+    /* Phase 3: #25d366 (offizielles WhatsApp-Gruen) gibt mit weissem Text nur
+       1.98:1 Kontrast -- WCAG AA verlangt 4.5:1 fuer normal grossen Text.
+       #108040 ist dunkler, aber noch eindeutig "WhatsApp-gruen" (5.0:1). */
     .nav-wa {
-      background: #25d366; color: white; text-decoration: none;
+      background: #108040; color: white; text-decoration: none;
       padding: .45rem 1.1rem; border-radius: 99px; font-weight: 700;
       font-size: .85rem; display: flex; align-items: center; gap: .4rem;
       transition: transform .2s, box-shadow .2s;
@@ -389,7 +392,7 @@
     }
     .wa-big {
       display: inline-flex; align-items: center; gap: .7rem;
-      background: #25d366; color: white; text-decoration: none;
+      background: #108040; color: white; text-decoration: none;
       padding: 1.1rem 2.4rem; border-radius: 99px;
       font-weight: 700; font-size: 1.1rem; margin-top: 2rem;
       box-shadow: 0 4px 24px rgba(37,211,102,.5);
@@ -404,6 +407,13 @@
       background: var(--navy); color: rgba(255,255,255,.75);
       padding: 3rem 2rem 2rem; text-align: center;
     }
+    /* Phase 3: Lighthouse deckte auf, dass auf 33 von 35 Seiten die
+       Footer-Links (Impressum/Datenschutz/AGB) ohne .footer-links-Wrapper
+       stehen und dadurch komplett ungestylt bleiben -- Browser-Default-Blau
+       auf Navy, Kontrast 1.47:1 statt 4.5:1. Diese Basis-Regel greift
+       unabhaengig vom Wrapper fuer jeden Link im Footer. */
+    footer a { color: rgba(255,255,255,.75); text-decoration: none; transition: color .2s; }
+    footer a:hover { color: var(--gold); }
     .footer-logo {
       font-family: var(--font-head); font-size: 1.5rem; font-weight: 700;
       color: var(--white); margin-bottom: .5rem;
@@ -412,7 +422,9 @@
     .footer-links { display: flex; gap: 1.5rem; justify-content: center; margin: 1.2rem 0; flex-wrap: wrap; }
     .footer-links a { color: rgba(255,255,255,.6); text-decoration: none; font-size: .88rem; transition: color .2s; }
     .footer-links a:hover { color: var(--gold); }
-    .footer-legal { font-size: .78rem; color: rgba(255,255,255,.4); margin-top: 1.5rem; }
+    /* Phase 3: Kontrast von .4 auf .6 angehoben -- Lighthouse/axe bemaengelte
+       3.53:1 auf dem Navy-Hintergrund, WCAG AA verlangt 4.5:1 fuer Fliesstext. */
+    .footer-legal { font-size: .78rem; color: rgba(255,255,255,.6); margin-top: 1.5rem; }
 
     /* ── FLOATING WA BUTTON ── */
     .float-wa {
@@ -893,9 +905,15 @@ body.menu-open .mobile-menu { transform: translateX(0); }
 }
 .blog-post__cta h2 { margin-bottom: .5rem; }
 
+/* Phase 3: dritter Fund derselben Fehlerklasse wie der Breadcrumb-Bug (siehe
+   Fehlerlog) -- auch hier ein bares <footer>-Tag, das seit dem allerersten
+   Blog-Artikel unbeabsichtigt die globale footer{background:navy}-Regel erbt.
+   Betraf alle 19 Wissen-Artikel: dunkelgrauer Text auf Navy statt auf Weiss,
+   Kontrast 1.83:1 statt 4.5:1. Explizite Hintergrundfarbe stellt das
+   urspruenglich gemeinte Aussehen (auf dem weissen Artikel-Hintergrund) wieder her. */
 .blog-post__legal {
   border-top: 1px solid var(--border); padding-top: 1.5rem; margin-top: 2rem;
-  color: var(--slate);
+  background: var(--white); color: var(--slate);
 }
 
 /* ── BLOG-TEASER auf index.html (unterhalb Hero) ── */
@@ -1055,3 +1073,13 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   font-family: var(--font-head); font-size: 1.15rem; color: var(--navy); margin-bottom: .4rem;
 }
 .faq-item p { color: var(--slate); }
+
+/* ── SKIP-LINK (Phase 3, Barrierefreiheit) ── */
+.skip-link {
+  position: absolute; top: -100%; left: 0; z-index: 2000;
+  background: var(--navy); color: var(--white);
+  padding: .8rem 1.4rem; font-weight: 700; text-decoration: none;
+  border-radius: 0 0 var(--radius-sm) 0;
+  transition: top .15s ease;
+}
+.skip-link:focus { top: 0; }

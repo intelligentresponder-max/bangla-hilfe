@@ -285,6 +285,53 @@ ausgelassen, siehe AP 8: 10 neue Artikel sind eigenes späteres Paket).
 
 ---
 
+## Phase 3 (14.09.2026): JSON-LD, Canonical/OG-Audit, Lighthouse
+
+Angepasst aus der externen Übergabe: Punkt 12 „Tailwind Production-Build"
+entfällt vollständig (kein Tailwind im Repo, siehe AP 8). hreflang aus
+Punkt 10 bewusst **nicht** umgesetzt — es gibt keine englische Version der
+Seite, ein `hreflang="en"` auf nicht existierende Seiten wäre falsch.
+
+- **JSON-LD sitewide**: `Organization` + `LocalBusiness` auf allen 35
+  echten Seiten (nicht auf den 3 Redirect-Stubs). Bewusst **ohne** `logo`
+  (nur ein 217-Byte-Favicon vorhanden, kein echtes Markenlogo) und **ohne**
+  Straße/PLZ in der Adresse (Impressum-Lücke, siehe „Was fehlt") — nur die
+  bereits überall öffentlich genannte Stadt „Frankfurt am Main" wurde
+  verwendet, nichts erfunden.
+- `FAQPage` auf `faq.html`, `DefinedTermSet` auf `glossar.html`: beide
+  automatisiert aus dem sichtbaren Text erzeugt (Frage/Antwort bzw.
+  dt/dd), 1:1-Spiegelung, keine neuen Fakten.
+- `Service` + `OfferCatalog` auf `pakete.html`: aus den 6 echten
+  Produktkarten generiert (Titel, Preis, Anker-URL).
+- `Article` + `BreadcrumbList` auf allen 19 Wissen-Artikeln. Bewusst
+  **ohne** `datePublished` — echtes Veröffentlichungsdatum nicht bekannt,
+  wird nicht erfunden.
+- **Canonical/OG-Audit**: `lektionen/lektion2.html` und `lektion3.html`
+  hatten weder OG-Tags noch Twitter-Card trotz echten, teilbaren Inhalts —
+  ergänzt. `twitter:card` fehlte sitewide komplett, jetzt auf allen 31
+  Seiten mit OG-Tags ergänzt. `<meta name="keywords">` (obsolet, wird von
+  keiner Suchmaschine mehr genutzt) aus den 3 verbliebenen Dateien
+  (`index.html`, `lektion2.html`, `lektion3.html`) entfernt.
+- **Skip-Link** (`Zum Hauptinhalt springen`) auf allen 35 Seiten mit
+  `id="main"` ergänzt, sichtbar erst bei Tastatur-Fokus.
+- **Lighthouse-Audit** (lokal installiert, `CHROME_PATH` auf den
+  vorinstallierten Chromium gesetzt): deckte drei echte Bugs auf, siehe
+  Fehlerlog Punkte 11–13. Nach den Fixes: `index.html` 90/100/96/100
+  (Performance/A11y/Best-Practices/SEO), `pakete.html` und `wissen.html`
+  100/100/100/100, `faq.html`/`glossar.html` 100/100/100/**66** (SEO-Abzug
+  ist der beabsichtigte `noindex`-Zustand, kein Bug — behebt sich von
+  selbst, sobald Amirs Bangla-Fassung da ist und `noindex` entfernt wird).
+  Performance bei 90 (Doku-Vorgabe „> 90") liegt an nicht selbst
+  gehosteten Google Fonts/cdnjs — Selbst-Hosten ist im Handoff-Dokument
+  selbst als „optional" eingestuft und wurde nicht umgesetzt. CSS-
+  Minifizierung als weiterer Performance-Hebel bewusst **nicht** gemacht:
+  `theme.css` trägt inzwischen sehr viel Begründungs-Dokumentation
+  (genau das, was seit heute explizit gewünscht ist) — Minifizieren würde
+  das unlesbar machen, und ein separater Minify-Build-Schritt verstößt
+  gegen die Regel „kein Build-Schritt".
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
@@ -410,6 +457,46 @@ Diagnose verliert, die schon einmal gemacht wurde.
     global stylt, per `grep -n "^\s*ELEMENTNAME\s*{"` prüfen, ob im CSS ein
     Elementselektor (statt Klassenselektor) existiert — der trifft jede
     Instanz des Tags, nicht nur die eine, für die er gedacht war.**
+
+11. **`.blog-post__legal` seit dem allerersten Blog-Artikel mit Navy-
+    Hintergrund statt Weiss — dritter Fund derselben Fehlerklasse wie
+    Punkt 10.** `.blog-post__legal` ist ebenfalls ein bares `<footer>`-Tag
+    (der rechtliche Hinweis am Ende jedes Wissen-Artikels) und erbt dadurch
+    die globale `footer { background: var(--navy) }`-Regel, obwohl es auf
+    dem weissen Artikel-Hintergrund gedacht war. Betraf alle 19 Wissen-
+    Artikel von Anfang an: dunkelgrauer Text (`var(--slate)`) auf Navy,
+    Kontrast 1.83:1 statt 4.5:1 — von Lighthouse aufgedeckt, nicht vorher
+    aufgefallen, weil es "nur" der kleingedruckte Rechtshinweis ist. Fix:
+    `.blog-post__legal` bekommt jetzt explizit `background: var(--white)`.
+    **Lehre: Punkt 10s Regel gilt für jedes semantische Tag, nicht nur
+    `nav`** — `footer`, `header`, `aside` etc. sind im selben Repo genauso
+    global gestylt und kollidieren genauso mit einer zweiten, spezifischeren
+    Verwendung desselben Tags weiter unten im Dokument.
+
+12. **WhatsApp-Markengrün `#25d366` mit weissem Text: 1.98:1 statt 4.5:1.**
+    `.nav-wa` und `.wa-big` (die beiden Call-to-Action-Buttons mit
+    sichtbarem "WhatsApp"-Text) nutzten das offizielle, aber vergleichsweise
+    helle WhatsApp-Gruen als Hintergrund mit weisser Schrift — seit deren
+    jeweiliger Erstellung nie auf Kontrast geprueft. Fix: Hintergrund auf
+    `#108040` gedunkelt (5.0:1), noch eindeutig als "WhatsApp-Gruen"
+    erkennbar. `.float-wa` (nur ein Emoji-Icon, kein Text) bewusst
+    unveraendert gelassen. **Lehre: Marken-/CI-Farben sind nicht automatisch
+    barrierefrei — bei jeder neuen Farbe-auf-Farbe-Kombination mit Text den
+    Kontrast rechnen, nicht nur "sieht gut aus" pruefen.**
+
+13. **Lighthouse war die ganze Zeit nutzbar, wurde aber nie eingesetzt.**
+    `npx lighthouse` liess sich in dieser Session einfach per `npm install
+    --no-save lighthouse` nachinstallieren und lief mit
+    `CHROME_PATH=/opt/pw-browsers/chromium` gegen den bereits vorhandenen
+    Playwright-Chromium — kein Extra-Download noetig. Deckte in einem
+    einzigen Durchlauf drei echte, teils seit Monaten bestehende Bugs auf
+    (Punkte 11, 12, plus das fehlende `<main>`-Landmark auf `index.html`),
+    die weder `pruefen.sh` noch manuelle Screenshot-Checks je gefunden
+    hatten. **Lehre: Bei zukuenftigen Accessibility-/Performance-Fragen
+    zuerst `CHROME_PATH=/opt/pw-browsers/chromium npx lighthouse <url>
+    --chrome-flags="--headless=new --no-sandbox"` laufen lassen, statt nur
+    visuell zu pruefen — es ist bereits eingerichtet und kostet nur eine
+    einmalige `npm install`.**
 
 ---
 
