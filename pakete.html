@@ -3,12 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hilfe-Pakete | BanglaHilfe Deutschland</title>
-<meta name="description" content="Fertige Schritt-fuer-Schritt-Pakete fuer Visum, Anmeldung, FSJ und Familiennachzug auf Deutsch und Bangla.">
+<title>Pakete &amp; Preise | BanglaHilfe Deutschland</title>
+<meta name="description" content="Fertige Schritt-fuer-Schritt-Pakete fuer Visum, Anmeldung, FSJ und Familiennachzug auf Deutsch und Bangla -- mit Preisuebersicht.">
 <link rel="canonical" href="https://intelligentresponder-max.github.io/bangla-hilfe/pakete.html">
 <meta property="og:type" content="website">
-<meta property="og:title" content="Hilfe-Pakete | BanglaHilfe Deutschland">
-<meta property="og:description" content="Fertige Schritt-fuer-Schritt-Pakete fuer Visum, Anmeldung, FSJ und Familiennachzug auf Deutsch und Bangla.">
+<meta property="og:title" content="Pakete &amp; Preise | BanglaHilfe Deutschland">
+<meta property="og:description" content="Fertige Schritt-fuer-Schritt-Pakete fuer Visum, Anmeldung, FSJ und Familiennachzug auf Deutsch und Bangla -- mit Preisuebersicht.">
 <meta property="og:url" content="https://intelligentresponder-max.github.io/bangla-hilfe/pakete.html">
 <link rel="icon" type="image/png" href="images/favicon.png">
 <link rel="stylesheet" href="assets/css/theme.css">
@@ -18,7 +18,7 @@
 <a href="https://wa.me/491634692255" target="_blank" class="float-wa" title="WhatsApp">💬</a>
 
 <!-- NAV -->
-<nav>
+<nav aria-label="Hauptnavigation">
   <a href="index.html" class="nav-logo">
     <span class="nav-logo-flag">🇧🇩🇩🇪</span>
     <div>
@@ -27,15 +27,10 @@
     </div>
   </a>
   <ul class="nav-links">
-      <li><a href="pakete.html">Pakete</a></li>
-      <li><a href="preise.html">Preise</a></li>
-      <li><a href="behoerden.html">Behoerden</a></li>
-      <li><a href="ratgeber.html">Ratgeber</a></li>
-      <li><a href="faq.html">FAQ</a></li>
-      <li><a href="glossar.html">Glossar</a></li>
-      <li><a href="ueber-uns.html">Ueber uns</a></li>
-      <li><a href="lektionen.html">Lektionen</a></li>
-      <li><a href="blog/chancenkarte-2025-26.html">Blog</a></li>
+      <li><a href="pakete.html" aria-current="page">Pakete &amp; Preise</a></li>
+      <li><a href="wissen.html">Wissen</a></li>
+      <li><a href="faq.html">FAQ &amp; Glossar</a></li>
+      <li><a href="ueber-uns.html">Über uns</a></li>
   </ul>
   <div class="nav-right">
     <button class="nav-toggle" onclick="toggleMenu()">☰</button>
@@ -50,15 +45,10 @@
 </nav>
 <div class="mobile-menu">
   <button class="nav-close" onclick="toggleMenu()">✕</button>
-    <a href="pakete.html" onclick="toggleMenu()">Pakete</a>
-    <a href="preise.html" onclick="toggleMenu()">Preise</a>
-    <a href="behoerden.html" onclick="toggleMenu()">Behoerden</a>
-    <a href="ratgeber.html" onclick="toggleMenu()">Ratgeber</a>
-    <a href="faq.html" onclick="toggleMenu()">FAQ</a>
-    <a href="glossar.html" onclick="toggleMenu()">Glossar</a>
-    <a href="ueber-uns.html" onclick="toggleMenu()">Ueber uns</a>
-    <a href="lektionen.html" onclick="toggleMenu()">Lektionen</a>
-    <a href="blog/chancenkarte-2025-26.html" onclick="toggleMenu()">Blog</a>
+    <a href="pakete.html" onclick="toggleMenu()" aria-current="page">Pakete &amp; Preise</a>
+    <a href="wissen.html" onclick="toggleMenu()">Wissen</a>
+    <a href="faq.html" onclick="toggleMenu()">FAQ &amp; Glossar</a>
+    <a href="ueber-uns.html" onclick="toggleMenu()">Über uns</a>
   <div class="mobile-menu-legal">
       <a href="impressum.html">Impressum</a>
       <a href="datenschutz.html">Datenschutz</a>
@@ -81,7 +71,7 @@
       <div class="products-grid">
 
         <!-- Product 1 -->
-        <div class="product-card reveal">
+        <div id="starter" class="product-card reveal">
           <div class="product-top">
             <div class="product-icon">📋</div>
             <div class="product-title" data-lang="de">Visum-Starter-Paket</div>
@@ -110,7 +100,7 @@
         </div>
 
         <!-- Product 2 - FEATURED -->
-        <div class="product-card featured reveal">
+        <div id="fsj-bfd" class="product-card featured reveal">
           <div class="product-top">
             <div class="product-badge" data-lang="de">⭐ Bestseller</div>
             <div class="product-badge" data-lang="bn">⭐ সেরা বিক্রয়</div>
@@ -141,7 +131,7 @@
         </div>
 
         <!-- Product 3 -->
-        <div class="product-card reveal">
+        <div id="familiennachzug" class="product-card reveal">
           <div class="product-top">
             <div class="product-icon">👨‍👩‍👧</div>
             <div class="product-title" data-lang="de">Familienzusammenführung</div>
@@ -170,7 +160,7 @@
         </div>
 
         <!-- Product 4 -->
-        <div class="product-card reveal">
+        <div id="anmeldung-behoerden" class="product-card reveal">
           <div class="product-top">
             <div class="product-icon">🏛️</div>
             <div class="product-title" data-lang="de">Anmeldung & Behörden</div>
@@ -199,7 +189,7 @@
         </div>
 
         <!-- Product 5 -->
-        <div class="product-card reveal">
+        <div id="studium" class="product-card reveal">
           <div class="product-top">
             <div class="product-icon">🎓</div>
             <div class="product-title" data-lang="de">Studium in Deutschland</div>
@@ -228,7 +218,7 @@
         </div>
 
         <!-- Bundle -->
-        <div class="product-card featured reveal">
+        <div id="bundle" class="product-card featured reveal">
           <div class="product-top">
             <div class="product-badge" data-lang="de">🔥 Bestes Angebot</div>
             <div class="product-badge" data-lang="bn">🔥 সেরা অফার</div>
@@ -259,6 +249,63 @@
         </div>
 
       </div><!-- /products-grid -->
+
+      <!-- Preisuebersicht (ehemals preise.html, hier konsolidiert) -->
+      <div id="preisuebersicht" class="reveal">
+        <span class="section-tag" data-lang="de">Preisübersicht</span>
+        <span class="section-tag" data-lang="bn">মূল্য তালিকা</span>
+        <h2 class="section-title" data-lang="de">Alle Pakete auf <em>einen Blick</em></h2>
+        <h2 class="section-title" data-lang="bn">সব প্যাকেজ <em>এক নজরে</em></h2>
+        <!-- OFFEN: Hinweis "inkl. MwSt." oder Verweis auf § 19 UStG ergaenzen, sobald der Steuerstatus feststeht. -->
+        <table class="price-table">
+          <thead>
+            <tr>
+              <th data-lang="de">Paket</th>
+              <th data-lang="bn">প্যাকেজ</th>
+              <th data-lang="de">Preis</th>
+              <th data-lang="de">Bestellen</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td data-lang="de"><a href="#starter">Visum-Starter-Paket</a></td>
+              <td data-lang="bn">ভিসা স্টার্টার প্যাকেজ</td>
+              <td>9,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Visum-Starter-Paket%20f%C3%BCr%209%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+            <tr>
+              <td data-lang="de"><a href="#fsj-bfd">FSJ / BFD Komplettpaket</a></td>
+              <td data-lang="bn">FSJ / BFD সম্পূর্ণ প্যাকেজ</td>
+              <td>19,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20FSJ%2FBFD%20Komplettpaket%20f%C3%BCr%2019%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+            <tr>
+              <td data-lang="de"><a href="#familiennachzug">Familienzusammenführung</a></td>
+              <td data-lang="bn">পারিবারিক পুনর্মিলন</td>
+              <td>12,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Familienzusammenf%C3%BChrung-Paket%20f%C3%BCr%2012%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+            <tr>
+              <td data-lang="de"><a href="#anmeldung-behoerden">Anmeldung &amp; Behörden</a></td>
+              <td data-lang="bn">নিবন্ধন ও কর্তৃপক্ষ</td>
+              <td>9,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Anmeldung-Beh%C3%B6rden-Paket%20f%C3%BCr%209%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+            <tr>
+              <td data-lang="de"><a href="#studium">Studium in Deutschland</a></td>
+              <td data-lang="bn">জার্মানিতে পড়াশোনা</td>
+              <td>14,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20Studium-Paket%20f%C3%BCr%2014%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+            <tr>
+              <td data-lang="de"><a href="#bundle">KOMPLETT-BUNDLE (alle 5 Pakete)</a></td>
+              <td data-lang="bn">সম্পূর্ণ বান্ডেল (সব ৫টি প্যাকেজ)</td>
+              <td>49,99 € <span data-lang="de">einmalig</span><span data-lang="bn">এককালীন</span></td>
+              <td><a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20m%C3%B6chte%20das%20KOMPLETT-BUNDLE%20f%C3%BCr%2049%2C99%20%E2%82%AC%20kaufen." target="_blank" class="btn-buy">💬 <span data-lang="de">Kaufen</span><span data-lang="bn">কিনুন</span></a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
 
       <!-- Personal services note -->
       <div class="help-note reveal">

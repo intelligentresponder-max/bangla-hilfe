@@ -168,7 +168,7 @@ alle Canonicals per `sed` nachziehen. In dieser Reihenfolge.
 
 ---
 
-## Zielstruktur
+## Zielstruktur (Stand AP 1-7, Basis fuer topwash-Muster)
 
 Übernommen aus `topwash`, weil sich das Muster dort bewährt hat: ein Hub mit
 vier Detailseiten, ein Artikelordner mit Übersichtsseite, ein Glossar, drei
@@ -199,6 +199,54 @@ Rechtstexte.
 
 `topwash` hat für `blog/` **keine** Übersichtsseite — 14 Artikel hängen nur
 an Querverweisen. Hier ist `ratgeber.html` als Hub von Anfang an eingeplant.
+
+**Seit AP 8 (14.09.2026) abgeloest durch die Nav-Konsolidierung unten** —
+`behoerden.html`/`ratgeber.html`/`preise.html` existieren nur noch als
+Redirect-Stubs, die eigentlichen Artikel liegen unveraendert an ihrem Platz.
+
+---
+
+## AP 8: Navigation von 9 auf 4 Punkte konsolidiert (14.09.2026)
+
+Externe Übergabe wollte: Tailwind-Stack, erweiterungsfreie URLs (`/pakete`,
+`/wissen/visum-einreise`), hreflang für eine nicht existierende EN-Version,
+und einen neuen 4-Produkte-Katalog (Starter/Dokumenten-Check/Behörden-Guide/
+Bundle), der den echten, bereits verkauften 6-Produkte-Katalog (9,99-49,99 €)
+ersetzt hätte. Alle vier Punkte wurden **abgelehnt** und stattdessen so
+umgesetzt:
+
+- **Kein Tailwind.** Bestehendes `theme.css` erweitert, siehe „Kein Tailwind
+  in diesem Repo" oben — die Begründung von damals gilt unverändert.
+- **`.html`-Endungen bleiben.** Neue Nav zeigt auf `pakete.html`,
+  `wissen.html`, `faq.html`, `ueber-uns.html` statt auf erweiterungsfreie
+  Pfade. Eine Umstellung auf `/pakete/index.html` hätte jeden internen Link,
+  jeden Canonical und die Sitemap-Logik im ganzen Repo angefasst — für einen
+  Nav-Umbau nicht zu rechtfertigen.
+- **Echter Produktkatalog bleibt unangetastet.** Die Übergabe hat sich einen
+  Katalog ausgedacht, der nicht dem entspricht, was auf `pakete.html`
+  tatsächlich steht (6 Produkte: Visum-Starter, FSJ/BFD, Familiennachzug,
+  Anmeldung & Behörden, Studium, Komplett-Bundle). Erfundene Preise/Produkte
+  hätten den hart formulierten „Nichts erfinden"-Grundsatz verletzt. Stattdessen
+  wurde nur strukturell konsolidiert: `preise.html` (reine Tabellen-Dopplung
+  der Pakete) ist jetzt ein Redirect-Stub, die Tabelle lebt als
+  Preisübersicht unterhalb der Produktkarten in `pakete.html`.
+- **`wissen.html`** ist der neue Blog-/Ratgeber-Hub mit 5 Kategorien
+  (Visum & Einreise, Job & Karriere, Anerkennung & Ausbildung, Sprache &
+  Leben, Kosten & Planung). Die 18 bereits bestehenden `ratgeber/*`- und
+  `behoerden/*`-Artikel (weiterhin `noindex`, bis Amir die Bangla-Fassung
+  liefert) plus der Blog-Artikel und `lektionen.html` wurden dort nach
+  Thema einsortiert — keine Zeile Artikeltext neu geschrieben oder erfunden.
+  `behoerden.html` und `ratgeber.html` waren beide nur leere Gerüste (nie
+  befüllt) und sind jetzt Redirect-Stubs auf `wissen.html`.
+- **10 neue Redaktionsplan-Artikel** (Chancenkarte 2026, EU Blue Card,
+  Pflegekraft-Anerkennung, Anabin/ZAB, …) aus der Übergabe sind bewusst
+  **nicht** geschrieben — eigenes, späteres Arbeitspaket, siehe
+  `OFFEN`-Kommentar in `wissen.html` bei „Anerkennung & Ausbildung".
+- **GitHub Pages hat keine echten 301-Redirects.** Alte Nav-Ziele
+  (`preise.html`, `behoerden.html`, `ratgeber.html`) bekommen `<meta
+  http-equiv="refresh">` + `noindex` + einen sichtbaren Fallback-Link,
+  Canonical zeigt weiterhin auf sich selbst (Projektregel), nicht auf das
+  Redirect-Ziel — sonst widersprechen sich Canonical und Redirect-Signal.
 
 ---
 
@@ -282,6 +330,36 @@ Diagnose verliert, die schon einmal gemacht wurde.
    through this proxy`; kein MCP-Tool deckt Pages-Settings ab. **Bekannte
    Grenze, kein Bug** — dieser eine Punkt aus AP7 muss immer manuell in
    den Repo-Settings kontrolliert werden, nicht per Skript.
+
+8. **Desktop-Nav seit AP1 unsichtbar — `.nav-links` doppelt definiert.**
+   `theme.css` enthielt `.nav-links { display: flex }` als Basis-Regel UND
+   ein zweites, **ungeschütztes** `.nav-links { display: none }` weiter
+   unten im Abschnitt „MOBILE MENU" (kein Media-Query drumherum). Die
+   zweite Regel gewann per Kaskade auf jeder Bildschirmbreite — der
+   Hamburger war seit der CSS-Auslagerung in AP1 die einzige Nav auf allen
+   Geräten, auch auf Desktop, wo eigentlich die volle Link-Leiste stehen
+   sollte. Erst beim Screenshot-Vergleich für AP8 aufgefallen, weil beide
+   Bugs (Links unsichtbar, Hamburger nie versteckt) sich optisch
+   gegenseitig kaschiert haben. Fix: doppelte Regel entfernt, `.nav-toggle`
+   bekommt jetzt `display: none` als Basis und wird nur in der
+   `max-width:768px`-Query wieder eingeblendet. **Lehre: eine
+   unqualifizierte `display:none`-Regel ausserhalb einer Media-Query auf
+   eine Klasse, die anderswo schon eine Basis-Regel hat, immer verdächtig —
+   nicht nur den zuletzt geänderten Ort pruefen, sondern per `grep -n
+   "\.klasse"` alle Fundstellen im ganzen CSS auflisten.**
+
+9. **Mehrzeilige HTML-Kommentare entgehen `pruefen.sh` Punkt 3.** Das
+   Skript filtert sichtbaren Text mit `sed 's/<!--[^>]*-->//g'`, was nur
+   **einzeilige** Kommentare korrekt entfernt (`sed` arbeitet zeilenweise,
+   nicht über Zeilenumbrüche hinweg). Ein selbst geschriebener zweizeiliger
+   `<!-- TODO: ... -->`-Kommentar wurde dadurch als sichtbarer
+   Platzhaltertext erkannt. Kein `pruefen.sh`-Bug im eigentlichen Sinne,
+   sondern eine Grenze der bestehenden Prüfung. **Lehre: Entwurfs-/Offen-
+   Kommentare im Projekt immer einzeilig halten (wie die etablierten
+   `<!-- OFFEN: ... -->`-Kommentare in `impressum.html`) statt mehrzeilig
+   mit `TODO`/`Platzhalter`/`XXX` — sonst entgeht der Kommentar der
+   Platzhalter-Prüfung nicht etwa sicher, sondern nur zufällig, wenn keines
+   der Trigger-Wörter zufällig im sichtbaren Rest landet.**
 
 ---
 
