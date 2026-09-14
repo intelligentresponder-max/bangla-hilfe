@@ -43,6 +43,7 @@
       <li><a href="#kontakt" data-lang="de">Kontakt</a><a href="#kontakt" data-lang="bn">যোগাযোগ</a></li>
     </ul>
     <div class="nav-right">
+        <button class="nav-toggle" onclick="toggleMenu()">☰</button>
       <div class="lang-toggle">
         <button class="lang-btn active" onclick="setLang('de')">DE</button>
         <button class="lang-btn" onclick="setLang('bn')">বাং</button>
@@ -52,6 +53,22 @@
       </a>
     </div>
   </nav>
+  <div class="mobile-menu">
+    <button class="nav-close" onclick="toggleMenu()">✕</button>
+    <a href="#wie" onclick="toggleMenu()" data-lang="de">Wie es läuft</a>
+    <a href="#wie" onclick="toggleMenu()" data-lang="bn">কীভাবে কাজ করে</a>
+    <a href="#produkte" onclick="toggleMenu()" data-lang="de">Produkte</a>
+    <a href="#produkte" onclick="toggleMenu()" data-lang="bn">পণ্য</a>
+    <a href="#ueber-uns" onclick="toggleMenu()" data-lang="de">Über uns</a>
+    <a href="#ueber-uns" onclick="toggleMenu()" data-lang="bn">আমাদের সম্পর্কে</a>
+    <a href="#kontakt" onclick="toggleMenu()" data-lang="de">Kontakt</a>
+    <a href="#kontakt" onclick="toggleMenu()" data-lang="bn">যোগাযোগ</a>
+    <div class="mobile-menu-legal">
+      <a href="impressum.html">Impressum</a>
+      <a href="datenschutz.html">Datenschutz</a>
+      <a href="agb.html">AGB</a>
+    </div>
+  </div>
 
   <!-- HERO -->
   <section class="hero">
@@ -294,6 +311,7 @@
   </footer>
 
   <script>
+    function toggleMenu(){ document.body.classList.toggle("menu-open"); }
     // ── LANGUAGE SWITCHER ──
     function setLang(lang) {
       document.body.classList.toggle('bn', lang === 'bn');
