@@ -25,7 +25,8 @@ set -euo pipefail
 # --- hier umstellen, je Repo ----------------------------------------------
 BASE="https://intelligentresponder-max.github.io/bangla-hilfe/"
 # topwash:  BASE="https://intelligentresponder-max.github.io/topwash/"
-# nach DNS: BASE="https://bangla-hilfe.de/"
+# bangla-hilfe.de wurde am 14.09.2026 verworfen (CNAME geloescht, DNS tot).
+# Falls die Domain spaeter kommt: erst DNS, dann CNAME, dann BASE hier.
 # ---------------------------------------------------------------------------
 
 OUT="sitemap.xml"

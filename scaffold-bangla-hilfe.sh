@@ -27,11 +27,11 @@ set -euo pipefail
 DRY=0
 [ "${1:-}" = "--dry-run" ] && DRY=1
 
-# Kanonische Basis-URL. Achtung: Im Repo liegt eine CNAME-Datei mit
-# "bangla-hilfe.de", die Domain loest aber aktuell nicht auf. Bis das DNS
-# steht, ist die github.io-Adresse die einzige erreichbare. Nach dem
-# DNS-Setup hier auf https://bangla-hilfe.de/ umstellen -- und dann in
-# einem Rutsch alle Canonicals mit sed nachziehen.
+# Kanonische Basis-URL -- feste, einzige Adresse.
+# Die CNAME-Datei mit "bangla-hilfe.de" wird in AP 1a geloescht: die Domain
+# loeste weder mit noch ohne www im DNS auf. Falls sie spaeter doch kommt:
+# erst DNS einrichten und pruefen, dann CNAME neu anlegen, dann BASE hier
+# und in build-sitemap.sh/pruefen.sh aendern, dann Canonicals per sed.
 BASE="https://intelligentresponder-max.github.io/bangla-hilfe/"
 
 created=0

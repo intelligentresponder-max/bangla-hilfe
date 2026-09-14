@@ -27,13 +27,31 @@ git checkout -b umbau-struktur
    nur lesen, nicht ändern.
 3. `update_site.py` ist 14 Byte groß und damit faktisch leer. Prüfen und
    melden, ob sie gelöscht werden kann.
+4. Fremdkanäle suchen: `grep -rn "gumroad\|stripe\|paypal" .` — es gibt
+   genau einen Treffer, den Gumroad-Link am Button neben dem QR-Code.
+   Verkauft wird ausschließlich über WhatsApp, der Link ist eine Altlast.
 
 **Abnahme:** Kurzer Bericht, welche Inhalte in welcher Sektion stehen und
 welche Zielseite sie später bekommen. Keine Dateiänderung.
 
 ---
 
-## AP 1 — CSS auslagern
+## AP 1 — CNAME löschen und CSS auslagern
+
+### 1a — CNAME löschen
+
+```bash
+git rm CNAME
+```
+
+`bangla-hilfe.de` löst im DNS nicht auf. Entscheidung vom 14.09.2026: Die
+Datei wird entfernt, die Seite läuft dauerhaft unter der github.io-Adresse.
+Begründung siehe `CLAUDE.md`.
+
+Danach prüfen, dass die Seite weiterhin erreichbar ist — GitHub Pages
+braucht nach dem Entfernen einer Custom Domain einen Deploy-Durchlauf.
+
+### 1b — CSS auslagern
 
 Die 17.530 Zeichen aus dem `<style>`-Block in `index.html` nach
 `assets/css/theme.css` überführen. In `index.html` bleibt ein
@@ -92,15 +110,24 @@ irreführend und abmahnfähig. In `topwash` steht er noch drin — hier von
 Anfang an weglassen.
 
 **`datenschutz.html`** — abzudecken: Server-Logfiles beim Hosting über
-GitHub Pages, WhatsApp als Bestell- und Kontaktkanal samt Datenübermittlung
-an Meta, Gumroad beziehungsweise Stripe als Zahlungsweg, Google Fonts falls
-sie bleiben. Kein Satz darüber, dass der Text noch geprüft werden muss —
+GitHub Pages, WhatsApp als Bestell-, Liefer- und Kontaktkanal samt
+Datenübermittlung an Meta, Google Fonts falls sie bleiben. **Kein Abschnitt
+zu Gumroad oder Stripe** — es gibt keinen anderen Kanal als WhatsApp, und ein
+Absatz über einen Dienst, der nicht eingesetzt wird, ist genauso falsch wie
+ein fehlender. Kein Satz darüber, dass der Text noch geprüft werden muss —
 diese Notiz gehört in die Abnahme, nicht auf die Seite.
 
-**`agb.html`** — digitale Inhalte als Sofort-Download. Zentral: das
-Widerrufsrecht und die Frage, ob der Kunde auf das Erlöschen des
-Widerrufsrechts hinweisen muss, bevor die Datei zugeht. Das ist der Punkt,
-an dem WhatsApp-Sofortlieferung und Fernabsatzrecht kollidieren.
+**`agb.html`** — digitale Inhalte, per WhatsApp sofort zugestellt. Das ist
+Fernabsatz, der topwash-Ausweg über „Kauf vor Ort" existiert hier nicht
+(siehe `CLAUDE.md`). Zwingend zu regeln:
+
+- Widerrufsrecht mit 14 Tagen Frist und Muster-Widerrufsformular
+- § 356 Abs. 5 BGB: Wortlaut der Zustimmung, die der Kunde **vor** der
+  Lieferung im WhatsApp-Chat geben muss, damit das Widerrufsrecht erlischt —
+  ausdrückliche Einwilligung in den sofortigen Beginn **und** Bestätigung
+  der Kenntnis des dadurch eintretenden Verlusts. Beides muss als Text
+  vorliegen, den André eins zu eins in den Chat kopieren kann.
+- Was geliefert wird, in welchem Format, in welcher Frist
 
 **Abnahme:** Drei Seiten mit vollständiger Struktur, `noindex` noch gesetzt,
 Liste der offenen Angaben für André. Kein Platzhaltertext im Fließtext.
@@ -127,6 +154,11 @@ Block unverändert kopieren und in der Abnahme vermerken.
 
 `index.html` behält Anreißer mit Link auf die jeweilige Seite — die
 Landingpage bleibt vollständig lesbar, sie verliert nur die Tiefe.
+
+Dabei den Gumroad-Button („🛒 Alle Produkte – ab 9,99 EUR") auf
+`pakete.html` umhängen. Die 12 `wa.me`-Buttons bleiben unverändert, inklusive
+der vorbelegten Nachrichtentexte je Paket — die sind der eigentliche
+Bestellvorgang.
 
 **Abnahme:** Kein deutscher oder bengalischer Satz ist verloren gegangen.
 Nachweis: Wortzahl je Sprache vorher/nachher im Vergleich. `noindex` auf den
@@ -164,14 +196,12 @@ offen, oder beides fertig und `noindex` entfernt.
 
 ---
 
-## AP 7 — Domain und Abschluss
+## AP 7 — Abschluss
 
-1. Klären, ob `bangla-hilfe.de` per DNS auf GitHub Pages gezeigt werden
-   soll. Wenn ja: DNS einrichten, danach `BASE` in
-   `scaffold-bangla-hilfe.sh`, `build-sitemap.sh` und `pruefen.sh` ändern
-   und alle Canonicals per `sed` nachziehen. Wenn nein: `CNAME` löschen.
-   Der Zwischenzustand — CNAME vorhanden, DNS tot — ist der schlechteste
-   von beiden.
+1. Prüfen, dass `CNAME` aus AP 1a wirklich weg ist und unter
+   Settings → Pages keine Custom Domain mehr eingetragen steht. Beides muss
+   stimmen — die Datei allein zu löschen reicht nicht, wenn die Domain in
+   den Repo-Einstellungen hängen bleibt.
 2. `robots.txt` und `sitemap.xml` final erzeugen.
 3. `pruefen.sh` ein letztes Mal, dann Merge nach `master`.
 
@@ -185,6 +215,9 @@ offen, oder beides fertig und `noindex` entfernt.
 - **Tailwind einführen.** Siehe `CLAUDE.md`.
 - **Preise oder Leistungsumfang ändern.** Die sechs Pakete werden übernommen
   wie sie sind.
+- **Einen Zahlungsweg einbauen.** Kein Warenkorb, kein Checkout, kein
+  Gumroad, kein Stripe. Bestellung läuft über `wa.me`-Links, wie in
+  `topwash`.
 - **Eine bestehende Datei überschreiben, ohne sie vorher gelesen zu haben.**
 - **Rechtstexte als geprüft bezeichnen.** Der Umbau ist eine technische
   Arbeit, keine Rechtsberatung; die Freigabe der Rechtstexte liegt bei André
