@@ -152,16 +152,27 @@
       transition: all .2s; display: inline-flex; align-items: center; gap: .5rem;
     }
     .btn-ghost:hover { background: rgba(255,255,255,.25); border-color: rgba(255,255,255,.7); }
-    .hero-stats {
-      display: flex; gap: 2.5rem; margin-top: 3.5rem; flex-wrap: wrap;
+    /* AP 5 (Handy-Redesign, Schritt 3): Hero-Stats als Pill-Badges statt
+       grosser Kacheln -- Zahl + Label in einer Zeile, abgerundet,
+       nebeneinander auf dem dunklen Hero-Hintergrund (topwash-Stil). */
+    .hero-badges {
+      display: flex; gap: .75rem; margin-top: 3rem; flex-wrap: wrap;
       animation: fadeUp .8s .5s ease both;
     }
-    .hero-stat { color: var(--white); }
-    .hero-stat-num {
-      font-family: var(--font-head); font-size: 2rem; font-weight: 700;
-      color: var(--gold); display: block; line-height: 1;
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: .4rem;
+      background: rgba(255,255,255,.12);
+      border: 1px solid rgba(255,255,255,.25);
+      color: var(--white);
+      padding: .5rem 1rem;
+      border-radius: 99px;
+      font-size: .85rem;
+      font-weight: 600;
     }
-    .hero-stat-label { font-size: .8rem; opacity: .8; margin-top: .2rem; }
+    .hero-badge-num {
+      font-family: var(--font-head); font-weight: 700;
+      color: var(--gold);
+    }
 
     /* ── SECTIONS ── */
     section { padding: 5rem 2rem; }
