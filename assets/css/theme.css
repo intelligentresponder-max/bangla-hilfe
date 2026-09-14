@@ -241,7 +241,7 @@
       margin-bottom: 1.2rem;
     }
     .step-icon { font-size: 1.8rem; margin-bottom: .8rem; }
-    .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
+    .step h2, .step h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: .4rem; }
     .step p { color: var(--slate); font-size: .95rem; }
     .step p em { color: var(--green); font-style: italic; font-size: .85rem; display: block; margin-top: .3rem; }
 
@@ -1100,3 +1100,15 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   margin: 1.2rem 0 .3rem;
 }
 .article-faq p { color: var(--slate); }
+
+/* ── INHALTSVERZEICHNIS (Wissen-Artikel) ── */
+.toc {
+  background: var(--light); border: 1px solid var(--border);
+  border-radius: var(--radius-sm); padding: 1.2rem 1.5rem;
+  margin: 1.5rem 0 2rem;
+}
+.toc-title { font-weight: 700; color: var(--navy); margin-bottom: .6rem; font-size: .95rem; }
+.toc ul { list-style: none; padding: 0; margin: 0; }
+.toc li { margin: .35rem 0; }
+.toc a { color: var(--green); text-decoration: none; font-size: .92rem; }
+.toc a:hover { text-decoration: underline; }

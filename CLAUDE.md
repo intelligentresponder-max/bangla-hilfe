@@ -499,6 +499,70 @@ rückwirkend für neue Artikel). `wissen.html` sowie Cross-Links in
 
 ---
 
+## Phase 4, Teil 3 (14.09.2026): externer "Prüfauftrag" umgesetzt statt nur gelistet
+
+Dritte externe Übergabe (`uebergabe-claude-code-pruefung.md`) wollte
+explizit nur eine Abweichungsliste ohne Fixes ("Format der Rückmeldung:
+keine automatischen Fixes"). André hat stattdessen direkt „optimiere
+proaktiv, schreibe die Änderungen in jede Datei" angewiesen — entsprechend
+umgesetzt, nicht nur berichtet.
+
+**Falsche Grundannahme der Übergabe:** Punkt B.⚠️ ging davon aus, dass
+`ratgeber.html`/`behoerden.html` noch „echte Hub-Seiten mit Inhalt" seien.
+Das war bereits seit AP 8 nicht mehr der Fall (beide sind Redirect-Stubs) —
+die Übergabe wurde offenbar ohne aktuellen `git pull` erstellt. Vor
+jeder externen Übergabe künftig kurz den Ist-Zustand der genannten
+Dateien gegenchecken, bevor Prüfpunkte übernommen werden.
+
+**Erneut abgelehnt** (dieselben Gründe wie bei AP 8 / Batch 2, hier nicht
+wiederholt, siehe dort): Tailwind-CDN im Head, erweiterungsfreie
+Redirect-Ziele (`/pakete` statt `pakete.html`), Pflichtbilder ohne echte
+Fotos, EN-Sprachversion, `lang="en"`.
+
+**Neu abgelehnt:**
+- **`datePublished`/`dateModified` im Article-JSON-LD.** Es gibt keine
+  echten Veröffentlichungsdaten für die 25 Wissen-Artikel — das war in
+  Phase 3 bereits bewusst weggelassen (nicht erfinden). Bleibt so.
+- **"Link trotzdem setzen, auch wenn Zielartikel fehlt, mit `<!-- TODO -->`-
+  Kommentar."** Das erzeugt tote interne Links — `pruefen.sh` Punkt 1
+  prüft explizit genau darauf und würde das korrekt als Fehler zurückweisen.
+  Ein Link auf eine nicht existierende Datei ist auf der echten,
+  veröffentlichten Seite ein 404, kein harmloser Kommentar. Nicht
+  umgesetzt.
+- **Exakt 5 FAQ-Fragen pro Artikel erzwingen.** 2–3 belastbare Fragen sind
+  besser als 5 Fragen, von denen 2–3 nur Lückenfüller wären.
+
+**Umgesetzt, weil echte, wiederholt genannte Lücken (jetzt zum dritten
+Mal von unterschiedlichen Übergaben verlangt — diesmal übernommen, weil
+risikofrei und wertvoll):**
+- **Inhaltsverzeichnis auf allen 25 Wissen-Artikeln.** Automatisiert
+  erzeugt (`add_toc.py`): `id`-Slug pro `<h2>` (Emoji entfernt, ä/ö/ü/ß
+  transliteriert), Sprungmarken-Liste direkt nach der Einleitung. Die
+  CTA-Box (`.blog-post__cta`) bewusst nicht ins Inhaltsverzeichnis
+  aufgenommen — das ist Conversion, kein Inhaltsabschnitt.
+- **Meta-Descriptions verlängert.** 19 Artikel hatten 53–116 Zeichen
+  (Ziel 140–160), auf Basis des jeweils echten Artikelinhalts erweitert,
+  nichts erfunden. Eine (Chancenkarte) war mit 181 Zeichen zu lang, auf
+  160 gekürzt. `og:description` und das `description`-Feld im
+  Article-JSON-LD liefen automatisch mit, da alle drei denselben Text
+  nutzen.
+- **Ein echter Überschriften-Sprung gefunden und behoben:**
+  `bestellen.html` sprang H1 → H3 (die drei Schritt-Karten). Kam daher,
+  dass die andere Session kürzlich die Sektionsüberschrift dieser Seite
+  korrekt von H2 auf H1 gehoben hatte (siehe „SEO/AEO-Fixes"-Commit),
+  dabei aber die darunterliegenden Schritt-Titel nicht mitgezogen hat.
+  Jetzt H1 → H2. `.step`-Klasse wird nur noch auf `bestellen.html`
+  verwendet (frühere Verwendung auf `index.html` ist inzwischen nur noch
+  ein Teaser-Link ohne Kartenraster) — CSS-Selektor auf `.step h2, .step
+  h3` erweitert, damit beide Verwendungen weiter funktionieren, statt nur
+  einer Seite eine Sonderregel zu geben.
+
+pruefen.sh: Fehler 0. Alle 100 JSON-LD-Blöcke sitewide erneut strukturell
+validiert (`json.loads`), keine Überschriften-Sprünge mehr sitewide
+gefunden (automatisierter Scan über alle H1–H6).
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
