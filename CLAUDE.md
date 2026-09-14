@@ -332,6 +332,38 @@ Seite, ein `hreflang="en"` auf nicht existierende Seiten wäre falsch.
 
 ---
 
+## Policy-Änderung (14.09.2026): noindex bei 21 DE-only-Seiten aufgehoben
+
+Von einer zweiten, parallel arbeitenden Claude-Chat-Session (Branch
+`seo-fixes-2026-09`, Commit `7ef24c0`) gemergt. **Wichtig für alle
+künftigen Sessions:** Die bisher überall zitierte Projektregel „`noindex`
+bleibt gesetzt, bis Amir die Bangla-Fassung geliefert hat" gilt **nicht
+mehr uneingeschränkt** — André hat das Aufheben für 21 konkrete, inhaltlich
+fertige DE-Seiten ausdrücklich bestätigt:
+
+- `faq.html`, `glossar.html`, `blog/chancenkarte-2025-26.html`
+- alle 12 `ratgeber/*`-Artikel, alle 4 `behoerden/*`-Artikel (nicht:
+  `lektionen/lektion2.html`/`lektion3.html` — die haben eigene Bangla-
+  Blöcke direkt im Text, ein anderer Fall)
+
+Alle diese Seiten stehen jetzt auf `robots: index, follow` und sind Teil
+der Sitemap (29 statt 8 URLs). Die drei Rechtstexte
+(`impressum.html`/`datenschutz.html`/`agb.html`, echtes Rohgerüst ohne
+Firmendaten) und `mitmachen.html` (Inhalt fehlt) bleiben bewusst `noindex`
+— das ist kein Widerspruch, sondern die Regel greift dort weiterhin zu
+Recht.
+
+**Offen/uneindeutig, falls das nochmal relevant wird:** Ob das eine
+einmalige Entscheidung für genau diese 21 Seiten war oder eine
+grundsätzliche Abkehr von „warten auf Bangla" für künftige neue Artikel
+ebenfalls gilt, geht aus der Übergabe nicht hervor. Im Zweifel bei André
+nachfragen, bevor bei neuen Artikeln eigenmächtig auf `index` statt
+`noindex` gesetzt wird — nicht einfach die alte Regel für neue Inhalte
+weiter unterstellen, aber auch nicht ungefragt die neue Praxis
+verallgemeinern.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
