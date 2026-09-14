@@ -17,7 +17,7 @@
 <meta property="og:url" content="https://bit.ly/bangla-hilfe"/>
 <meta property="og:type" content="website"/>
 </head>
-<body>
+<body class="has-banner">
 
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/491634692255" target="_blank" class="float-wa" title="WhatsApp">💬</a>
@@ -351,33 +351,6 @@
     </div>
   </footer>
 
-  <script>
-    function toggleMenu(){ document.body.classList.toggle("menu-open"); }
-    // ── LANGUAGE SWITCHER ──
-    function toggleLang(){ setLang(document.body.classList.contains('bn') ? 'de' : 'bn'); }
-    function setLang(lang) {
-      document.body.classList.toggle('bn', lang === 'bn');
-      document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-      document.querySelector(`.lang-btn:${lang==='de'?'first':'last'}-child`).classList.add('active');
-      document.documentElement.lang = lang === 'bn' ? 'bn' : 'de';
-      localStorage.setItem('bh-lang', lang);
-    }
-    // Restore language preference
-    const saved = localStorage.getItem('bh-lang');
-    if (saved) setLang(saved);
-
-    // ── SCROLL REVEAL ──
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
-    }, { threshold: 0.12 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ── SMOOTH NAV ACTIVE ──
-    const sections = document.querySelectorAll('section[id]');
-    window.addEventListener('scroll', () => {
-      let current = '';
-      sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
-    });
-  </script>
+  <script src="assets/js/site.js"></script>
 </body>
 </html>

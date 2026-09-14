@@ -43,8 +43,11 @@
     body:not(.bn) [data-lang="de"] { display: block; }
 
     /* ── NAV ── */
+    /* top:0 ist die Basis fuer alle Seiten ohne Promo-Banner (also fast
+       alle ausser index.html); body.has-banner schiebt die Nav darunter. */
+    body.has-banner nav { top: var(--banner-h); }
     nav {
-      position: fixed; top: var(--banner-h); left: 0; right: 0; z-index: 1000;
+      position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
       background: rgba(255,255,255,.97);
       border-bottom: 2px solid var(--border);
       backdrop-filter: blur(8px);
@@ -811,11 +814,12 @@
   position: fixed; top: 0; right: 0; bottom: 0; width: min(320px, 85vw);
   background: var(--white); z-index: 1002;
   display: flex; flex-direction: column;
-  padding: calc(var(--banner-h) + 4.5rem) 1.8rem 2rem;
+  padding: 4.5rem 1.8rem 2rem;
   gap: 1.1rem; overflow-y: auto;
   transform: translateX(100%); transition: transform .3s ease;
   box-shadow: -8px 0 32px rgba(0,0,0,.15);
 }
+body.has-banner .mobile-menu { padding-top: calc(var(--banner-h) + 4.5rem); }
 body.menu-open .mobile-menu { transform: translateX(0); }
 .mobile-menu a {
   font-size: 1.05rem; font-weight: 700; color: var(--navy); text-decoration: none;
@@ -905,3 +909,11 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   color: var(--green); font-weight: 700; text-decoration: none; font-size: .95rem;
 }
 .blog-teaser-link:hover { text-decoration: underline; }
+
+/* ── Einheitliche Nav auf allen Nicht-Hero-Seiten (AP 5) ── */
+/* main braucht Abstand zur fixen Nav, da diese Seiten keinen eigenen
+   Hero-Bereich mit eingebauter Kompensation haben (anders als index.html). */
+.page-main { padding-top: 6rem; }
+@media (max-width: 768px) {
+  .page-main { padding-top: 5rem; }
+}

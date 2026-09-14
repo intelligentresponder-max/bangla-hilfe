@@ -18,20 +18,57 @@
 <link rel="stylesheet" href="../assets/css/theme.css">
 </head>
 <body>
-<header>
-  <a href="../index.html">BanglaHilfe Deutschland</a>
-  <nav>
-    <a href="../pakete.html">Pakete</a>
-    <a href="../preise.html">Preise</a>
-    <a href="../behoerden.html">Behoerden</a>
-    <a href="../ratgeber.html">Ratgeber</a>
-    <a href="../faq.html">FAQ</a>
-    <a href="../glossar.html">Glossar</a>
-    <a href="../ueber-uns.html">Ueber uns</a>
-  </nav>
-</header>
+<!-- FLOATING WHATSAPP -->
+<a href="https://wa.me/491634692255" target="_blank" class="float-wa" title="WhatsApp">💬</a>
 
-<main id="main">
+<!-- NAV -->
+<nav>
+  <a href="../index.html" class="nav-logo">
+    <span class="nav-logo-flag">🇧🇩🇩🇪</span>
+    <div>
+      <div class="nav-logo-text">BanglaHilfe</div>
+      <div class="nav-logo-sub">Deutschland</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+      <li><a href="../pakete.html">Pakete</a></li>
+      <li><a href="../preise.html">Preise</a></li>
+      <li><a href="../behoerden.html">Behoerden</a></li>
+      <li><a href="../ratgeber.html">Ratgeber</a></li>
+      <li><a href="../faq.html">FAQ</a></li>
+      <li><a href="../glossar.html">Glossar</a></li>
+      <li><a href="../ueber-uns.html">Ueber uns</a></li>
+      <li><a href="../blog/chancenkarte-2025-26.html">Blog</a></li>
+  </ul>
+  <div class="nav-right">
+    <button class="nav-toggle" onclick="toggleMenu()">☰</button>
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('de')">DE</button>
+      <button class="lang-btn" onclick="setLang('bn')">বাং</button>
+    </div>
+    <a href="https://wa.me/491634692255" target="_blank" class="nav-wa">
+      💬 WhatsApp
+    </a>
+  </div>
+</nav>
+<div class="mobile-menu">
+  <button class="nav-close" onclick="toggleMenu()">✕</button>
+    <a href="../pakete.html" onclick="toggleMenu()">Pakete</a>
+    <a href="../preise.html" onclick="toggleMenu()">Preise</a>
+    <a href="../behoerden.html" onclick="toggleMenu()">Behoerden</a>
+    <a href="../ratgeber.html" onclick="toggleMenu()">Ratgeber</a>
+    <a href="../faq.html" onclick="toggleMenu()">FAQ</a>
+    <a href="../glossar.html" onclick="toggleMenu()">Glossar</a>
+    <a href="../ueber-uns.html" onclick="toggleMenu()">Ueber uns</a>
+    <a href="../blog/chancenkarte-2025-26.html" onclick="toggleMenu()">Blog</a>
+  <div class="mobile-menu-legal">
+      <a href="../impressum.html">Impressum</a>
+      <a href="../datenschutz.html">Datenschutz</a>
+      <a href="../agb.html">AGB</a>
+  </div>
+</div>
+
+<main id="main" class="page-main">
   <h1>Anmeldung Schritt fuer Schritt</h1>
 </main>
 
@@ -40,5 +77,6 @@
   <a href="../datenschutz.html">Datenschutz</a>
   <a href="../agb.html">AGB</a>
 </footer>
+<script src="../assets/js/site.js"></script>
 </body>
 </html>
