@@ -394,10 +394,31 @@
       background: #25d366; color: white; text-decoration: none;
       display: flex; align-items: center; justify-content: center;
       font-size: 1.8rem; box-shadow: 0 4px 24px rgba(37,211,102,.5);
-      transition: transform .2s, box-shadow .2s;
+      transition: transform .2s, box-shadow .2s, bottom .2s;
       animation: pulse 2.5s infinite;
     }
     .float-wa:hover { transform: scale(1.12); }
+
+    /* ── BOTTOM BAR (Handy-Redesign, Schritt 4) ── */
+    /* Nur mobil sichtbar (siehe RESPONSIVE weiter unten) -- auf Desktop
+       uebernehmen Top-Nav und Sprachumschalter dieselbe Funktion. */
+    .bottom-bar {
+      display: none;
+      position: fixed; bottom: 0; left: 0; right: 0; z-index: 998;
+      background: var(--white);
+      border-top: 2px solid var(--border);
+      box-shadow: 0 -4px 24px rgba(0,106,78,.12);
+    }
+    .bottom-bar-btn {
+      flex: 1;
+      display: flex; align-items: center; justify-content: center; gap: .4rem;
+      padding: .85rem .5rem;
+      text-decoration: none; color: var(--navy);
+      font-family: inherit; font-weight: 700; font-size: .9rem;
+      background: none; border: none; cursor: pointer;
+    }
+    .bottom-bar-btn:first-child { border-right: 1px solid var(--border); }
+    .bottom-bar-btn:hover { color: var(--green); }
 
     /* ── ANIMATIONS ── */
     @keyframes fadeUp {
@@ -414,9 +435,12 @@
       nav { padding: .8rem 1rem; }
       .nav-links { display: none; }
       .hero { padding: 6rem 1.2rem 3rem; }
-      .hero-stats { gap: 1.5rem; }
+      .hero-badges { gap: .5rem; }
       section { padding: 3.5rem 1.2rem; }
       .products-grid { grid-template-columns: 1fr; }
+      .bottom-bar { display: flex; }
+      .float-wa { bottom: 5rem; }
+      body { padding-bottom: 3.4rem; }
     }
 
     /* ── SCROLL REVEAL ── */

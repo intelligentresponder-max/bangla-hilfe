@@ -22,6 +22,19 @@
   <!-- FLOATING WHATSAPP -->
   <a href="https://wa.me/491634692255" target="_blank" class="float-wa" title="WhatsApp">💬</a>
 
+  <!-- BOTTOM BAR (mobil) -->
+  <div class="bottom-bar">
+    <a href="pakete.html" class="bottom-bar-btn">
+      <span>📦</span>
+      <span data-lang="de">Pakete</span>
+      <span data-lang="bn">প্যাকেজ</span>
+    </a>
+    <button class="bottom-bar-btn" onclick="toggleLang()" type="button">
+      <span>🌐</span>
+      <span>DE / বাং</span>
+    </button>
+  </div>
+
   <a href="#produkte" class="promo-banner">
     <span data-lang="de">🇧🇩🇩🇪 Unsere Pakete entdecken</span>
     <span data-lang="bn">🇧🇩🇩🇪 আমাদের প্যাকেজ দেখুন</span>
@@ -313,6 +326,7 @@
   <script>
     function toggleMenu(){ document.body.classList.toggle("menu-open"); }
     // ── LANGUAGE SWITCHER ──
+    function toggleLang(){ setLang(document.body.classList.contains('bn') ? 'de' : 'bn'); }
     function setLang(lang) {
       document.body.classList.toggle('bn', lang === 'bn');
       document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
