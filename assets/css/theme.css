@@ -1029,3 +1029,29 @@ body.menu-open .mobile-menu { transform: translateX(0); }
   text-decoration: none; transition: background .2s;
 }
 .tag-pill:hover { background: var(--gold-light); color: var(--navy); }
+
+/* ── BREADCRUMB (Wissen-Unterseiten) ── */
+.breadcrumb {
+  max-width: 760px; margin: 1.2rem auto 0; padding: 0 1.5rem;
+  font-size: .85rem; color: var(--slate);
+}
+.breadcrumb a { color: var(--slate); text-decoration: none; }
+.breadcrumb a:hover { color: var(--green); text-decoration: underline; }
+.breadcrumb [aria-current="page"] { color: var(--navy); font-weight: 600; }
+
+/* ── GLOSSAR (glossar.html) ── */
+.glossary-list { margin: 2rem 0 3rem; max-width: 720px; }
+.glossary-list dt {
+  font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
+  color: var(--navy); margin-top: 1.6rem; padding-top: 1.2rem;
+  border-top: 1px solid var(--border);
+}
+.glossary-list dt:first-child { margin-top: 0; padding-top: 0; border-top: none; }
+.glossary-list dd { color: var(--slate); margin: .4rem 0 0; }
+
+/* ── FAQ (faq.html) ── */
+.faq-item { margin: 2rem 0; }
+.faq-item h3 {
+  font-family: var(--font-head); font-size: 1.15rem; color: var(--navy); margin-bottom: .4rem;
+}
+.faq-item p { color: var(--slate); }

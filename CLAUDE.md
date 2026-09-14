@@ -250,6 +250,41 @@ umgesetzt:
 
 ---
 
+## Phase 2 (14.09.2026): FAQ/Glossar-Inhalt, interne Verlinkung, Breadcrumbs
+
+Fortsetzung von AP 8, angepasste Reihenfolge aus der externen Übergabe
+(deren Punkte 5, 6, 8 — Punkt 7 „3 Blog-Artikel schreiben" bewusst
+ausgelassen, siehe AP 8: 10 neue Artikel sind eigenes späteres Paket).
+
+- **`faq.html`**: 8 Frage/Antwort-Paare, alle auf bereits etablierten Fakten
+  aufgebaut (WhatsApp-Bestellung, 48h-Antwortzeit, Preise 9,99–49,99 €,
+  Widerrufsrecht aus `agb.html` §5/§6, Standard-Disclaimer). Nichts erfunden,
+  kein Bangla ergänzt — bleibt `noindex`, bis Amir übersetzt.
+- **`glossar.html`**: 13 Begriffe als `dt`/`dd`, ausschließlich Begriffe, die
+  bereits an anderer Stelle im Repo vorkommen (Anmeldung, Aufenthaltstitel,
+  Chancenkarte, FSJ/BFD, Schufa, Steuer-ID, Widerrufsrecht, …). Gleiche
+  Bangla-Einschränkung wie oben.
+- **Interne Verlinkung**: alle 19 Wissen-Artikel (18 ratgeber/behoerden +
+  Blog) bekommen automatisiert (`related_links.py`) einen Link zum
+  passenden Paket-Anker in `pakete.html` (wo ein echtes Produkt thematisch
+  passt, sonst allgemein) plus 2 Links zu verwandten Artikeln aus derselben
+  Wissen-Kategorie.
+- **Breadcrumbs**: „Wissen › Kategorie › Artikel" auf allen 19 Artikeln.
+  **Wichtig gefundener Bug dabei** (Details im Fehlerlog, Punkt 10): erst als
+  `<nav class="breadcrumb">` gebaut, was mit der globalen `nav{}`-Regel
+  kollidierte — Breadcrumb legte sich fix über die echte Navigation. Fix:
+  `<div class="breadcrumb" role="navigation">` statt `<nav>`.
+- **Bewusst nicht angefasst**: `ueber-uns.html` bleibt unverändert. Der
+  bestehende Text ist bereits vollständig zweisprachig (DE+BN) und indexiert;
+  neuer deutschsprachiger Prosa-Text (z. B. explizite „keine
+  Rechtsberatung"-Klarstellung) hätte diese Parität gebrochen, ohne dass
+  Amir die Bangla-Fassung gleichzeitig liefern kann. Entscheidung: warten,
+  bis entweder (a) Amir Bangla für einen neuen Absatz mitliefert, oder (b)
+  André ausdrücklich einen deutschsprachigen Zusatz ohne Bangla-Parität
+  freigibt.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
@@ -360,6 +395,21 @@ Diagnose verliert, die schon einmal gemacht wurde.
    mit `TODO`/`Platzhalter`/`XXX` — sonst entgeht der Kommentar der
    Platzhalter-Prüfung nicht etwa sicher, sondern nur zufällig, wenn keines
    der Trigger-Wörter zufällig im sichtbaren Rest landet.**
+
+10. **Eigener `<nav>`-Tag kollidiert mit der sitewide Nav-Regel.** Für
+    Breadcrumbs auf den 19 Wissen-Artikeln ein zweites `<nav class="breadcrumb">`
+    pro Seite eingesetzt — aber `theme.css` stylt den nackten `nav`-Selektor
+    global (`position: fixed; top: 0; ...`, siehe Zeile ~45), nicht nur
+    `nav[aria-label="Hauptnavigation"]`. Der Breadcrumb legte sich dadurch
+    fix positioniert über die echte Navigation statt normal im Textfluss zu
+    stehen. Erst am Screenshot bemerkt. Fix: `<div class="breadcrumb"
+    role="navigation" aria-label="Breadcrumb">` statt `<nav>` — gleiche
+    Barrierefreiheits-Semantik über `role`, ohne den Element-Selektor zu
+    treffen. **Lehre: Bevor ein zweites semantisches Element (`nav`, `header`,
+    `aside` …) auf einer Seite verwendet wird, die bereits eines dieser Tags
+    global stylt, per `grep -n "^\s*ELEMENTNAME\s*{"` prüfen, ob im CSS ein
+    Elementselektor (statt Klassenselektor) existiert — der trifft jede
+    Instanz des Tags, nicht nur die eine, für die er gedacht war.**
 
 ---
 
