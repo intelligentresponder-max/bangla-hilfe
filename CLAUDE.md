@@ -215,6 +215,76 @@ ohne Fehler durchläuft.
 
 ---
 
+## Fehlerlog — dokumentierte Bugs & ihre Fixes
+
+Grundsatz ab 14.09.2026: Jeder gefundene Fehler wird hier festgehalten,
+auch wenn er längst behoben ist. Ziel ist, dass niemand (Mensch oder
+Claude) denselben Fehler ein zweites Mal macht oder Zeit mit einer
+Diagnose verliert, die schon einmal gemacht wurde.
+
+1. **`pruefen.sh` Punkt 1 — hartkodierter Temp-Pfad.**
+   `/tmp/_tote.txt` war fest verdrahtet. Auf Termux (Android) existiert
+   `/tmp` nicht regulär beschreibbar, dort gilt `$PREFIX/tmp`. Fix:
+   `tote_datei=$(mktemp)` + `trap 'rm -f "$tote_datei"' EXIT`. Bewusst
+   **gegen** einen Termux-spezifischen `$PREFIX/tmp`-Pfad entschieden,
+   weil das Skript auf jeder Plattform laufen muss, nicht nur auf einer.
+
+2. **`pruefen.sh` Punkt 8 und Punkt 12 — verschluckter Hinweise-Zähler.**
+   Muster `befehl | while read zeile; do ((warn++)); done` — Bash startet
+   die rechte Seite einer Pipe in einer Subshell, Zähler-Erhöhungen darin
+   gehen beim Verlassen der Subshell verloren. Ergebnis: „Hinweise: 0"
+   obwohl Zeilen mit `HINWEIS` sichtbar ausgegeben wurden. Fix in beiden
+   Fällen: Umbau auf `done < <(befehl)` (Process Substitution), damit die
+   Schleife in der aktuellen Shell läuft. **Wenn `pruefen.sh` künftig neue
+   Zähler-Schleifen bekommt: nie `| while`, immer `< <(...)`.**
+
+3. **Nav-Inkonsistenz site-weit.** Zwei Ursachen gleichzeitig: (a) über 30
+   Unterseiten hatten nie das Hamburger-Menü-Update von `index.html`
+   bekommen, liefen noch mit der alten AP2-Nav; (b) eine globale Regel
+   `nav { position: fixed; top: var(--banner-h) }` in `theme.css` ging
+   davon aus, dass jede Seite den Promo-Banner von `index.html` hat — auf
+   allen anderen Seiten überlappte die Nav dadurch den Seiteninhalt. Fix:
+   `body.has-banner nav { top: var(--banner-h) }` als Override, Basis-Regel
+   auf `top: 0`; dieselbe Entkopplung für `.mobile-menu`; neue
+   `.page-main { padding-top: 6rem }`-Klasse für Content unter der fixen
+   Nav. Danach 32 Dateien per Skript (nicht von Hand) auf das
+   `index.html`-Nav-Muster gebracht. **Lehre: eine globale CSS-Regel, die
+   nur für eine Seite Sinn ergibt, gehört hinter eine Body-Klasse, nicht
+   an die nackte Selektor-Basis.**
+
+4. **Eigener Inline-Style-Verstoß.** Beim Herauslösen von `ueber-uns.html`
+   selbst `style="margin-top:1.5rem;"` an einen Link gehängt — Verstoß
+   gegen harte Regel 3 oben, von mir selbst verursacht. Von `pruefen.sh`
+   im nächsten Lauf korrekt als 1 Hinweis gemeldet. Fix: eigene Klasse
+   `.about-more-link`. **Lehre: `pruefen.sh` nach jeder eigenen Änderung
+   laufen lassen, nicht nur am Ende eines Arbeitspakets — es fängt auch
+   selbst verursachte Fehler zuverlässig ab.**
+
+5. **Tote Links nach Ordner-Verschiebung.** `lektionen/lektion2.html` und
+   `lektionen/lektion3.html` verlinkten nach dem Verschieben in den neuen
+   `lektionen/`-Unterordner weiterhin auf `produkte/...` statt
+   `../produkte/...`. Wurde vom reparierten `pruefen.sh` Punkt 1 korrekt
+   gefunden. **Lehre: bei jedem Verschieben von Dateien in Unterordner
+   alle relativen Pfade in der verschobenen Datei explizit gegenprüfen,
+   nicht nur in den Dateien, die auf sie verweisen.**
+
+6. **Zwei falsche „Push ist durch"-Meldungen.** Nutzer meldete Push als
+   erledigt; `git fetch` / `git ls-remote --heads` zeigten beide Male,
+   dass auf GitHub nichts Neues ankam (einmal stiller No-Op, einmal ein
+   tatsächliches `[rejected] (fetch first)`). **Lehre: eine gemeldete
+   Aktion nie ungeprüft übernehmen, wenn sie sich technisch verifizieren
+   lässt — bei Git-Operationen immer die rohe Kommandozeilen-Ausgabe
+   anfordern statt der Zusammenfassung „ist durch".**
+
+7. **GitHub-Pages-Custom-Domain nicht programmatisch prüfbar.** Direkter
+   Zugriff auf `https://api.github.com/repos/.../pages` liefert aus dieser
+   Session `HTTP 403 Access to this GitHub API path is not permitted
+   through this proxy`; kein MCP-Tool deckt Pages-Settings ab. **Bekannte
+   Grenze, kein Bug** — dieser eine Punkt aus AP7 muss immer manuell in
+   den Repo-Settings kontrolliert werden, nicht per Skript.
+
+---
+
 ## Umgebung
 
 - Termux auf Android (Hauptgerät), Git Bash auf dem PC
