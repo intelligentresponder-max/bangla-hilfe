@@ -563,6 +563,100 @@ gefunden (automatisierter Scan über alle H1–H6).
 
 ---
 
+## Phase 4, Teil 4 (14.09.2026): Übergabe "Familiennachzug"-Artikel — Ist-Zustand widersprach der Annahme
+
+Externe Übergabe (`cda1e5aa-uebergabe-artikel-familiennachzug.md`) wollte
+einen **neuen** Ratgeber-Artikel "Familiennachzug nach Deutschland:
+Voraussetzungen, Ablauf und Kosten" anlegen und verwies dabei auf eine
+Datei `AUFTRAG-restarbeiten.md` mit "Aufgaben 4-6" — diese Datei existiert
+in diesem Repo nicht (nur `AUFTRAG-umbau.md` und `HANDOFF.md`). Wie schon
+bei Phase 4 Teil 3 dokumentiert: **vor jeder externen Übergabe erst den
+Ist-Zustand prüfen**, nicht die Annahmen der Übergabe blind übernehmen.
+
+**Gefundener Widerspruch:** `ratgeber/familiennachzug-ablauf.html`
+existierte bereits, war schon einer der 21 auf `index, follow`
+umgestellten Seiten (Policy-Änderung oben) und in `wissen.html` sogar als
+"featured" Karte verlinkt. Ein zweiter, separater Artikel zum exakt
+gleichen Thema hätte Duplicate Content erzeugt und zwei konkurrierende
+Familiennachzug-Einträge im Wissen-Hub — schlechter für SEO als die
+Alternative.
+
+**Entscheidung (Alternative geprüft, nicht die Übergabe-Annahme
+übernommen):** Bestehenden Artikel erweitert statt Duplikat angelegt.
+Slug/URL/Canonical unverändert gelassen (kein Duplicate-Content-Risiko,
+keine toten Backlinks) — Title und H1 auf "Familiennachzug nach
+Deutschland: Voraussetzungen, Ablauf und Kosten" angehoben, weil der
+Inhalt jetzt tatsächlich mehr als nur den Ablauf abdeckt. Neu ergänzt,
+alles mit den in der Übergabe gelieferten, bereits geprüften Fakten:
+
+- **A1-Sprachnachweis: Regel und Ausnahmen** (Blaue Karte EU, akademische
+  Fachkräfte, Staatsangehörige bestimmter Länder, geringer
+  Integrationsbedarf).
+- **Sonderfall Chancenkarte** — die Übergabe-Korrektur, dass die
+  Chancenkarte (1 Jahr gültig) allein meist NICHT für den
+  Ehegattennachzug reicht, weil der Aufenthaltstitel des Sponsors bei
+  Antragstellung noch mindestens ein weiteres Jahr gültig sein muss
+  (§ 30 AufenthG). Die Übergabe hatte dafür die Unterbuchstaben „§ 30
+  Abs. 1 Satz 3 Nr. 5" bzw. „Buchst. e" mitgeliefert — per WebSearch
+  gegen `buzer.de`/Rechtsdatenbanken geprüft, aber die Treffer nannten für
+  ähnliche Ausnahmen widersprüchlich Buchst. f und g. Direkter Zugriff auf
+  `gesetze-im-internet.de` und `diplo.de` zum Gegenprüfen ist vom Proxy
+  blockiert. **Bewusst nicht übernommen**, um keine unsicher verifizierte
+  Unterbuchstaben-Angabe zu drucken (gleiches Prinzip wie bei den
+  Goethe-Institut-Kurspreisen in Phase 4 Teil 2: lieber die sicher
+  verifizierte Basisnorm zitieren als eine Zahl/einen Buchstaben, der sich
+  nicht zweifelsfrei bestätigen lässt) — im Artikel steht durchgehend nur
+  „§ 30 AufenthG" ohne Unterbuchstaben.
+- **Blaue Karte EU als schnellerer Weg** — mit Cross-Link zum bereits
+  bestehenden `eu-blue-card-beantragen.html` (und umgekehrt dort ein
+  neuer Link zurück, siehe unten).
+- **Kosten-Angaben, selbst recherchiert statt aus der Übergabe
+  übernommen** (Übergabe nannte dazu keine Zahlen): nationales Visum
+  75 € Erwachsene / 37,50 € Kinder, gebührenfrei beim Nachzug zu
+  Deutschen (Quelle: Auswärtiges Amt/diplo.de, per WebSearch); Gebühr für
+  die Aufenthaltserlaubnis nach Einreise 100 € / Kinder 50 € nach § 45
+  AufenthV (Quelle: `buzer.de`, Gesetzestext AufenthV Kapitel 3).
+- **3 statt 5 FAQ** (Chancenkarte, A1-Pflicht, Kosten) — dieselbe
+  Begründung wie bei Phase 4 Teil 3: 2–3 belastbare Fragen statt
+  Lückenfüller, plus `FAQPage`-JSON-LD.
+- **Glossar ergänzt** (`glossar.html`, DefinedTermSet + sichtbare Liste,
+  alphabetisch einsortiert): `A1-Niveau (GER)`, `Auslandsvertretung`,
+  `Blaue Karte EU`, `Ehegattennachzug`, `Vorabzustimmung` — nur Begriffe,
+  die jetzt tatsächlich in mindestens einem Artikel vorkommen (Projekt-
+  Regel, siehe Phase 2). `§ 30 AufenthG`/`§ 16a AufenthG` bewusst
+  **nicht** als eigene Glossar-Einträge angelegt — kein bestehender
+  Eintrag im Glossar zitiert einen nackten Paragrafen, das hätte den
+  etablierten Stil (Alltagsbegriff → Erklärung) gebrochen. Stattdessen
+  im Artikeltext selbst zitiert.
+
+**Aus der Übergabe abgelehnt** (gleiche, bereits mehrfach dokumentierte
+Gründe wie bei früheren Übergaben, hier nur kurz):
+- **Mind. 2 Bilder pro Artikel.** Vierter Handoff in Folge mit dieser
+  Forderung (siehe Phase 4 Teil 2) — weiterhin keine echten Fotos
+  vorhanden, weiterhin keine Stockbilder erfunden.
+- **1.200–1.800 Wörter als harte Vorgabe.** Der fertige Artikel hat
+  ca. 950 Wörter — mehr als doppelt so lang wie die zuletzt geschriebenen
+  Artikel im selben Format (`eu-blue-card-beantragen.html` 450,
+  `sperrkonto-visum-kosten.html` 484, `anabin-zab-abschluss-bewerten.html`
+  462 Wörter), aber bewusst nicht künstlich auf 1.200+ aufgefüllt: die
+  Wortzahl-Vorgabe stammt aus einer externen, in diesem Repo nicht
+  vorhandenen Datei und widerspricht dem hier tatsächlich etablierten
+  Artikelformat. Zusätzliche Füllabsätze ohne neuen Fakteninhalt hätten
+  gegen "kein Platzhaltertext" verstoßen.
+- **TODO-Kommentar bei fehlendem Zielartikel.** Nicht nötig gewesen — alle
+  vorgeschlagenen internen Ziele (Glossar-Anker, `eu-blue-card-
+  beantragen.html`, `haeufige-fehler-im-antrag.html`,
+  `blog/chancenkarte-2025-26.html`) existierten bereits.
+
+`wissen.html`-Karten (2×) auf den neuen Titel/Beschreibung aktualisiert.
+`sitemap.xml` neu generiert (weiterhin 29 URLs, nur `lastmod` aktualisiert
+— kein neuer Artikel, keine neue URL). pruefen.sh: Fehler 0. Alle
+JSON-LD-Blöcke der geänderten Dateien (`familiennachzug-ablauf.html`,
+`glossar.html`, `eu-blue-card-beantragen.html`, `wissen.html`) erneut
+strukturell validiert.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
