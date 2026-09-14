@@ -151,6 +151,17 @@ for p in impressum.html datenschutz.html agb.html 404.html robots.txt sitemap.xm
   [ -e "$p" ] && ok "$p vorhanden" || rot "$p fehlt"
 done
 
+# --- 10b. CNAME -----------------------------------------------------------
+# Entscheidung 14.09.2026: keine Custom Domain. Eine CNAME-Datei ohne
+# passendes DNS macht jede Seite unindexierbar.
+echo
+echo "10b) Custom Domain"
+if [ -e CNAME ]; then
+  rot "CNAME vorhanden ($(cat CNAME)) -- soll geloescht sein: git rm CNAME"
+else
+  ok "keine CNAME-Datei, Seite laeuft unter github.io"
+fi
+
 # --- 11. Sitemap-Konsistenz -----------------------------------------------
 # topwash-Bezug: Sitemap listete 27 URLs, im Repo lagen 32.
 echo

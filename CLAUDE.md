@@ -12,6 +12,33 @@ aus Bangladesch beim Start in Deutschland — Visum, Anmeldung, FSJ/BFD,
 Familiennachzug, Studium. Verkauft werden PDF-Pakete zwischen 9,99 € und
 49,99 €, ausgeliefert per WhatsApp.
 
+### Verkaufskanal: ausschließlich WhatsApp
+
+Wie in `topwash` läuft alles über WhatsApp — Anfrage, Bestellung, Lieferung.
+**Kein Gumroad, kein Stripe, kein Warenkorb, keine Zahlungsseite.** Neue
+Zahlungswege werden nicht eingeführt.
+
+Zwei Konsequenzen daraus:
+
+**Der Gumroad-Link in `index.html` muss weg.** Beim Button „🛒 Alle Produkte
+– ab 9,99 EUR" neben dem QR-Code hängt noch
+`https://banglahilfe.gumroad.com/l/wxfrk`. Daneben stehen 12 `wa.me`-Buttons.
+Ein einzelner Fremdkanal, der noch aus einer früheren Runde stammt und den
+niemand pflegt, ist genau die Art von Altlast, die später jemand anklickt.
+Ersetzen durch einen `wa.me`-Link oder streichen.
+
+**Der topwash-Ausweg trägt hier nicht.** Bei topwash lässt sich das
+Fernabsatzrecht umgehen, indem WhatsApp als reiner Anfragekanal ausgewiesen
+wird und Kauf und Bezahlung vor Ort stattfinden („Karte direkt vor Ort
+erhältlich"). Hier gibt es kein „vor Ort": digitale Inhalte, per WhatsApp
+zugestellt, Kunde und Anbieter sehen sich nie. Das **ist** Fernabsatz, ohne
+Wenn und Aber. Widerrufsbelehrung ist Pflicht, und weil sofort geliefert
+wird, greift zusätzlich § 356 Abs. 5 BGB: das Widerrufsrecht erlischt nur,
+wenn der Kunde vor dem Download ausdrücklich zugestimmt hat und bestätigt,
+dass er dadurch sein Widerrufsrecht verliert. Diese Zustimmung muss im
+WhatsApp-Verlauf dokumentiert sein — sonst bleibt das Widerrufsrecht
+14 Tage lang bestehen, auch nach Lieferung.
+
 Ansprechpartner für bengalische Inhalte: Amir. **Jede bengalische Zeile geht
 vor Livegang durch ihn.** Claude Code schreibt kein Bangla und korrigiert
 kein Bangla — vorhandene Bangla-Blöcke werden byteweise übernommen, nie
@@ -30,7 +57,7 @@ bangla-hilfe/            Default-Branch: master   (NICHT main)
 ├── danke.html           Danke-Seite nach Kauf
 ├── qrcode.html          QR-Ziel
 ├── produkte/
-├── CNAME                "bangla-hilfe.de"  → Domain löst nicht auf
+├── CNAME                "bangla-hilfe.de" → tote Domain, wird gelöscht (AP 1)
 ├── update_site.py       14 Byte, faktisch leer
 └── .github/
 ```
@@ -101,10 +128,20 @@ dann als eigener Schritt danach.
 BASE = https://intelligentresponder-max.github.io/bangla-hilfe/
 ```
 
-Nicht `bangla-hilfe.de`. Die CNAME-Datei zeigt auf eine Domain, die weder
-mit noch ohne `www` im DNS auflöst. Ein Canonical auf eine unerreichbare URL
-nimmt jeder Seite die Indexierbarkeit. Sobald das DNS steht: `BASE` in beiden
-Skripten ändern, dann alle Canonicals per `sed` nachziehen.
+Das ist ab sofort die feste, einzige Basis-URL.
+
+**Entschieden am 14.09.2026: `CNAME` wird gelöscht.** Die Datei enthielt
+`bangla-hilfe.de`, eine Domain, die weder mit noch ohne `www` im DNS
+auflöste. Eine Custom-Domain-Konfiguration ohne DNS dahinter ist der
+schlechteste der drei möglichen Zustände: GitHub Pages hält die Domain für
+gültig, Canonicals zeigen ins Leere, und beim nächsten Deploy fragt sich
+jemand, warum die Seite unter zwei Adressen laufen soll. Lieber keine Domain
+als eine tote.
+
+Falls `bangla-hilfe.de` später doch kommt: erst DNS einrichten und prüfen,
+dass es auflöst, dann `CNAME` neu anlegen, dann `BASE` in
+`scaffold-bangla-hilfe.sh`, `build-sitemap.sh` und `pruefen.sh` ändern und
+alle Canonicals per `sed` nachziehen. In dieser Reihenfolge.
 
 ---
 
