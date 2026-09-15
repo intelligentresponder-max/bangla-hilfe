@@ -3,7 +3,12 @@
 
     /* ── RESET & BASE ── */
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html { scroll-behavior: smooth; font-size: 16px; }
+    /* Fehlerlog #14: nav ist sitewide position:fixed (~6rem hoch inkl.
+       Abstand). Ohne scroll-padding-top landet jedes Sprungziel (#anker,
+       Breadcrumb, Glossar-Deeplink) direkt unter der Nav und wird zur
+       Haelfte verdeckt -- betraf ALLE bestehenden Anker sitewide, nicht nur
+       neue. Wert deckt sich mit dem bestehenden .page-main padding-top. */
+    html { scroll-behavior: smooth; scroll-padding-top: 6rem; font-size: 16px; }
 
     /* ── DESIGN TOKENS ── */
     :root {
@@ -25,6 +30,17 @@
       --font-head:  'Fraunces', Georgia, serif;
       --font-body:  'Plus Jakarta Sans', sans-serif;
     }
+
+    /* Fehlerlog #15: Es gab nie eine globale Link-Farbe -- jeder <a> ohne
+       eigene Klasse (Fliesstext in FAQ-Antworten, Glossar-Beschreibungen,
+       Ratgeber-Artikeltexten) fiel auf Browser-Default-Blau zurueck statt
+       auf die Marken-Farbe. Betraf sitewide jeden Inline-Link in <p>/<dd>,
+       nicht nur die neuen Glossar-Querverweise. text-decoration bewusst
+       nicht angetastet (Browser-Underline bleibt fuer Barrierefreiheit
+       erhalten) -- spezifischere Regeln (.nav-links a, footer a, .toc a...)
+       ueberschreiben das ohnehin per hoeherer Spezifitaet. */
+    a { color: var(--green); }
+    a:hover { color: var(--green-dark); }
 
     body {
       font-family: var(--font-body);
@@ -425,6 +441,20 @@
     /* Phase 3: Kontrast von .4 auf .6 angehoben -- Lighthouse/axe bemaengelte
        3.53:1 auf dem Navy-Hintergrund, WCAG AA verlangt 4.5:1 fuer Fliesstext. */
     .footer-legal { font-size: .78rem; color: rgba(255,255,255,.6); margin-top: 1.5rem; }
+
+    /* ── FOOTER TEILEN (sitewide, alle 39 Seiten mit Footer) ── */
+    .footer-share { display: flex; gap: .8rem; justify-content: center; flex-wrap: wrap; margin: 1.6rem 0; }
+    .footer-share-btn {
+      display: inline-flex; align-items: center; gap: .4rem;
+      padding: .5rem 1.1rem; border-radius: 99px; font-weight: 700; font-size: .82rem;
+      text-decoration: none; cursor: pointer; font-family: inherit; border: none;
+      transition: transform .2s, box-shadow .2s;
+    }
+    .footer-share-btn:hover { transform: translateY(-2px); }
+    /* #108040 statt #25d366: siehe Fehlerlog Punkt 12 (Kontrast 5.0:1 statt 1.98:1). */
+    .footer-share-btn--wa { background: #108040; color: white; }
+    .footer-share-btn--copy { background: transparent; color: var(--white); border: 1px solid rgba(255,255,255,.4); }
+    .footer-share-btn--copy:hover { border-color: var(--white); }
 
     /* ── FLOATING WA BUTTON ── */
     .float-wa {
@@ -944,6 +974,9 @@ body.menu-open .mobile-menu { transform: translateX(0); }
 .page-main { padding-top: 6rem; }
 @media (max-width: 768px) {
   .page-main { padding-top: 5rem; }
+  /* Fehlerlog #14: Nav ist auf Mobile niedriger, denselben Wert wie
+     .page-main fuer Anker-Spruenge uebernehmen. */
+  html { scroll-padding-top: 5rem; }
 }
 
 /* ── LEKTIONEN-KARTEN (lektionen.html) ── */
@@ -1058,21 +1091,51 @@ body.menu-open .mobile-menu { transform: translateX(0); }
 .breadcrumb [aria-current="page"] { color: var(--navy); font-weight: 600; }
 
 /* ── GLOSSAR (glossar.html) ── */
-.glossary-list { margin: 2rem 0 3rem; max-width: 720px; }
+/* Schaufenster-Doppelsicht: ab Tablet-Breite 2 Spalten. CSS Grid statt
+   `columns` -- `columns` balanciert per column-fill:balance ueber die
+   GESAMTE Spaltenhoehe und reisst bei ungleich langen Eintraegen grosse,
+   unvorhersagbare Luecken auf (in der FAQ mit nur 8 unterschiedlich langen
+   Antworten deutlich sichtbar). Grid ordnet stattdessen zeilenweise --
+   Eintrag 1+2 nebeneinander, dann 3+4 usw. -- jede Zeile ist nur so hoch
+   wie ihr laengster Eintrag, keine Luecken. dl > div > dt/dd ist gueltiges
+   HTML5 (deshalb der .glossary-item-Wrapper). */
+.glossary-list { display: grid; grid-template-columns: 1fr; margin: 2rem 0 3rem; max-width: 1080px; }
+.glossary-item { padding: 1.2rem 0; border-bottom: 1px solid var(--border); }
+.glossary-item:last-child { border-bottom: none; }
 .glossary-list dt {
   font-family: var(--font-head); font-weight: 700; font-size: 1.1rem;
-  color: var(--navy); margin-top: 1.6rem; padding-top: 1.2rem;
-  border-top: 1px solid var(--border);
+  color: var(--navy);
 }
-.glossary-list dt:first-child { margin-top: 0; padding-top: 0; border-top: none; }
 .glossary-list dd { color: var(--slate); margin: .4rem 0 0; }
+/* Fehlerlog #14 nutzt scroll-padding-top sitewide; dieser Zusatz hebt das
+   Ziel-Element visuell hervor, wenn jemand ueber einen Deeplink landet
+   (z. B. von einem Ratgeber-Artikel auf glossar.html#blaue-karte-eu) --
+   sonst faellt gar nicht auf, welcher von 18 Begriffen gemeint war. */
+.glossary-item:target {
+  background: var(--green-light); border-radius: var(--radius-sm);
+  padding: 1.2rem; margin: 0 -1.2rem; border-bottom-color: transparent;
+}
+@media (min-width: 860px) {
+  .glossary-list { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+}
 
 /* ── FAQ (faq.html) ── */
-.faq-item { margin: 2rem 0; }
+.faq-grid { display: grid; grid-template-columns: 1fr; margin: 2rem 0; }
+.faq-item { margin: 0 0 2rem; }
 .faq-item h3 {
   font-family: var(--font-head); font-size: 1.15rem; color: var(--navy); margin-bottom: .4rem;
 }
 .faq-item p { color: var(--slate); }
+@media (min-width: 860px) {
+  .faq-grid { grid-template-columns: 1fr 1fr; column-gap: 3rem; }
+}
+
+/* ── INHALTS-ZAEHLER (FAQ/Glossar) ── */
+.content-counter {
+  display: inline-block; background: var(--green-light); color: var(--green-dark);
+  font-weight: 700; font-size: .85rem; padding: .35rem .9rem; border-radius: 99px;
+  margin: .8rem 0 1.6rem;
+}
 
 /* ── SKIP-LINK (Phase 3, Barrierefreiheit) ── */
 .skip-link {
