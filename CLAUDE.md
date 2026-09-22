@@ -978,6 +978,25 @@ von `anmeldung-schritt-fuer-schritt.html` gesetzt. Kein Bangla ergänzt
 Seite strukturell validiert (`json.loads`). Meta-Description auf 150
 Zeichen im 140-160-Zielkorridor (siehe Phase 4 Teil 3).
 
+**Gefundener und behobener Bindestrich-Stilbruch (auf Nachfrage geprüft,
+nachdem nur nach der `wissen.html`-Karte gefragt wurde):** Der neue
+Artikel nutzte im sichtbaren Fließtext durchgängig den einfachen
+Tastatur-Bindestrich `--`. Ein Abgleich mit bestehenden Artikeln
+(`deutsch-lernen-dhaka.html`, `familiennachzug-ablauf.html`,
+`sperrkonto-visum-kosten.html`) zeigte ein durchgängiges, offenbar
+bewusstes Muster: sichtbarer Fließtext (Absätze, Listen, `.aeo-box`,
+sichtbare FAQ-Antworten) nutzt den echten Halbgeviertstrich `–`,
+während `<meta name="description">`, `og:description` und JSON-LD-
+Textfelder (`description`, FAQ-`text`) durchgehend den einfachen `--`
+verwenden -- vermutlich um Encoding-/Escaping-Risiken beim
+automatisierten Befüllen von Attributen und JSON-Strings zu vermeiden.
+Fix: `--` im sichtbaren Body-Text (7 Stellen) auf `–` umgestellt, Head
+(Meta/JSON-LD) unverändert gelassen -- ebenso die `wissen.html`-Karten-
+Beschreibung. **Lehre: Bei neuen Artikeln vor dem Commit `grep -n ' -- '
+datei.html` laufen lassen und prüfen, ob Treffer im sichtbaren Body oder
+nur im Head (Meta/JSON-LD) liegen -- nur Body-Treffer sind ein
+Stilbruch.**
+
 ---
 
 ## Umgebung
