@@ -936,6 +936,50 @@ Diagnose verliert, die schon einmal gemacht wurde.
 
 ---
 
+## Phase 6 (18.09.2026): Neuer Ratgeber-Artikel "Schweinefleisch und Religion"
+
+Externe Übergabe (Markdown-Datei mit eingebetteter `HANDOFF-NOTIZ`) lieferte
+einen redaktionell fertigen Artikeltext samt Front-Matter und wollte ihn
+1:1 nach dem "topwash-Muster" einsortiert haben. Zwei Punkte aus der
+Notiz wurden **abgelehnt**, ein dritter, unabhängig mitgeschickter Punkt
+(ein KI-generiertes Bildprompt für ein Schwein mit Schal) wurde ignoriert:
+
+- **"semantisches HTML5 + Tailwind CDN"** -- dieselbe veraltete Vorgabe aus
+  dem allgemeinen Vertical-Coding-Leitfaden, die in AP 8 und seither bei
+  jeder externen Übergabe abgelehnt wurde (siehe „Kein Tailwind in diesem
+  Repo" oben). Kein Tailwind, bestehendes `theme.css` verwendet.
+- **Bild-Prompt für ein KI-generiertes Foto** (Schwein mit Schal auf einer
+  Wiese) war der Übergabe als separater Text beigefügt. Nicht umgesetzt,
+  aus zwei Gründen: Erstens verstößt jedes erfundene/KI-generierte Bild
+  gegen den seit Phase 4 Teil 2 mehrfach bekräftigten Grundsatz „keine
+  Stockbilder oder erfundene Fotos" (dort ging es um fehlende echte
+  Fotos, hier wäre es sogar ein komplett synthetisches Bild). Zweitens passt
+  ein possierliches Schwein mit Schal inhaltlich nicht zu einem Artikel
+  über ein religiöses Speiseverbot, das für einen großen Teil der
+  Zielgruppe ernst genommen wird -- das Bild wäre nicht nur
+  Projektregel-widrig, sondern auch redaktionell unpassend gewesen.
+- **Zensuszahlen aktualisiert statt übernommen:** Die Übergabe nannte
+  "rund 90 %" Muslime / "8,5 %" Hindus in Bangladesch -- das sind die
+  **2011er**-Zensuswerte (90,39 % / 8,54 %). Per `WebSearch` gegen den
+  Zensus 2022 geprüft und auf die aktuelleren Zahlen 91,04 % (Muslime) /
+  7,95 % (Hindus) / 0,61 % (Buddhisten) / 0,30 % (Christen) aktualisiert.
+
+**Umgesetzt:** `ratgeber/schweinefleisch-und-religion.html`, Kategorie
+"Sprache & Leben" (passt zu den Tags "Kultur"/"Religion"/"Alltag in
+Deutschland" aus dem Front-Matter). Gleiches Format wie die übrigen
+25 Wissen-Artikel: TOC, `.aeo-box`, `FAQPage`- + `Article`- +
+`BreadcrumbList`-JSON-LD, Footer-Teilen-Block, `noindex` (neue Artikel
+fallen nicht unter die Policy-Änderung vom 14.09.2026, die galt nur für
+die 21 damals bereits bestehenden Seiten). Die `HANDOFF-NOTIZ` aus dem
+Markdown wurde entfernt, nicht mit übernommen (kein Platzhaltertext im
+sichtbaren Bereich, Hard Rule 2). `wissen.html`-Karte ergänzt, Rück-Link
+von `anmeldung-schritt-fuer-schritt.html` gesetzt. Kein Bangla ergänzt
+(Hard Rule 6). `pruefen.sh`: Fehler 0. Alle 4 JSON-LD-Blöcke der neuen
+Seite strukturell validiert (`json.loads`). Meta-Description auf 150
+Zeichen im 140-160-Zielkorridor (siehe Phase 4 Teil 3).
+
+---
+
 ## Umgebung
 
 - Termux auf Android (Hauptgerät), Git Bash auf dem PC
