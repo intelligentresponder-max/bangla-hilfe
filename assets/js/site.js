@@ -27,3 +27,28 @@ window.addEventListener('scroll', () => {
   let current = '';
   sections.forEach(s => { if (window.scrollY >= s.offsetTop - 100) current = s.id; });
 });
+
+// ── FOOTER TEILEN ──
+function shareWhatsApp() {
+  const text = document.title + ' – ' + location.href;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+}
+function copyLink(btn) {
+  const original = btn.textContent;
+  navigator.clipboard.writeText(location.href).then(() => {
+    btn.textContent = '✓ Kopiert!';
+    setTimeout(() => { btn.textContent = original; }, 2000);
+  }).catch(() => {
+    btn.textContent = 'Fehler – bitte Link manuell kopieren';
+    setTimeout(() => { btn.textContent = original; }, 2500);
+  });
+}
+
+// ── INHALTS-ZAEHLER (FAQ/Glossar) ──
+// Zaehlt vorhandene Elemente statt eine Zahl von Hand zu pflegen -- gleiches
+// Prinzip wie build-sitemap.sh: generieren statt pflegen, damit der Zaehler
+// nie veraltet, wenn spaeter Fragen/Begriffe dazukommen.
+document.querySelectorAll('[data-count-selector]').forEach(el => {
+  const n = document.querySelectorAll(el.dataset.countSelector).length;
+  el.textContent = el.dataset.countLabel.replace('{n}', n);
+});

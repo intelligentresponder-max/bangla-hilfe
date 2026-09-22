@@ -657,6 +657,83 @@ strukturell validiert.
 
 ---
 
+## Phase 5 (15.09.2026): FAQ/Glossar 2-Spalten-Layout, Glossar vertieft, Teilen-Bereich, Zähler
+
+André wollte konkret: „Schaufenster-Doppelsicht" auf `faq.html`/`glossar.html`,
+alle Glossar-Begriffe (namentlich Blaue Karte EU) genauer erklärt +
+SEO-tauglich für häufige Verlinkung, einen „Teilen"-Bereich im Footer und
+einen „Zähler". Vor der Umsetzung per `AskUserQuestion` geklärt, weil alle
+drei Punkte mehrdeutig waren (siehe Antworten unten) — Ergebnis:
+
+- **Zähler = Inhalts-Zähler, kein Besucherzähler.** Ein Live-Besucherzähler
+  bräuchte einen Drittanbieter-Dienst oder ein Backend (GitHub Pages hat
+  keins) — neuer externer Request pro Aufruf, genau die Art Fremdressource,
+  die dieses Projekt bisher bewusst vermeidet (siehe Hinweis 12 in
+  `pruefen.sh` zu Fonts/cdnjs). Stattdessen zählt `site.js` beim Laden die
+  vorhandenen `.faq-item`/`.glossary-item`-Elemente per
+  `document.querySelectorAll(...).length` und schreibt "8 Fragen &
+  Antworten" / "18 Begriffe erklärt" in ein `.content-counter`-Element via
+  `data-count-selector`/`data-count-label`. Gleiches Prinzip wie
+  `build-sitemap.sh`: generieren statt von Hand pflegen, damit der Zähler
+  nie veraltet.
+- **Layout = CSS Grid, nicht CSS `columns`.** Erster Versuch war
+  `columns: 2` (Zeitungsspalten) mit `break-inside: avoid` — bei der FAQ
+  (nur 8 unterschiedlich lange Antworten) erzeugte `column-fill: balance`
+  grosse, unvorhersagbare Lücken (siehe Screenshot-Vergleich vor/nach in
+  dieser Session). Umgestellt auf `display: grid; grid-template-columns:
+  1fr 1fr` ab 860px — ordnet zeilenweise in Lesereihenfolge (1+2
+  nebeneinander, dann 3+4 …), jede Zeile nur so hoch wie ihr längster
+  Eintrag, keine Lücken. Für `glossar.html` mit 18 gleichmäßigeren
+  Einträgen wäre `columns` vermutlich unauffällig geblieben, aber Grid ist
+  hier ebenfalls das robustere, vorhersagbarere Verhalten — einheitlich
+  auf beiden Seiten verwendet.
+- **Teilen = WhatsApp-Teilen + Link kopieren, kein Facebook/Social-SDK.**
+  Passt zum WhatsApp-only-Vertriebskanal (siehe oben) und braucht keinen
+  Drittanbieter. `shareWhatsApp()` öffnet `wa.me/?text=` mit Titel + URL,
+  `copyLink(btn)` nutzt `navigator.clipboard` mit Kurzzeit-Feedback
+  („✓ Kopiert!") und einem `.catch()`-Fallback-Text, falls die Clipboard-
+  API in einem unsicheren Kontext fehlschlägt. In allen 39 Footern mit
+  echtem Inhalt eingebaut (36 per Python-Skript am einfachen 3-Link-Footer,
+  `index.html` manuell in den bilingualen Footer, `lektionen/lektion2.html`
+  und `lektionen/lektion3.html` manuell — die beiden hatten bisher gar kein
+  `site.js` eingebunden, jetzt ergänzt, da sie keine eigenen Funktionen
+  definieren und `site.js` ohne Nav/Sprachumschalter-Elemente auf diesen
+  Seiten harmlos leerläuft). **Bewusst nur Deutsch** — Bangla-Fassung der
+  Buttons müsste Amir liefern (Hard Rule 6), `<!-- OFFEN: ... -->`-Kommentar
+  in `index.html` gesetzt.
+- **Glossar vertieft**: alle 18 Einträge überarbeitet, mit Kategorie-Emoji
+  versehen und wo möglich untereinander sowie zu bestehenden Ratgeber-
+  Artikeln verlinkt (z. B. Blaue Karte EU ↔ Ehegattennachzug ↔
+  Familiennachzug-Artikel ↔ EU-Blue-Card-Artikel). Flaggschiff „Blaue Karte
+  EU" (namentlich verlangt) deutlich ausgebaut: Rechtsgrundlage § 18g
+  AufenthG, EU-Richtlinie 2021/1883 (per `WebSearch` gegengeprüft: löst
+  Richtlinie 2009/50/EG seit 19.11.2023 ab, Quelle EUR-Lex), Verweis auf
+  den bestehenden Artikel statt Wiederholung der jährlich wechselnden
+  Gehaltsschwelle. `§ 30`/`§ 16a AufenthG` bewusst **nicht** als eigene
+  Glossar-Einträge — kein bestehender Eintrag zitiert einen nackten
+  Paragrafen als Stichwort, das hätte den etablierten Stil gebrochen;
+  stattdessen im Fließtext der betroffenen Einträge zitiert. Sichtbarer
+  Text und `DefinedTermSet`-JSON-LD werden seither aus einer einzigen
+  Python-Datenquelle generiert (`/tmp/rewrite_glossar.py`, nicht ins Repo
+  übernommen — Einweg-Skript wie `add_toc.py` in Phase 4 Teil 3), damit
+  beide garantiert synchron bleiben.
+- **Meta-Descriptions** von `glossar.html` und `faq.html` in den
+  140–160-Zeichen-Zielkorridor gebracht (waren 118 bzw. 65 Zeichen).
+
+**Zwei echte, vorher unentdeckte Bugs gefunden und sitewide gefixt** (siehe
+Fehlerlog #14 und #15 unten) — beide betrafen nicht nur die neuen
+Glossar/FAQ-Elemente, sondern jede Seite mit Anker-Links bzw. jeden
+Inline-Link im Fließtext sitewide.
+
+pruefen.sh: Fehler 0. Alle 101 JSON-LD-Blöcke sitewide erneut strukturell
+validiert. Lighthouse auf `glossar.html` und `faq.html`:
+100/100/100 (Accessibility/Best-Practices/SEO). Visuell per Playwright-
+Screenshot geprüft (Desktop 1280px, Mobile 390px, `:target`-Deeplink) und
+die Teilen-Buttons funktional getestet (Clipboard-Schreibvorgang, WhatsApp-
+Share-URL, Zähler-Werte) — alle wie erwartet.
+
+---
+
 ## Werkzeuge im Repo
 
 | Datei | Zweck |
@@ -822,6 +899,103 @@ Diagnose verliert, die schon einmal gemacht wurde.
     --chrome-flags="--headless=new --no-sandbox"` laufen lassen, statt nur
     visuell zu pruefen — es ist bereits eingerichtet und kostet nur eine
     einmalige `npm install`.**
+
+14. **Anker-Spruenge landeten seit AP1 hinter der fixen Nav -- sitewide,
+    nicht nur bei den neuen Glossar-Deeplinks.** `nav` ist `position:
+    fixed`, aber es gab nie ein `scroll-padding-top`. Jeder `#anker`-Link
+    (Breadcrumb-Ziele, `pakete.html#familiennachzug`,
+    `wissen.html#visum-einreise`, jetzt auch alle 18 Glossar-Begriffe)
+    scrollte das Ziel-Element exakt an die Fensteroberkante -- dort, wo die
+    Nav liegt. Die obersten ~60-90px des Ziels (oft genau die Ueberschrift)
+    waren dadurch verdeckt. Erst beim Bau des `:target`-Highlights fuer die
+    Glossar-Deeplinks per Screenshot aufgefallen. Fix: `html {
+    scroll-padding-top: 6rem }` (bzw. `5rem` im `max-width:768px`-Media-
+    Query, deckt sich mit den bestehenden `.page-main`-Werten). **Lehre:
+    Bei jeder `position: fixed`-Nav gehoert `scroll-padding-top` sofort
+    dazu, nicht erst wenn zufaellig ein Deeplink-Feature das Problem
+    sichtbar macht -- betrifft ausnahmslos jeden Anker-Link im Dokument.**
+
+15. **Keine globale Link-Farbe -- jeder unklassierte `<a>` im Fliesstext
+    war Browser-Default-Blau statt Markengruen.** `theme.css` stylte immer
+    nur einzelne Klassen (`.nav-links a`, `.toc a`, `footer a`, …), nie den
+    nackten `a`-Selektor. Betraf jeden Inline-Link in `<p>`/`<dd>` sitewide
+    -- die "Pakete & Preise"-Verlinkung in der FAQ, die AGB-Verlinkung im
+    Widerrufsrecht-Eintrag, jeden Cross-Link in den Ratgeber-Artikeln,
+    nicht nur die neuen Glossar-Querverweise. Erst beim ersten Screenshot
+    der ueberarbeiteten Glossar-Seite aufgefallen (blaue statt gruene
+    Links). Fix: `a { color: var(--green) } a:hover { color:
+    var(--green-dark) }` frueh in der RESET/BASE-Sektion -- `text-
+    decoration` bewusst nicht angetastet (Browser-Underline bleibt fuer
+    Barrierefreiheit erhalten), spezifischere Klassen-Selektoren
+    ueberschreiben das per hoeherer Spezifitaet ohnehin. Kontrast gegen
+    Weiss 6.6:1, gegen den neuen `:target`-Hintergrund `--green-light`
+    5.9:1 -- beide weit ueber 4.5:1. **Lehre: eine fehlende globale Basis-
+    Regel ist genauso ein Bug wie eine falsche -- `grep -n "^\s*a\s*{"`
+    haette das schon vor Monaten gezeigt, nicht erst bei einem
+    Screenshot-Vergleich.**
+
+---
+
+## Phase 6 (18.09.2026): Neuer Ratgeber-Artikel "Schweinefleisch und Religion"
+
+Externe Übergabe (Markdown-Datei mit eingebetteter `HANDOFF-NOTIZ`) lieferte
+einen redaktionell fertigen Artikeltext samt Front-Matter und wollte ihn
+1:1 nach dem "topwash-Muster" einsortiert haben. Zwei Punkte aus der
+Notiz wurden **abgelehnt**, ein dritter, unabhängig mitgeschickter Punkt
+(ein KI-generiertes Bildprompt für ein Schwein mit Schal) wurde ignoriert:
+
+- **"semantisches HTML5 + Tailwind CDN"** -- dieselbe veraltete Vorgabe aus
+  dem allgemeinen Vertical-Coding-Leitfaden, die in AP 8 und seither bei
+  jeder externen Übergabe abgelehnt wurde (siehe „Kein Tailwind in diesem
+  Repo" oben). Kein Tailwind, bestehendes `theme.css` verwendet.
+- **Bild-Prompt für ein KI-generiertes Foto** (Schwein mit Schal auf einer
+  Wiese) war der Übergabe als separater Text beigefügt. Nicht umgesetzt,
+  aus zwei Gründen: Erstens verstößt jedes erfundene/KI-generierte Bild
+  gegen den seit Phase 4 Teil 2 mehrfach bekräftigten Grundsatz „keine
+  Stockbilder oder erfundene Fotos" (dort ging es um fehlende echte
+  Fotos, hier wäre es sogar ein komplett synthetisches Bild). Zweitens passt
+  ein possierliches Schwein mit Schal inhaltlich nicht zu einem Artikel
+  über ein religiöses Speiseverbot, das für einen großen Teil der
+  Zielgruppe ernst genommen wird -- das Bild wäre nicht nur
+  Projektregel-widrig, sondern auch redaktionell unpassend gewesen.
+- **Zensuszahlen aktualisiert statt übernommen:** Die Übergabe nannte
+  "rund 90 %" Muslime / "8,5 %" Hindus in Bangladesch -- das sind die
+  **2011er**-Zensuswerte (90,39 % / 8,54 %). Per `WebSearch` gegen den
+  Zensus 2022 geprüft und auf die aktuelleren Zahlen 91,04 % (Muslime) /
+  7,95 % (Hindus) / 0,61 % (Buddhisten) / 0,30 % (Christen) aktualisiert.
+
+**Umgesetzt:** `ratgeber/schweinefleisch-und-religion.html`, Kategorie
+"Sprache & Leben" (passt zu den Tags "Kultur"/"Religion"/"Alltag in
+Deutschland" aus dem Front-Matter). Gleiches Format wie die übrigen
+25 Wissen-Artikel: TOC, `.aeo-box`, `FAQPage`- + `Article`- +
+`BreadcrumbList`-JSON-LD, Footer-Teilen-Block, `noindex` (neue Artikel
+fallen nicht unter die Policy-Änderung vom 14.09.2026, die galt nur für
+die 21 damals bereits bestehenden Seiten). Die `HANDOFF-NOTIZ` aus dem
+Markdown wurde entfernt, nicht mit übernommen (kein Platzhaltertext im
+sichtbaren Bereich, Hard Rule 2). `wissen.html`-Karte ergänzt, Rück-Link
+von `anmeldung-schritt-fuer-schritt.html` gesetzt. Kein Bangla ergänzt
+(Hard Rule 6). `pruefen.sh`: Fehler 0. Alle 4 JSON-LD-Blöcke der neuen
+Seite strukturell validiert (`json.loads`). Meta-Description auf 150
+Zeichen im 140-160-Zielkorridor (siehe Phase 4 Teil 3).
+
+**Gefundener und behobener Bindestrich-Stilbruch (auf Nachfrage geprüft,
+nachdem nur nach der `wissen.html`-Karte gefragt wurde):** Der neue
+Artikel nutzte im sichtbaren Fließtext durchgängig den einfachen
+Tastatur-Bindestrich `--`. Ein Abgleich mit bestehenden Artikeln
+(`deutsch-lernen-dhaka.html`, `familiennachzug-ablauf.html`,
+`sperrkonto-visum-kosten.html`) zeigte ein durchgängiges, offenbar
+bewusstes Muster: sichtbarer Fließtext (Absätze, Listen, `.aeo-box`,
+sichtbare FAQ-Antworten) nutzt den echten Halbgeviertstrich `–`,
+während `<meta name="description">`, `og:description` und JSON-LD-
+Textfelder (`description`, FAQ-`text`) durchgehend den einfachen `--`
+verwenden -- vermutlich um Encoding-/Escaping-Risiken beim
+automatisierten Befüllen von Attributen und JSON-Strings zu vermeiden.
+Fix: `--` im sichtbaren Body-Text (7 Stellen) auf `–` umgestellt, Head
+(Meta/JSON-LD) unverändert gelassen -- ebenso die `wissen.html`-Karten-
+Beschreibung. **Lehre: Bei neuen Artikeln vor dem Commit `grep -n ' -- '
+datei.html` laufen lassen und prüfen, ob Treffer im sichtbaren Body oder
+nur im Head (Meta/JSON-LD) liegen -- nur Body-Treffer sind ein
+Stilbruch.**
 
 ---
 
