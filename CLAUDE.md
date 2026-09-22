@@ -934,6 +934,28 @@ Diagnose verliert, die schon einmal gemacht wurde.
     haette das schon vor Monaten gezeigt, nicht erst bei einem
     Screenshot-Vergleich.**
 
+16. **Die eigentliche GitHub-Pages-Domain (`intelligentresponder-max.github.io`)
+    ist aus dieser Session heraus nicht erreichbar -- weder per WebFetch
+    noch per `curl` in Bash.** Nach dem Merge von PR #7 (22.09.2026) wollte
+    ich den Live-Stand des neuen Artikels direkt nachpruefen. Beide Wege
+    scheiterten mit derselben Ursache: `curl` liefert `CONNECT tunnel
+    failed, response 403`, der Proxy-Status (`__agentproxy/status`) zeigt
+    dazu `connect_rejected -- gateway answered 403 to CONNECT (policy
+    denial)` fuer genau diesen Host. Kein transienter Fehler, sondern eine
+    Egress-Policy dieser Umgebung. **Erweitert Fehlerlog #7** (dort ging es
+    nur um die GitHub-REST-API fuer Pages-Settings) -- jetzt ist auch die
+    tatsaechlich ausgelieferte Seite selbst nicht direkt abrufbar.
+    **Ersatz-Verifikation, die funktioniert:** den Workflow-Run des
+    `.github/workflows/deploy.yml` nach dem Merge-Commit pruefen
+    (`actions_list` → `list_workflow_runs`, `head_sha` gegen den
+    Merge-Commit abgleichen, `conclusion: success` genuegt als Nachweis,
+    dass GitHub Pages den Build uebernommen hat) -- das lief nicht ueber
+    den blockierten Proxy, sondern ueber das GitHub-MCP-Tool. **Lehre:
+    Live-Deploy nie per direktem HTTP-Abruf der `.github.io`-Domain
+    verifizieren wollen, das schlaegt in dieser Umgebung zuverlaessig fehl
+    -- stattdessen den zugehoerigen `Deploy to GitHub Pages`-Workflow-Run
+    pruefen, das ist der verlaessliche, tatsaechlich erreichbare Nachweis.**
+
 ---
 
 ## Phase 6 (18.09.2026): Neuer Ratgeber-Artikel "Schweinefleisch und Religion"
