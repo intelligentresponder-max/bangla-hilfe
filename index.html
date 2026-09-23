@@ -14,13 +14,19 @@
 <meta property="og:title" content="BanglaHilfe Deutschland – Deutsch lernen auf Bangla"/>
 <meta property="og:description" content="Zweisprachige Hilfe fuer Bangladeschis: Visum, FSJ, BFD, Deutschkurs. Frankfurt. Ab 9,99 EUR."/>
 <meta property="og:url" content="https://bit.ly/bangla-hilfe"/>
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="https://intelligentresponder-max.github.io/bangla-hilfe/images/og-image.jpg"/>
+<meta property="og:image:width" content="1200"/>
+<meta property="og:image:height" content="800"/>
+<meta property="og:image:alt" content="BanglaHilfe Deutschland – Bangladesch und Deutschland Hand in Hand"/>
+<meta property="twitter:image" content="https://intelligentresponder-max.github.io/bangla-hilfe/images/og-image.jpg"/>
+<meta name="twitter:card" content="summary_large_image">
 <meta property="og:type" content="website"/>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": ["Organization", "LocalBusiness"],
   "name": "BanglaHilfe Deutschland",
+  "logo": "https://intelligentresponder-max.github.io/bangla-hilfe/images/logo-badge.jpg",
   "url": "https://intelligentresponder-max.github.io/bangla-hilfe/",
   "address": {
     "@type": "PostalAddress",
@@ -49,17 +55,18 @@
       <span>📦</span>
       <span data-lang="de">Pakete</span>
       <span data-lang="bn">প্যাকেজ</span>
+      <span data-lang="en">Packages</span>
     </a>
     <button class="bottom-bar-btn" onclick="toggleLang()" type="button">
       <span>🌐</span>
-      <span>DE / বাং</span>
+      <span>DE / বাং / EN</span>
     </button>
   </div>
 
   <!-- NAV -->
   <nav aria-label="Hauptnavigation">
     <a href="#" class="nav-logo">
-      <span class="nav-logo-flag">🇧🇩🇩🇪</span>
+      <img src="images/logo-badge.jpg" alt="BanglaHilfe Deutschland Logo" class="nav-logo-img" width="44" height="44">
       <div>
         <div class="nav-logo-text">BanglaHilfe</div>
         <div class="nav-logo-sub">Deutschland</div>
@@ -74,11 +81,12 @@
     <div class="nav-right">
         <button class="nav-toggle" onclick="toggleMenu()">☰</button>
       <div class="lang-toggle">
-        <button class="lang-btn active" onclick="setLang('de')">DE</button>
-        <button class="lang-btn" onclick="setLang('bn')">বাং</button>
+        <button class="lang-btn active" data-lang-btn="de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" data-lang-btn="bn" onclick="setLang('bn')">বাং</button>
+        <button class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
       </div>
       <a href="https://wa.me/491634692255" target="_blank" class="nav-wa">
-        💬 <span data-lang="de">WhatsApp</span><span data-lang="bn">হোয়াটসঅ্যাপ</span>
+        💬 <span data-lang="de">WhatsApp</span><span data-lang="bn">হোয়াটসঅ্যাপ</span><span data-lang="en">WhatsApp</span>
       </a>
     </div>
   </nav>
@@ -104,6 +112,7 @@
 
       <div class="hero-tag" data-lang="de">Frankfurt am Main · Hessen · Deutschland</div>
       <div class="hero-tag" data-lang="bn">ফ্রাঙ্কফুর্ট · হেসেন · জার্মানি</div>
+      <div class="hero-tag" data-lang="en">Frankfurt am Main · Hesse · Germany</div>
 
       <h1 data-lang="de">
         Dein Weg nach<br/>
@@ -113,6 +122,11 @@
       <h1 data-lang="bn">
         জার্মানিতে তোমার পথ –<br/>
         <em>আমরা দেখাই কীভাবে।</em>
+      </h1>
+      <h1 data-lang="en">
+        Your path to<br/>
+        <em>Germany</em> –<br/>
+        we'll show you how.
       </h1>
 
       <p class="hero-sub" data-lang="de">
@@ -125,15 +139,22 @@
         আমরা সবকিছু বাংলায় <strong>এবং</strong> জার্মানে ব্যাখ্যা করি।
         সহজ, সৎ, কোনো জটিল শব্দ ছাড়া।
       </p>
+      <p class="hero-sub" data-lang="en">
+        Visa, volunteer service (FSJ/BFD), registration, family reunification –
+        we explain everything in Bangla, German <strong>and</strong> English.
+        Clear, honest, no bureaucratic jargon.
+      </p>
 
       <div class="hero-btns">
         <a href="#produkte" class="btn-primary">
           📦 <span data-lang="de">Pakete ansehen</span>
               <span data-lang="bn">প্যাকেজ দেখুন</span>
+              <span data-lang="en">View packages</span>
         </a>
         <a href="https://wa.me/491634692255" target="_blank" class="btn-ghost">
           💬 <span data-lang="de">Jetzt fragen</span>
               <span data-lang="bn">এখনই জিজ্ঞেস করুন</span>
+              <span data-lang="en">Ask now</span>
         </a>
       </div>
 
@@ -142,21 +163,25 @@
           <span class="hero-badge-num">100%</span>
           <span data-lang="de">Zweisprachig DE + বাংলা</span>
           <span data-lang="bn">দ্বিভাষিক DE + বাংলা</span>
+          <span data-lang="en">Trilingual DE + বাংলা + EN</span>
         </span>
         <span class="hero-badge">
           <span class="hero-badge-num">48h</span>
           <span data-lang="de">Antwortzeit</span>
           <span data-lang="bn">উত্তরের সময়</span>
+          <span data-lang="en">Response time</span>
         </span>
         <span class="hero-badge">
           <span class="hero-badge-num">0 €</span>
           <span data-lang="de">Versteckte Kosten</span>
           <span data-lang="bn">লুকানো খরচ</span>
+          <span data-lang="en">Hidden costs</span>
         </span>
         <span class="hero-badge">
           <span class="hero-badge-num">FFM</span>
           <span data-lang="de">Vor Ort in Frankfurt</span>
           <span data-lang="bn">ফ্রাঙ্কফুর্টে সরাসরি</span>
+          <span data-lang="en">Based in Frankfurt</span>
         </span>
       </div>
     </div>
@@ -193,10 +218,13 @@
       <div class="reveal">
         <span class="section-tag" data-lang="de">So einfach geht's</span>
         <span class="section-tag" data-lang="bn">এত সহজ এটি</span>
+        <span class="section-tag" data-lang="en">It's this simple</span>
         <h2 class="section-title" data-lang="de">3 Schritte – und du bist <em>startklar</em></h2>
         <h2 class="section-title" data-lang="bn">৩টি ধাপ – এবং তুমি <em>প্রস্তুত</em></h2>
+        <h2 class="section-title" data-lang="en">3 steps – and you're <em>ready to go</em></h2>
         <p class="section-sub" data-lang="de">Stell dir vor, du willst nach Deutschland. Du weißt nicht, wo du anfangen sollst. Genau da kommen wir ins Spiel.</p>
         <p class="section-sub" data-lang="bn">কল্পনা করো, তুমি জার্মানিতে যেতে চাও। কোথা থেকে শুরু করবে জানো না। ঠিক সেখানেই আমরা আসি।</p>
+        <p class="section-sub" data-lang="en">Imagine you want to move to Germany. You don't know where to start. That's exactly where we come in.</p>
         <p><a href="bestellen.html">→ So läuft die Bestellung ab</a></p>
       </div>
     </div>
@@ -208,10 +236,13 @@
       <div class="reveal">
         <span class="section-tag" data-lang="de">Unsere Pakete</span>
         <span class="section-tag" data-lang="bn">আমাদের প্যাকেজ</span>
+        <span class="section-tag" data-lang="en">Our packages</span>
         <h2 class="section-title" data-lang="de">Alles, was du brauchst – <em>fertig verpackt</em></h2>
         <h2 class="section-title" data-lang="bn">তোমার যা দরকার – <em>প্রস্তুত প্যাকেজে</em></h2>
+        <h2 class="section-title" data-lang="en">Everything you need – <em>ready to go</em></h2>
         <p class="section-sub" data-lang="de">Kauf per WhatsApp – du schreibst uns, wir schicken dir die Datei. Fertig. Keine Anmeldung, kein Schnickschnack.</p>
         <p class="section-sub" data-lang="bn">WhatsApp-এ কেনো – তুমি লেখো, আমরা ফাইল পাঠাই। শেষ। কোনো নিবন্ধন নেই, কোনো ঝামেলা নেই।</p>
+        <p class="section-sub" data-lang="en">Buy via WhatsApp – you message us, we send you the file. Done. No sign-up, no hassle.</p>
         <p><a href="pakete.html">→ Alle Pakete ansehen</a> · <a href="preise.html">→ Preisübersicht</a></p>
       </div>
     </div>
@@ -222,11 +253,13 @@
     <div class="container">
       <div class="about-inner">
         <div class="about-visual reveal">
-          <div class="about-visual-flags">🇧🇩 🤝 🇩🇪</div>
+          <img src="images/logo-badge.jpg" alt="BanglaHilfe Deutschland – Bangladesch und Deutschland Hand in Hand" class="about-visual-img">
           <div class="about-visual-title" data-lang="de">Wir kennen beide Welten.</div>
           <div class="about-visual-title" data-lang="bn">আমরা দুই জগত জানি।</div>
+          <div class="about-visual-title" data-lang="en">We know both worlds.</div>
           <div class="about-visual-sub" data-lang="de">Bangladesch in der Seele, Deutschland im Alltag.</div>
           <div class="about-visual-sub" data-lang="bn">মনে বাংলাদেশ, জীবনে জার্মানি।</div>
+          <div class="about-visual-sub" data-lang="en">Bangladesh at heart, Germany in everyday life.</div>
           <div class="about-pills">
             <span class="about-pill">Frankfurt 🏙️</span>
             <span class="about-pill">Hessen 🌿</span>
@@ -246,41 +279,117 @@
       <div class="reveal text-center">
         <span class="section-tag" data-lang="de">Warum wir?</span>
         <span class="section-tag" data-lang="bn">কেন আমরা?</span>
+        <span class="section-tag" data-lang="en">Why us?</span>
         <h2 class="section-title" data-lang="de">Was uns <em>anders macht</em></h2>
         <h2 class="section-title" data-lang="bn">যা আমাদের <em>আলাদা করে</em></h2>
+        <h2 class="section-title" data-lang="en">What makes us <em>different</em></h2>
       </div>
       <div class="trust-grid">
         <div class="trust-card reveal">
           <div class="trust-icon">🗣️</div>
           <div class="trust-title" data-lang="de">Echtes Bangla</div>
           <div class="trust-title" data-lang="bn">আসল বাংলা</div>
+          <div class="trust-title" data-lang="en">Real Bangla</div>
           <div class="trust-text" data-lang="de">Kein Google-Übersetzer. Wir schreiben und sprechen echtes Bangla – so wie du es zuhause redest.</div>
           <div class="trust-text" data-lang="bn">কোনো গুগল অনুবাদ নয়। আমরা আসল বাংলা লিখি এবং বলি – ঠিক যেভাবে তুমি বাড়িতে কথা বলো।</div>
+          <div class="trust-text" data-lang="en">No Google Translate. We write and speak real Bangla – the way you talk at home.</div>
         </div>
         <div class="trust-card reveal">
           <div class="trust-icon">📍</div>
           <div class="trust-title" data-lang="de">Vor Ort in Frankfurt</div>
           <div class="trust-title" data-lang="bn">ফ্রাঙ্কফুর্টে সরাসরি</div>
+          <div class="trust-title" data-lang="en">Based in Frankfurt</div>
           <div class="trust-text" data-lang="de">Wir kennen die Ämter, die Buslinien und die besten Einsatzstellen hier vor Ort. Kein Ferndienstleister.</div>
           <div class="trust-text" data-lang="bn">আমরা এখানকার অফিস, বাস লাইন এবং সেরা কর্মস্থান জানি। কোনো দূরবর্তী সেবা প্রদানকারী নই।</div>
+          <div class="trust-text" data-lang="en">We know the local offices, the bus lines and the best placements right here. No remote agency.</div>
         </div>
         <div class="trust-card reveal">
           <div class="trust-icon">⚖️</div>
           <div class="trust-title" data-lang="de">Ehrlich & fair</div>
           <div class="trust-title" data-lang="bn">সৎ ও ন্যায্য</div>
+          <div class="trust-title" data-lang="en">Honest & fair</div>
           <div class="trust-text" data-lang="de">Wir versprechen keine Wunder. Wir sagen dir klar, was möglich ist und was nicht. Immer fair.</div>
           <div class="trust-text" data-lang="bn">আমরা অলৌকিক কিছু প্রতিশ্রুতি দিই না। আমরা স্পষ্টভাবে বলি কী সম্ভব এবং কী নয়। সবসময় ন্যায্য।</div>
+          <div class="trust-text" data-lang="en">We don't promise miracles. We tell you clearly what's possible and what isn't. Always fair.</div>
         </div>
         <div class="trust-card reveal">
           <div class="trust-icon">⚡</div>
           <div class="trust-title" data-lang="de">Schnell & direkt</div>
           <div class="trust-title" data-lang="bn">দ্রুত ও সরাসরি</div>
+          <div class="trust-title" data-lang="en">Fast & direct</div>
           <div class="trust-text" data-lang="de">Kein langer Briefwechsel. Kauf per WhatsApp, bekomm dein Dokument – fertig. So soll's sein.</div>
           <div class="trust-text" data-lang="bn">কোনো দীর্ঘ চিঠি বিনিময় নেই। WhatsApp-এ কেনো, দলিল পাও – শেষ। এভাবেই হওয়া উচিত।</div>
+          <div class="trust-text" data-lang="en">No long back-and-forth. Buy via WhatsApp, get your document – done. That's how it should be.</div>
         </div>
       </div>
     </div>
   </section>
+
+  <!-- VERTRAUEN -->
+  <!-- Nur DE fertig ausformuliert. BN/EN dieser Sektion bewusst NICHT
+       mitgeliefert -- Risiko fuer falsche Nuancen bei sensiblem Vertrauens-/
+       Anti-Betrugs-Thema ist zu hoch fuer eine ungeprüfte Übersetzung. Amir
+       sollte die Bangla-Fassung gegenlesen, danach EN nach demselben Text. -->
+  <section class="trust-detail" id="vertrauen">
+    <div class="container">
+      <div class="reveal text-center">
+        <span class="section-tag">Sicherheit zuerst</span>
+        <h2 class="section-title">Warum ihr uns <em>vertrauen könnt</em></h2>
+        <p class="section-sub">
+          In Bangladesch kursieren viele falsche Versprechen von "Dalals" und
+          anonymen Vermittlern. So arbeiten wir anders.
+        </p>
+      </div>
+
+      <div class="trust-grid">
+        <div class="trust-card reveal">
+          <div class="trust-icon">🛡️</div>
+          <div class="trust-title">Radikale Transparenz</div>
+          <div class="trust-text">
+            Nur das Goethe-Institut Dhaka stellt das offizielle A1-Zertifikat
+            (Start Deutsch 1) für den Familiennachzug aus – wir verweisen aktiv
+            auf die Deutsche Botschaft Dhaka und Make it in Germany. Wir
+            versprechen keine Visa, nur ehrliche Vorbereitung.
+          </div>
+        </div>
+
+        <div class="trust-card reveal">
+          <div class="trust-icon">🤝</div>
+          <div class="trust-title">Echte Gesichter, keine Marke ohne Namen</div>
+          <div class="trust-text">
+            André (deutscher Muttersprachler) und Amir (Bangla-Bruder) stehen
+            mit Namen und Gesicht für BanglaHilfe – kein anonymes Team,
+            keine Briefkastenfirma.
+          </div>
+        </div>
+
+        <div class="trust-card reveal">
+          <div class="trust-icon">✅</div>
+          <div class="trust-title">Kostenloser Erstkontakt ohne Risiko</div>
+          <div class="trust-text">
+            Schreibt uns unverbindlich per WhatsApp und stellt eure Frage –
+            ihr bekommt eine ehrliche Antwort, bevor ihr etwas kauft.
+          </div>
+        </div>
+
+        <div class="trust-card reveal">
+          <div class="trust-icon">📄</div>
+          <div class="trust-title">Sofort-Mehrwert kostenlos</div>
+          <div class="trust-text">
+            Fragt nach unserem kostenlosen A1-Sprech-Spickzettel (7 Standardfragen
+            zur Selbstvorstellung) – bevor ihr euch für ein Paket entscheidet.
+          </div>
+        </div>
+      </div>
+
+      <div class="reveal text-center trust-detail-cta">
+        <a href="https://wa.me/491634692255?text=Hallo%2C%20ich%20h%C3%A4tte%20gern%20den%20kostenlosen%20A1-Sprech-Spickzettel." target="_blank" class="btn-primary">
+          📄 Kostenlosen Spickzettel anfragen
+        </a>
+      </div>
+    </div>
+  </section>
+  <!-- OFFENE PUNKTE, bewusst NICHT erfunden: "Echte Sprachnachrichten-Ausschnitte" und Testimonials fehlen absichtlich (kein echter Social Proof vorhanden); Gruppengroessen-Garantie aus der Vorlage passt nicht zum Pakete-Modell und wurde weggelassen. -->
 
   <!-- CTA / KONTAKT -->
   <section class="cta" id="kontakt">
@@ -288,12 +397,15 @@
       <div class="reveal">
         <h2 data-lang="de">Bereit? Dann schreib uns einfach. 👋</h2>
         <h2 data-lang="bn">প্রস্তুত? তাহলে শুধু লেখো। 👋</h2>
+        <h2 data-lang="en">Ready? Just message us. 👋</h2>
         <p data-lang="de">Kein langes Formular. Kein Termin. Einfach WhatsApp öffnen und losschreiben – auf Bangla oder Deutsch, ganz wie du willst.</p>
         <p data-lang="bn">কোনো দীর্ঘ ফর্ম নেই। কোনো অ্যাপয়েন্টমেন্ট নেই। শুধু WhatsApp খোলো এবং লিখতে শুরু করো – বাংলায় বা জার্মানে, যেটা চাও।</p>
+        <p data-lang="en">No long form. No appointment. Just open WhatsApp and start writing – in Bangla, German or English, whatever you prefer.</p>
         <a href="https://wa.me/491634692255" target="_blank" class="wa-big">
           <span class="wa-big-icon">💬</span>
           <span data-lang="de">WhatsApp: 0163 4692255</span>
           <span data-lang="bn">WhatsApp: 0163 4692255</span>
+          <span data-lang="en">WhatsApp: 0163 4692255</span>
         </a>
         <div class="cta-cards">
           <div class="cta-card">
@@ -310,8 +422,10 @@
             <div class="cta-card-icon">⏰</div>
             <div class="cta-card-title" data-lang="de">Antwortzeit</div>
             <div class="cta-card-title" data-lang="bn">উত্তরের সময়</div>
+            <div class="cta-card-title" data-lang="en">Response time</div>
             <div class="cta-card-text" data-lang="de">Innerhalb 48 Stunden<br/>Mo–Sa, 9–20 Uhr</div>
             <div class="cta-card-text" data-lang="bn">৪৮ ঘণ্টার মধ্যে<br/>সোম–শনি, ৯–২০ টা</div>
+            <div class="cta-card-text" data-lang="en">Within 48 hours<br/>Mon–Sat, 9am–8pm</div>
           </div>
         </div>
       </div>
@@ -340,21 +454,31 @@
     <p class="footer-tagline">
       <span data-lang="de">Deine Brücke zwischen Bangladesch und Deutschland. Frankfurt am Main.</span>
       <span data-lang="bn">বাংলাদেশ ও জার্মানির মধ্যে তোমার সেতু। ফ্রাঙ্কফুর্ট আম মাইন।</span>
+      <span data-lang="en">Your bridge between Bangladesh and Germany. Frankfurt am Main.</span>
     </p>
     <div class="footer-links">
       <a href="#wie" data-lang="de">Wie es läuft</a>
       <a href="#wie" data-lang="bn">কীভাবে কাজ করে</a>
+      <a href="#wie" data-lang="en">How it works</a>
       <a href="#produkte" data-lang="de">Pakete</a>
       <a href="#produkte" data-lang="bn">প্যাকেজ</a>
+      <a href="#produkte" data-lang="en">Packages</a>
       <a href="#ueber-uns" data-lang="de">Über uns</a>
       <a href="#ueber-uns" data-lang="bn">আমাদের সম্পর্কে</a>
+      <a href="#ueber-uns" data-lang="en">About us</a>
+      <a href="bestellen.html" data-lang="de">Bestellung</a>
+      <a href="bestellen.html" data-lang="bn">অর্ডার</a>
+      <a href="bestellen.html" data-lang="en">How to order</a>
       <a href="https://wa.me/491634692255" target="_blank">WhatsApp</a>
       <a href="impressum.html" data-lang="de">Impressum</a>
       <a href="impressum.html" data-lang="bn">ইম্প্রেসুম</a>
+      <a href="impressum.html" data-lang="en">Imprint</a>
       <a href="datenschutz.html" data-lang="de">Datenschutz</a>
       <a href="datenschutz.html" data-lang="bn">গোপনীয়তা</a>
+      <a href="datenschutz.html" data-lang="en">Privacy</a>
       <a href="agb.html" data-lang="de">AGB</a>
       <a href="agb.html" data-lang="bn">AGB</a>
+      <a href="agb.html" data-lang="en">Terms</a>
     </div>
     <!-- OFFEN: Teilen-Buttons nur auf Deutsch, Bangla-Fassung muesste Amir ergaenzen. -->
     <div class="footer-share">
@@ -364,6 +488,7 @@
     <div class="footer-legal">
       <span data-lang="de">Wir sind kein Rechtsanwalt und keine Behörde. Unsere Dokumente dienen zur Orientierung und ersetzen keine offizielle Rechtsberatung.</span>
       <span data-lang="bn">আমরা আইনজীবী বা সরকারি সংস্থা নই। আমাদের দলিল শুধু নির্দেশিকা এবং সরকারি আইনি পরামর্শের বিকল্প নয়।</span>
+      <span data-lang="en">We are not a lawyer or a government authority. Our documents are for orientation only and do not replace official legal advice.</span>
       <br/>© 2025 BanglaHilfe Deutschland · Frankfurt am Main
     </div>
   </footer>

@@ -1021,6 +1021,249 @@ Stilbruch.**
 
 ---
 
+## Phase 7 (23.09.2026): Englisch als dritte Sprache eingeführt — Kehrtwende bei einer mehrfach bekräftigten Entscheidung
+
+Externe Übergabe (5 Dateien: `04-index-en-content.html`, `02-theme-patch.css`,
+`03-nav-snippet.html`, `05-vertrauen-section.html`, `01-site.js`, ohne
+begleitenden Text) wollte Englisch als dritte Sprache neben Deutsch/Bangla
+einführen — das widerspricht direkt drei zuvor dokumentierten, wiederholt
+bekräftigten Entscheidungen (AP 8, Phase 3, Phase 4 Teil 2: „keine
+englische Version", „`hreflang=\"en\"` auf nicht existierende Seiten wäre
+falsch"). Bei einer Kehrtwende dieser Tragweite wurde **vor der Umsetzung**
+per `AskUserQuestion` nachgefragt statt die Übergabe stillschweigend
+auszuführen oder ungefragt abzulehnen — André hat alle drei Punkte
+ausdrücklich bestätigt:
+
+1. **„Ja, EN jetzt einführen"** — die frühere Ablehnung war keine
+   Bangla-Analogie-Regel, sondern schlicht mangelnder Bedarf; der Bedarf
+   ist jetzt da. Kein Widerspruch zur alten Begründung, sondern eine neue
+   Tatsachenlage.
+2. **„Nur bestellen.html ergänzen"** statt auch `preise.html` in die
+   Nav-Erweiterung aufzunehmen — die Übergabe ging fälschlich davon aus,
+   `preise.html` sei noch eine echte Seite mit Inhalt. Tatsächlich ist sie
+   seit AP 8 ein reiner Redirect-Stub auf `pakete.html`; ein Link darauf
+   wäre ein sinnloser Umweg gewesen. `bestellen.html` dagegen war
+   tatsächlich unterverlinkt (nur aus dem Footer der Startseite erreichbar).
+3. **Vertrauen-Sektion auf `index.html`**, nicht auf `ueber-uns.html` —
+   passt zur bestehenden Reihenfolge Hero → Wie-es-geht → Pakete → Über
+   uns → Vertrauen → CTA auf der Startseite.
+
+**Warum das kein Widerspruch zu Phase 3s hreflang-Ablehnung ist:** Die
+Seite nutzt für DE/BN nie separate URLs oder `hreflang` — beide Sprachen
+stehen im selben Dokument, per Klick umschaltbar (client-seitig). Englisch
+folgt exakt demselben Mechanismus (dieselbe URL, dritter Umschalter-Zustand),
+keine dritte gecrawlte URL. Damit stellt sich die hreflang-Frage gar nicht
+neu; die Phase-3-Ablehnung bezog sich auf eine echte separate `/en/`-Seite,
+die hier nie gebaut wurde.
+
+### Technischer Umbau
+
+- **CSS-Sichtbarkeitsmechanik geändert:** die alte binäre `body.bn`-Klasse
+  (De-facto ein Ein/Aus-Schalter) reicht für drei Sprachen nicht mehr.
+  Ersetzt durch `data-active-lang="de|bn|en"` auf `<body>` plus eine
+  strikte Positivliste in `theme.css`:
+  ```css
+  [data-lang] { display: none; }
+  body:not([data-active-lang]) [data-lang="de"] { display: block; }
+  body[data-active-lang="de"] [data-lang="de"] { display: block; }
+  body[data-active-lang="bn"] [data-lang="bn"] { display: block; }
+  body[data-active-lang="en"] [data-lang="en"] { display: block; }
+  ```
+  Die `body:not([data-active-lang])`-Zeile ist eine **eigene Ergänzung, nicht
+  aus der Übergabe**: ohne sie wäre vor dem ersten JS-Lauf (oder bei
+  deaktiviertem JS) gar kein `data-lang`-Inhalt sichtbar — die alte Mechanik
+  hatte implizit „Deutsch ohne JS" über `body:not(.bn)`. Gleiches
+  Schutzniveau jetzt bewusst nachgebaut.
+- **Gefundener Bug in `03-nav-snippet.html` vor dem Ausrollen:** die
+  Sprachumschalter-Buttons selbst nutzten `data-lang="de/bn/en"` als
+  Identifikations-Attribut — exakt dasselbe Attribut, das die neue
+  Positivlisten-Regel für Inhalte verwendet. Ergebnis: bei aktivem
+  Deutsch wären die BN/EN-Buttons unsichtbar gewesen (`[data-lang]
+  {display:none}` trifft auch sie), Sprachumschalten also nur einmal in
+  eine Richtung möglich. Nicht übernommen — stattdessen ein eigenes
+  Attribut `data-lang-btn` nur für die drei Buttons eingeführt, `site.js`
+  entsprechend umgeschrieben (`document.querySelectorAll('.lang-btn')`
+  mit `btn.dataset.langBtn`). **Lehre: bei einer neuen Sichtbarkeits-
+  Positivliste auf einem Attribut sofort prüfen, ob dasselbe Attribut noch
+  für etwas anderes (hier: UI-Steuerelemente) im selben Dokument verwendet
+  wird — sonst wird die UI, die die Sichtbarkeit steuern soll, selbst von
+  ihrer eigenen Regel unsichtbar gemacht.**
+- **`site.js`**: `setLang()`/`toggleLang()` von binär auf zyklisch DE → BN
+  → EN → DE umgebaut (`LANGS`-Array), `localStorage`-Persistenz und
+  `<html lang>`-Attribut-Update beibehalten. Footer-Teilen, Zähler,
+  Scroll-Reveal, Hamburger-Menü unverändert.
+- **38 HTML-Dateien sitewide** per Python-Skript (nicht von Hand) von
+  2-Button- auf 3-Button-Sprachumschalter umgestellt (`data-lang-btn`
+  statt `data-lang` auf allen drei Buttons).
+- **`index.html`**: EN-Gegenstücke für Hero, Wie-es-geht, Pakete-Teaser,
+  Über-uns-Teaser, Vertrauen-Sektion-Header, alle 4 Trust-Karten und den
+  CTA-Bereich (nur die „Antwortzeit"-Karte, E-Mail/Standort bleiben
+  unübersetzt — deckt sich mit dem Umfang der Übergabe) ergänzt, Inhalt
+  wörtlich aus `04-index-en-content.html` übernommen. Zwei fehlende
+  EN-Gegenstücke **selbst gefunden und ergänzt** (nicht in der Übergabe):
+  das „Pakete"-Label in der Bottom-Bar und das „💬 WhatsApp"-Label in der
+  Nav — beide hatten DE+BN, aber kein EN, wären unter aktivem Englisch
+  leer geblieben.
+- **Neue „Vertrauen"-Sektion** (`05-vertrauen-section.html`) zwischen
+  `.trust` und dem CTA-Bereich eingefügt: 4 Karten (Radikale Transparenz,
+  Echte Gesichter, Kostenloser Erstkontakt, Sofort-Mehrwert) plus CTA-Link
+  für einen kostenlosen „A1-Sprech-Spickzettel" per WhatsApp. **Kritischer
+  Bug in der Übergabe-Sektion gefunden:** sie war komplett mit
+  `data-lang="de"` markiert, ohne jedes BN/EN-Gegenstück. Unter der neuen
+  strikten Positivlisten-CSS-Regel wäre die gesamte Sektion (bis auf die
+  nackten Emoji-Icons) für BN- und EN-Besucher unsichtbar geworden — ein
+  Rückschritt, den es unter der alten, toleranteren Mechanik so nicht gab.
+  Fix: alle `data-lang="de"`-Attribute aus der Sektion entfernt, damit sie
+  wie die bereits bestehende Blog-Teaser-Sektion auf `index.html`
+  „unwrapped = immer sichtbar" ist — der etablierte Umgang mit bewusst
+  einsprachigem Inhalt, nicht in eine ungepaarte `data-lang="de"` verpackt.
+  `background: var(--light)` gewählt, um sich vom direkt darüberliegenden
+  `.trust` abzuheben (gleiches Wechselmuster wie `.how`/`.products`/
+  `.about`).
+- **Eigener Inline-Style-Verstoß, sofort selbst gefunden:** die
+  CTA-`<div>` der Vertrauen-Sektion kam mit `style="margin-top:2rem"` aus
+  der Übergabe — Verstoß gegen Hard Rule 3, dieselbe Fehlerklasse wie
+  historisch Fehlerlog #4. Fix: eigene Klasse `.trust-detail-cta` in
+  `theme.css`, `pruefen.sh` danach mit 0 Fehlern bestätigt.
+- **`bestellen.html`-Verlinkung nur im Footer, nicht in der Hauptnav.**
+  Die Übergabe wollte den Link in die primäre `<ul class="nav-links">` und
+  ins Mobile-Menü setzen — das hätte AP 8s hart erkämpfte
+  4-Punkte-Konsolidierung (siehe oben) direkt wieder auf 5 Punkte
+  aufgebläht. Stattdessen dreisprachiger Eintrag „Bestellung"/„অর্ডার"/
+  „How to order" nur im reichhaltigen `footer-links`-Block von
+  `index.html` ergänzt (die übrigen 38 Seiten haben dort nur einen
+  schmalen 3-Link-Rechtstexte-Footer ohne vergleichbare Erweiterungsstelle).
+
+### Sitewide-Due-Diligence: drei vorbestehende, bisher unentdeckte Bugs gefunden
+
+Nach Abschluss der EN-Umsetzung ein Sitewide-Scan gefahren (Anzahl
+`data-lang="de"` vs. `data-lang="bn"` pro Datei muss identisch sein) — rein
+aus eigenem Antrieb, nicht angefordert. Ergebnis: drei Dateien hatten
+„verwaiste" `data-lang="de"`-Elemente ganz ohne Bangla-Gegenstück, die es
+schon **vor** dieser Session gab und die unter der alten `body.bn`-Mechanik
+harmlos blieben (weil dort jedes `data-lang`-Element ohne Klasse `.bn`
+sichtbar war), unter der neuen strikten Positivliste aber sitewide für
+BN- und EN-Besucher unsichtbar geworden wären:
+
+- `lektionen.html`: „Kostenlos"-Tag und der Lektionen-Intro-Absatz.
+- `wissen.html`: die 5 Kategorie-Header (Tag+Sub je Kategorie, 10 Elemente)
+  sowie der Haupt-Intro-Absatz der Seite.
+- `pakete.html`: die Tabellenkopf-Zellen „Preis" und „Bestellen" in der
+  Preisübersicht (die benachbarte Zelle „Paket" hatte dagegen korrekt ein
+  BN-Gegenstück — nur diese beiden waren betroffen).
+
+Fix in allen drei Dateien: `data-lang="de"` entfernt (nie Bangla erfunden,
+Hard Rule 6), gleiche „unwrapped = immer sichtbar"-Logik wie bei der
+Vertrauen-Sektion. Ein Python-Skript mit `text.count()`/`text.replace()`
+auf exakte Zielstrings hatte dabei zunächst einen der elf `wissen.html`-
+Fixes übersprungen: der nackte öffnende Tag `<p class="section-sub"
+data-lang="de">` (ohne Text) war ein literales Präfix von fünf anderen,
+längeren Zielstrings in derselben Fix-Liste, wodurch `text.count()` 6 statt
+der erwarteten 1 Übereinstimmung meldete und das Skript den Fix
+korrekterweise mit einer Warnung übersprang, statt blind zu ersetzen. Fix
+nachgeholt mit dem `Edit`-Tool und dem vollständigen, eindeutigen
+Absatztext statt des nackten Tags. **Lehre: bei skriptgestützten
+Text-Ersetzungen mit `str.count()`/`str.replace()` nie einen bloßen
+öffnenden Tag ohne Inhalt als Zielstring verwenden, wenn in derselben
+Ersetzungsliste längere Strings existieren, die exakt mit diesem Tag
+beginnen — `count()` zählt Teilstring-Vorkommen, nicht öffnende Tags, und
+ein Präfix-Treffer in einem längeren String zählt mit. Immer bis zu einem
+eindeutigen Ankerpunkt (z. B. dem schließenden `</p>` oder genug vom
+tatsächlichen Text) matchen, nicht nur bis zum öffnenden Tag.**
+
+Nach dem Fix erneuter Sitewide-Scan: 0 verbleibende de/bn-Mismatches.
+`pruefen.sh`: Fehler 0 (3 unveränderte, seit langem bekannte Hinweise zu
+externen Font-Ressourcen). Alle JSON-LD-Blöcke sitewide erneut strukturell
+validiert (`json.loads`, weiterhin 0 fehlerhafte). Per Playwright verifiziert
+(`index.html`, alle drei Sprachzustände): Sprachumschalter zyklisch
+funktionsfähig, `data-active-lang` wechselt korrekt, Vertrauen-Sektion
+bleibt unter BN/EN sichtbar (unwrapped-Konvention greift), alle drei
+Umschalter-Buttons bleiben in jedem Sprachzustand sichtbar (die
+`data-lang-btn`-Trennung funktioniert wie vorgesehen).
+
+---
+
+## Phase 8 (23.09.2026): Echtes Markenlogo eingeführt — schließt eine seit Phase 3 dokumentierte Lücke
+
+André hat ein Logo-Bild geliefert (goldenes Medaillon, Handschlag-Symbol,
+„bangla-hilfe deutschland"-Schriftzug, von den Flaggen Deutschlands und
+Bangladeschs flankiert) mit dem Auftrag, es „an geeigneten Stellen"
+einzusetzen und danach PR #9 zu mergen. Anders als das abgelehnte
+KI-Bildprompt in Phase 6 (ein erfundenes Deko-Bild für einen Artikel ohne
+Bezug zur Marke) ist das hier ein echtes, von André selbst bereitgestelltes
+Markenzeichen für die Seite als Ganzes — kein Fall von „Bilder nicht
+erfinden", sondern die Bereitstellung des in Phase 3 explizit als fehlend
+dokumentierten „echten Markenlogos" (dort gab es nur einen 217-Byte-
+Favicon-Platzhalter).
+
+**Zwei zugeschnittene Varianten erzeugt** (Original 1248×832 JPEG, 502 KB,
+lokal mit Pillow verarbeitet statt einen Build-Schritt einzuführen —
+einmalige Bildbearbeitung, kein wiederkehrender Prozess):
+- `images/logo-badge.jpg` (600×600, 86 KB): quadratischer Ausschnitt des
+  Medaillons mit Flaggen und Schriftzug, für sichtbare Logo-Einbindungen.
+- `images/og-image.jpg` (1200×800, 149 KB): das komplette Originalbild,
+  für Social-Media-Vorschaubilder (Querformat ist dort Standard).
+
+**Eingesetzt an drei „geeigneten Stellen":**
+1. **Nav-Logo sitewide** (38 Dateien): das bisherige `<span
+   class="nav-logo-flag">🇧🇩🇩🇪</span>`-Platzhalter-Emoji durch
+   `<img src="…images/logo-badge.jpg" class="nav-logo-img">` ersetzt,
+   kreisrund zugeschnitten (`border-radius: 50%`) auf 2,2rem — an jeder
+   Verzeichnistiefe (Root und eine Ebene tief) korrekt mit `../`-Präfix.
+   Da die Klasse `nav-logo-flag` danach nirgends mehr verwendet wurde, die
+   verwaiste CSS-Regel entfernt statt totes CSS stehen zu lassen (gleiche
+   Sorgfalt wie in Fehlerlog #8 gefordert).
+2. **„Wir kennen beide Welten"-Karte auf `index.html`**: das
+   `.about-visual-flags`-Emoji („🇧🇩 🤝 🇩🇪") durch dasselbe Logo-Bild
+   ersetzt, 140px, kreisrund mit Schatten. Passt inhaltlich exakt zum
+   bereits dort stehenden Text und zur bisherigen Emoji-Aussage — keine
+   neue Botschaft, nur eine echte Illustration der bereits vorhandenen.
+   Per Playwright-Screenshot geprüft: der quadratische Bild-Ausschnitt
+   verschwindet durch den Kreis-Zuschnitt vollständig in den Ecken, sodass
+   nur das Medaillon sichtbar bleibt und optisch nahtlos auf dem
+   grünen Verlaufshintergrund der Karte sitzt — kein Bildrahmen-Bruch.
+3. **Sitewide `og:image`/`twitter:image`** (40 von 42 Seiten mit
+   `og:title`; die 3 Redirect-Stubs `behoerden.html`/`ratgeber.html`/
+   `preise.html` sowie `404.html`/`qrcode.html` haben keinen
+   `og:url`-Block und wurden ausgelassen) plus Umstieg von
+   `twitter:card content="summary"` auf `"summary_large_image"` (jetzt,
+   da ein echtes Bild existiert, sinnvoll — vorher hätte
+   `summary_large_image` nur den 217-Byte-Favicon vergrößert dargestellt).
+   Vorher hatte **keine einzige Seite** ein `og:image` — WhatsApp-/
+   Social-Vorschauen zeigten bisher gar kein Bild, ein bisher nie
+   dokumentierter, aber echter Gap angesichts des WhatsApp-only-
+   Vertriebskanals.
+4. **JSON-LD `Organization.logo`** in allen 42 Dateien mit dem
+   Organization/LocalBusiness-Block ergänzt (`https://…/images/
+   logo-badge.jpg`) — schließt exakt die in Phase 3 dokumentierte
+   bewusste Lücke „ohne logo (nur ein 217-Byte-Favicon, kein echtes
+   Markenlogo)".
+
+**Bewusst nicht angefasst:**
+- **Favicon.** Das Logo ist zu detailreich, um bei 16×16/32×32 px noch
+  erkennbar zu sein (ein Favicon-Redesign ist ein eigenes, hier nicht
+  beauftragtes Thema) — der bestehende 217-Byte-Favicon bleibt unverändert.
+- **`.footer-flags`** (🇧🇩 🤝 🇩🇪, 1,8rem in jedem Footer) und die
+  Bottom-Bar-/Hero-Badge-Emojis auf `index.html`: bei dieser geringen
+  Größe würde das detailreiche Bild kaum noch als Medaillon erkennbar
+  sein und nur unscharf wirken, während die Emoji-Flaggen bei jeder
+  Grösse scharf bleiben. Kein Austausch ohne erkennbaren Gewinn.
+- **`ueber-uns.html`** trotz Themen-Nähe nicht angefasst — dieselbe
+  Begründung wie in Phase 2 (bereits vollständig zweisprachig, keine
+  einseitige Änderung ohne Amirs Bangla-Gegenstück) gilt zwar nur für
+  Text, nicht für Bilder, aber ohne expliziten Auftrag für diese Seite
+  wurde der Umfang bewusst auf die drei oben genannten, eindeutig
+  passenden Stellen beschränkt statt salopp „wo es noch passen könnte"
+  zu erweitern.
+
+`pruefen.sh`: Fehler 0 (weiterhin dieselben 3 Font-Hinweise). Alle
+JSON-LD-Blöcke sitewide erneut strukturell validiert (`json.loads`).
+Playwright bestätigt: beide Bild-Einbindungen laden fehlerfrei
+(`naturalWidth` > 0, `complete: true`), Bildpfade an jeder Verzeichnistiefe
+korrekt aufgelöst (kein toter Link).
+
+---
+
 ## Umgebung
 
 - Termux auf Android (Hauptgerät), Git Bash auf dem PC

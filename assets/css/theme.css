@@ -50,12 +50,14 @@
       overflow-x: hidden;
     }
 
-    /* ── LANGUAGE HIDDEN ── */
-    [data-lang] { display: block; }
-    body.bn [data-lang="de"] { display: none; }
-    body.bn [data-lang="bn"] { display: block; }
-    body:not(.bn) [data-lang="bn"] { display: none; }
-    body:not(.bn) [data-lang="de"] { display: block; }
+    /* ── LANGUAGE HIDDEN (DE / BN / EN) ── */
+    /* Kein-JS-Fallback: ohne data-active-lang (JS noch nicht gelaufen oder
+       deaktiviert) wird Deutsch gezeigt, wie zuvor mit body:not(.bn). */
+    [data-lang] { display: none; }
+    body:not([data-active-lang]) [data-lang="de"] { display: block; }
+    body[data-active-lang="de"] [data-lang="de"] { display: block; }
+    body[data-active-lang="bn"] [data-lang="bn"] { display: block; }
+    body[data-active-lang="en"] [data-lang="en"] { display: block; }
 
     /* ── NAV ── */
     nav {
@@ -71,7 +73,10 @@
       display: flex; align-items: center; gap: .7rem;
       text-decoration: none; color: var(--green-dark);
     }
-    .nav-logo-flag { font-size: 1.5rem; }
+    .nav-logo-img {
+      width: 2.2rem; height: 2.2rem; border-radius: 50%;
+      object-fit: cover; flex-shrink: 0;
+    }
     .nav-logo-text {
       font-family: var(--font-head);
       font-size: 1.25rem; font-weight: 700;
@@ -329,7 +334,11 @@
       border-radius: var(--radius); padding: 3rem;
       text-align: center; color: var(--white);
     }
-    .about-visual-flags { font-size: 4rem; margin-bottom: 1rem; }
+    .about-visual-img {
+      width: 140px; height: 140px; border-radius: 50%;
+      object-fit: cover; margin-bottom: 1rem;
+      box-shadow: 0 4px 20px rgba(0,0,0,.25);
+    }
     .about-visual-title {
       font-family: var(--font-head); font-size: 1.6rem; font-weight: 700;
       margin-bottom: .5rem;
@@ -375,6 +384,13 @@
     .trust-card:hover { border-color: var(--green); }
     .trust-icon { font-size: 2.5rem; margin-bottom: .8rem; }
     .trust-title { font-weight: 700; font-size: 1rem; color: var(--navy); margin-bottom: .4rem; }
+
+    /* ── TRUST DETAIL (Vertrauen) ── */
+    /* var(--light) statt var(--white), damit die Sektion sich von der
+       direkt darueberliegenden .trust-Sektion abhebt -- gleiches
+       Wechselmuster wie .how/.products/.about. */
+    .trust-detail { background: var(--light); }
+    .trust-detail-cta { margin-top: 2rem; }
     .trust-text { font-size: .88rem; color: var(--slate); }
 
     /* ── CONTACT / CTA ── */
