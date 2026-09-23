@@ -956,6 +956,29 @@ Diagnose verliert, die schon einmal gemacht wurde.
     -- stattdessen den zugehoerigen `Deploy to GitHub Pages`-Workflow-Run
     pruefen, das ist der verlaessliche, tatsaechlich erreichbare Nachweis.**
 
+17. **QR-Code auf `index.html` seit Jahren tot -- `chart.googleapis.com`
+    (Google Image Charts) wurde am 14./18.03.2019 komplett abgeschaltet.**
+    André bat darum, "schnell einen QR-Code auf die Startseite" zu setzen --
+    es gab schon einen (`share-qr`-Sektion, "Scanne den QR-Code!"), aber die
+    `<img src="https://chart.googleapis.com/chart?...cht=qr...">`-URL zeigte
+    auf eine seit ueber sechs Jahren abgeschaltete Google-API (per
+    `WebSearch` bestaetigt, nicht nur vermutet) -- das Bild war die ganze
+    Zeit ein kaputtes Icon, nie ein echter QR-Code. Fix: auf
+    `api.qrserver.com/v1/create-qr-code/` umgestellt (dieselbe, bereits
+    funktionierende API, die `lektionen/lektion2.html`/`lektion3.html` in
+    ihrer Nav schon fuer den QR-Code zur Startseite nutzen), gleiches Ziel
+    (`bit.ly/bangla-hilfe`, deckt sich mit der sichtbaren Bildunterschrift
+    darunter) und gleiche Groesse (220×220) beibehalten. **Warum
+    `pruefen.sh` das nie gefunden hat:** Punkt 12 (Externe Ressourcen)
+    durchsucht nur `<script|link|iframe>`-Tags nach `src`/`href`, nicht
+    `<img>` -- ein totes Bild fällt dadurch nicht als Fehler auf, sondern
+    hoechstens am Screenshot. **Lehre: `pruefen.sh` deckt keine toten
+    externen Bild-URLs ab, nur tote interne Links (Punkt 1) und fehlende
+    Drittanbieter-Hinweise bei Skripten/Stylesheets/iFrames (Punkt 12) --
+    bei jedem `<img src="https://...">` auf einen Drittanbieter-Dienst
+    (QR-Generatoren, Kartendienste, o. ä.) muss die Erreichbarkeit der API
+    selbst unabhaengig geprueft werden, nicht nur die Bild-Syntax.**
+
 ---
 
 ## Phase 6 (18.09.2026): Neuer Ratgeber-Artikel "Schweinefleisch und Religion"
