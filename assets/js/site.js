@@ -1,19 +1,33 @@
 // ── HAMBURGER MENU ──
 function toggleMenu(){ document.body.classList.toggle("menu-open"); }
 
-// ── LANGUAGE SWITCHER ──
-function toggleLang(){ setLang(document.body.classList.contains('bn') ? 'de' : 'bn'); }
+// ── LANGUAGE SWITCHER (DE / BN / EN) ──
+// Ersetzt die alte binaere body.bn-Klasse durch data-active-lang="de|bn|en"
+// (siehe theme.css). data-lang-btn statt data-lang auf den Buttons, damit
+// sie nicht von der [data-lang]-Sichtbarkeitsregel fuer Inhalte erfasst
+// werden -- sonst waeren bei aktivem Deutsch die BN/EN-Buttons unsichtbar.
+const LANGS = ['de', 'bn', 'en'];
+
 function setLang(lang) {
-  document.body.classList.toggle('bn', lang === 'bn');
-  document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-  const btn = document.querySelector(`.lang-btn:${lang==='de'?'first':'last'}-child`);
-  if (btn) btn.classList.add('active');
-  document.documentElement.lang = lang === 'bn' ? 'bn' : 'de';
+  if (!LANGS.includes(lang)) lang = 'de';
+  document.body.setAttribute('data-active-lang', lang);
+  document.querySelectorAll('.lang-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.langBtn === lang);
+  });
+  document.documentElement.lang = lang;
   localStorage.setItem('bh-lang', lang);
 }
-// Restore language preference
+
+function toggleLang() {
+  // Bottom-Bar-Button: zyklisch DE -> BN -> EN -> DE
+  const current = document.body.getAttribute('data-active-lang') || 'de';
+  const next = LANGS[(LANGS.indexOf(current) + 1) % LANGS.length];
+  setLang(next);
+}
+
+// Restore language preference (Fallback: 'de')
 const saved = localStorage.getItem('bh-lang');
-if (saved) setLang(saved);
+setLang(saved && LANGS.includes(saved) ? saved : 'de');
 
 // ── SCROLL REVEAL ──
 const observer = new IntersectionObserver(entries => {

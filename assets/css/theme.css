@@ -50,12 +50,14 @@
       overflow-x: hidden;
     }
 
-    /* ── LANGUAGE HIDDEN ── */
-    [data-lang] { display: block; }
-    body.bn [data-lang="de"] { display: none; }
-    body.bn [data-lang="bn"] { display: block; }
-    body:not(.bn) [data-lang="bn"] { display: none; }
-    body:not(.bn) [data-lang="de"] { display: block; }
+    /* ── LANGUAGE HIDDEN (DE / BN / EN) ── */
+    /* Kein-JS-Fallback: ohne data-active-lang (JS noch nicht gelaufen oder
+       deaktiviert) wird Deutsch gezeigt, wie zuvor mit body:not(.bn). */
+    [data-lang] { display: none; }
+    body:not([data-active-lang]) [data-lang="de"] { display: block; }
+    body[data-active-lang="de"] [data-lang="de"] { display: block; }
+    body[data-active-lang="bn"] [data-lang="bn"] { display: block; }
+    body[data-active-lang="en"] [data-lang="en"] { display: block; }
 
     /* ── NAV ── */
     nav {
@@ -375,6 +377,13 @@
     .trust-card:hover { border-color: var(--green); }
     .trust-icon { font-size: 2.5rem; margin-bottom: .8rem; }
     .trust-title { font-weight: 700; font-size: 1rem; color: var(--navy); margin-bottom: .4rem; }
+
+    /* ── TRUST DETAIL (Vertrauen) ── */
+    /* var(--light) statt var(--white), damit die Sektion sich von der
+       direkt darueberliegenden .trust-Sektion abhebt -- gleiches
+       Wechselmuster wie .how/.products/.about. */
+    .trust-detail { background: var(--light); }
+    .trust-detail-cta { margin-top: 2rem; }
     .trust-text { font-size: .88rem; color: var(--slate); }
 
     /* ── CONTACT / CTA ── */

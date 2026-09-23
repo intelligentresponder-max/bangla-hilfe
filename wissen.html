@@ -57,9 +57,10 @@
   <div class="nav-right">
     <button class="nav-toggle" onclick="toggleMenu()">☰</button>
     <div class="lang-toggle">
-      <button class="lang-btn active" onclick="setLang('de')">DE</button>
-      <button class="lang-btn" onclick="setLang('bn')">বাং</button>
-    </div>
+        <button class="lang-btn active" data-lang-btn="de" onclick="setLang('de')">DE</button>
+        <button class="lang-btn" data-lang-btn="bn" onclick="setLang('bn')">বাং</button>
+        <button class="lang-btn" data-lang-btn="en" onclick="setLang('en')">EN</button>
+      </div>
     <a href="https://wa.me/491634692255" target="_blank" class="nav-wa">
       💬 WhatsApp
     </a>
@@ -86,7 +87,7 @@
     <span class="section-tag" data-lang="bn">জ্ঞান</span>
     <h1 class="section-title" data-lang="de">Wissen für deinen Weg nach <em>Deutschland</em></h1>
     <h1 class="section-title" data-lang="bn">জার্মানিতে তোমার পথের জন্য <em>জ্ঞান</em></h1>
-    <p class="section-sub" data-lang="de">
+    <p class="section-sub">
       Von der Chancenkarte bis zum ersten Termin beim Bürgeramt: Hier findest du
       alle Ratgeber und Behörden-Guides von BanglaHilfe an einem Ort, sortiert
       nach Thema statt nach Aktenordner.
@@ -149,8 +150,8 @@
   <!-- VISUM & EINREISE -->
   <div id="visum-einreise" class="wissen-section">
     <div class="wissen-section-head">
-      <span class="section-tag" data-lang="de">🛂 Visum &amp; Einreise</span>
-      <p class="section-sub" data-lang="de">Alles rund um Visumantrag, Chancenkarte und Aufenthaltstitel.</p>
+      <span class="section-tag">🛂 Visum &amp; Einreise</span>
+      <p class="section-sub">Alles rund um Visumantrag, Chancenkarte und Aufenthaltstitel.</p>
     </div>
     <div class="wissen-grid">
       <a class="wissen-card" href="blog/chancenkarte-2025-26.html">
@@ -194,8 +195,8 @@
   <!-- JOB & KARRIERE -->
   <div id="job-karriere" class="wissen-section">
     <div class="wissen-section-head">
-      <span class="section-tag" data-lang="de">💼 Job &amp; Karriere</span>
-      <p class="section-sub" data-lang="de">Arbeitsvertrag, Jobcenter, FSJ und BFD verständlich erklärt.</p>
+      <span class="section-tag">💼 Job &amp; Karriere</span>
+      <p class="section-sub">Arbeitsvertrag, Jobcenter, FSJ und BFD verständlich erklärt.</p>
     </div>
     <div class="wissen-grid">
       <a class="wissen-card" href="behoerden/jobcenter-agentur.html">
@@ -224,8 +225,8 @@
   <!-- ANERKENNUNG & AUSBILDUNG -->
   <div id="anerkennung-ausbildung" class="wissen-section">
     <div class="wissen-section-head">
-      <span class="section-tag" data-lang="de">🎓 Anerkennung &amp; Ausbildung</span>
-      <p class="section-sub" data-lang="de">Abschlüsse und Zeugnisse aus Bangladesch in Deutschland anerkennen lassen.</p>
+      <span class="section-tag">🎓 Anerkennung &amp; Ausbildung</span>
+      <p class="section-sub">Abschlüsse und Zeugnisse aus Bangladesch in Deutschland anerkennen lassen.</p>
     </div>
     <div class="wissen-grid">
       <a class="wissen-card" href="ratgeber/zeugnisse-anerkennen-lassen.html">
@@ -250,8 +251,8 @@
   <!-- SPRACHE & LEBEN -->
   <div id="sprache-leben" class="wissen-section">
     <div class="wissen-section-head">
-      <span class="section-tag" data-lang="de">🗣️ Sprache &amp; Leben</span>
-      <p class="section-sub" data-lang="de">Deutsch lernen, wohnen und ankommen im Alltag.</p>
+      <span class="section-tag">🗣️ Sprache &amp; Leben</span>
+      <p class="section-sub">Deutsch lernen, wohnen und ankommen im Alltag.</p>
     </div>
     <div class="wissen-grid">
       <a class="wissen-card" href="lektionen.html">
@@ -300,8 +301,8 @@
   <!-- KOSTEN & PLANUNG -->
   <div id="kosten-planung" class="wissen-section">
     <div class="wissen-section-head">
-      <span class="section-tag" data-lang="de">💶 Kosten &amp; Planung</span>
-      <p class="section-sub" data-lang="de">Konto, Versicherung und Steuer-ID: die Finanzen im Griff.</p>
+      <span class="section-tag">💶 Kosten &amp; Planung</span>
+      <p class="section-sub">Konto, Versicherung und Steuer-ID: die Finanzen im Griff.</p>
     </div>
     <div class="wissen-grid">
       <a class="wissen-card" href="ratgeber/konto-eroeffnen-ohne-schufa.html">
