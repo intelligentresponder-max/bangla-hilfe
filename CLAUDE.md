@@ -1264,6 +1264,87 @@ korrekt aufgelöst (kein toter Link).
 
 ---
 
+## Phase 9 (23.09.2026): Tafel-Bild für die Lektionen-Seiten — zweites, davon unabhängiges Logo-Motiv
+
+Zweites Bild von André in derselben Sitzung: Logo-Medaillon links, daneben
+eine leere Kreidetafel mit Kreidestücken rechts. Ausdrücklicher Auftrag:
+„an geeigneten Stellen einfügen — es war so gedacht, dass nachträglich
+jeweils die Lektion eingefügt werden soll (Überschrift oder ein paar
+Worte)". Das „jeweils" liest sich als Vorlage, die für jede Lektion
+wiederverwendet wird, mit dem jeweiligen Lektionstitel als echtem
+HTML-Text auf der leeren Tafel — nicht als fest ins Bild eingebranntem
+Text (das würde für jede neue Lektion ein neues Bild erfordern und gegen
+„kein Build-Schritt"/„kein Platzhaltertext" verstoßen: Text gehört als
+Text ins Dokument, nicht in Pixel).
+
+**Zwei Zuschnitte erzeugt** (Original 1024×1024 JPEG, lokal mit Pillow):
+- `images/lektion-tafel.jpg` (800×800): komplette Komposition (Medaillon +
+  Flaggen + leere Tafel), für die Lektionen-Übersichtsseite.
+- `images/lektion-tafel-leer.jpg` (480×883, Hochformat-Ausschnitt nur der
+  Tafel ohne Medaillon): für die Hero-Hintergründe der einzelnen
+  Lektionsseiten, wo das Markenzeichen bereits über die `.lek-nav` sichtbar
+  ist — ein zweites Mal das Medaillon dort einzublenden wäre redundant
+  gewesen.
+
+**Eingesetzt an zwei Stellen:**
+1. **`lektionen.html`** (Hub-Seite): neue `.lektionen-hero`-Zweispalten-Sektion
+   (gleiches Grid-Muster wie `.about-inner`) — Text (Tag/H1/Intro) links,
+   `lektion-tafel.jpg` rechts. Zeigt die volle Bild-Komposition genau so,
+   wie sie geliefert wurde.
+2. **`lektionen/lektion2.html` und `lektion3.html`**: der bisherige flache
+   Verlaufshintergrund (`linear-gradient(135deg,#0a1628,var(--black))` bzw.
+   `#1a0a00`-Variante) der jeweiligen `.hero`-Sektion um die Tafel als
+   Hintergrundbild erweitert, mit einem halbtransparenten Verlauf in der
+   jeweiligen Lektionsfarbe (Blau für Lektion 2, Orange für Lektion 3)
+   darüber. Der bereits vorhandene, echte H1-Lektionstitel („Nisha im Bus
+   🚌" / „Rashed beim Bäcker 🥐") erscheint dadurch jetzt direkt auf der
+   Tafel — exakt das „jeweils die Lektion einfügen", nur automatisch durch
+   Wiederverwendung dieser beiden bestehenden Templates statt manuell pro
+   Lektion.
+
+**Zwei echte Bugs beim Testen gefunden und behoben, bevor committet
+wurde:**
+- **Falscher relativer Pfad.** `theme.css` liegt unter `assets/css/`, ein
+  `url("../images/...")` darin zeigt fälschlich auf `assets/images/` statt
+  auf `images/` im Repo-Root — mit `curl`/Playwright-Netzwerklogging
+  direkt beim ersten Testlauf aufgefallen (kein 404 sichtbar, weil
+  `file://`-Requests keine harten Fehler werfen, aber `naturalWidth`/das
+  Fehlen der Textur im Screenshot hätten es sonst verschleiert). Korrigiert
+  auf `url("../../images/...")` (zwei Ebenen hoch von `assets/css/` zur
+  Repo-Wurzel).
+- **Zu dunkler Überlagerungs-Verlauf verschluckte das Bild fast komplett.**
+  Erster Versuch nutzte `rgba(10,22,40,.8)` → `rgba(15,15,15,.88)` als
+  Verlauf über dem Bild — bei 80–88 % Deckkraft blieb von der ohnehin
+  dunklen Tafel praktisch nichts mehr sichtbar, das Ergebnis sah aus wie
+  der alte reine Verlauf. Erst am Screenshot bemerkt, nicht am Code selbst
+  (die CSS-Syntax war fehlerfrei). Auf `.5`/`.62` gesenkt — Tafelholzrahmen
+  und -textur jetzt klar erkennbar, Textkontrast weiterhin ausreichend
+  (weißer H1-Text auf dunkler Tafel per Screenshot-Zoom geprüft).
+- **Dritter, vorbestehender Bug gleicher Fehlerklasse wie Fehlerlog #10/#11
+  gefunden:** die sitewide, unscoped Regel `.hero { min-height: 100vh; ... }`
+  (für den Startseiten-Hero gedacht) galt schon immer auch für
+  `.lektion2-page .hero`/`.lektion3-page .hero`, weil beide denselben
+  nackten Klassennamen `hero` verwenden. Bei der alten, glatten
+  Farbverlauf-Optik fiel das nie auf (ein Verlauf skaliert unauffällig auf
+  jede Höhe) — mit einem `background-size:cover`-Foto darunter wurde die
+  Lektions-Hero-Sektion dadurch auf volle Bildschirmhöhe gestreckt und der
+  Tafel-Ausschnitt oben unschön abgeschnitten. Fix: `min-height: auto;` in
+  beiden `.lektion2-page .hero`/`.lektion3-page .hero`-Regeln ergänzt (die
+  gleiche „spezifischere Regel überschreibt gezielt eine Eigenschaft"-
+  Taktik wie in Fehlerlog #3). **Lehre, Fortsetzung von Fehlerlog #10/#11:**
+  ein unscoped Klassenname kollidiert nicht nur bei Hintergrundfarbe/
+  Position, sondern bei jeder Eigenschaft, die die zweite Verwendung nicht
+  explizit selbst überschreibt — hier blieb es Jahre lang unbemerkt, weil
+  die betroffene Eigenschaft (`min-height`) bei der ursprünglichen,
+  unauffälligen Optik keinen sichtbaren Unterschied machte.
+
+`pruefen.sh`: Fehler 0. Alle JSON-LD-Blöcke sitewide erneut strukturell
+validiert. Playwright bestätigt: beide neuen Bilder laden fehlerfrei,
+Tafel-Textur und Lektionstitel auf beiden Lektionsseiten klar sichtbar und
+lesbar, Farbcodierung Blau/Orange pro Lektion bleibt erhalten.
+
+---
+
 ## Umgebung
 
 - Termux auf Android (Hauptgerät), Git Bash auf dem PC
