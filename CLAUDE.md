@@ -1183,6 +1183,87 @@ Umschalter-Buttons bleiben in jedem Sprachzustand sichtbar (die
 
 ---
 
+## Phase 8 (23.09.2026): Echtes Markenlogo eingeführt — schließt eine seit Phase 3 dokumentierte Lücke
+
+André hat ein Logo-Bild geliefert (goldenes Medaillon, Handschlag-Symbol,
+„bangla-hilfe deutschland"-Schriftzug, von den Flaggen Deutschlands und
+Bangladeschs flankiert) mit dem Auftrag, es „an geeigneten Stellen"
+einzusetzen und danach PR #9 zu mergen. Anders als das abgelehnte
+KI-Bildprompt in Phase 6 (ein erfundenes Deko-Bild für einen Artikel ohne
+Bezug zur Marke) ist das hier ein echtes, von André selbst bereitgestelltes
+Markenzeichen für die Seite als Ganzes — kein Fall von „Bilder nicht
+erfinden", sondern die Bereitstellung des in Phase 3 explizit als fehlend
+dokumentierten „echten Markenlogos" (dort gab es nur einen 217-Byte-
+Favicon-Platzhalter).
+
+**Zwei zugeschnittene Varianten erzeugt** (Original 1248×832 JPEG, 502 KB,
+lokal mit Pillow verarbeitet statt einen Build-Schritt einzuführen —
+einmalige Bildbearbeitung, kein wiederkehrender Prozess):
+- `images/logo-badge.jpg` (600×600, 86 KB): quadratischer Ausschnitt des
+  Medaillons mit Flaggen und Schriftzug, für sichtbare Logo-Einbindungen.
+- `images/og-image.jpg` (1200×800, 149 KB): das komplette Originalbild,
+  für Social-Media-Vorschaubilder (Querformat ist dort Standard).
+
+**Eingesetzt an drei „geeigneten Stellen":**
+1. **Nav-Logo sitewide** (38 Dateien): das bisherige `<span
+   class="nav-logo-flag">🇧🇩🇩🇪</span>`-Platzhalter-Emoji durch
+   `<img src="…images/logo-badge.jpg" class="nav-logo-img">` ersetzt,
+   kreisrund zugeschnitten (`border-radius: 50%`) auf 2,2rem — an jeder
+   Verzeichnistiefe (Root und eine Ebene tief) korrekt mit `../`-Präfix.
+   Da die Klasse `nav-logo-flag` danach nirgends mehr verwendet wurde, die
+   verwaiste CSS-Regel entfernt statt totes CSS stehen zu lassen (gleiche
+   Sorgfalt wie in Fehlerlog #8 gefordert).
+2. **„Wir kennen beide Welten"-Karte auf `index.html`**: das
+   `.about-visual-flags`-Emoji („🇧🇩 🤝 🇩🇪") durch dasselbe Logo-Bild
+   ersetzt, 140px, kreisrund mit Schatten. Passt inhaltlich exakt zum
+   bereits dort stehenden Text und zur bisherigen Emoji-Aussage — keine
+   neue Botschaft, nur eine echte Illustration der bereits vorhandenen.
+   Per Playwright-Screenshot geprüft: der quadratische Bild-Ausschnitt
+   verschwindet durch den Kreis-Zuschnitt vollständig in den Ecken, sodass
+   nur das Medaillon sichtbar bleibt und optisch nahtlos auf dem
+   grünen Verlaufshintergrund der Karte sitzt — kein Bildrahmen-Bruch.
+3. **Sitewide `og:image`/`twitter:image`** (40 von 42 Seiten mit
+   `og:title`; die 3 Redirect-Stubs `behoerden.html`/`ratgeber.html`/
+   `preise.html` sowie `404.html`/`qrcode.html` haben keinen
+   `og:url`-Block und wurden ausgelassen) plus Umstieg von
+   `twitter:card content="summary"` auf `"summary_large_image"` (jetzt,
+   da ein echtes Bild existiert, sinnvoll — vorher hätte
+   `summary_large_image` nur den 217-Byte-Favicon vergrößert dargestellt).
+   Vorher hatte **keine einzige Seite** ein `og:image` — WhatsApp-/
+   Social-Vorschauen zeigten bisher gar kein Bild, ein bisher nie
+   dokumentierter, aber echter Gap angesichts des WhatsApp-only-
+   Vertriebskanals.
+4. **JSON-LD `Organization.logo`** in allen 42 Dateien mit dem
+   Organization/LocalBusiness-Block ergänzt (`https://…/images/
+   logo-badge.jpg`) — schließt exakt die in Phase 3 dokumentierte
+   bewusste Lücke „ohne logo (nur ein 217-Byte-Favicon, kein echtes
+   Markenlogo)".
+
+**Bewusst nicht angefasst:**
+- **Favicon.** Das Logo ist zu detailreich, um bei 16×16/32×32 px noch
+  erkennbar zu sein (ein Favicon-Redesign ist ein eigenes, hier nicht
+  beauftragtes Thema) — der bestehende 217-Byte-Favicon bleibt unverändert.
+- **`.footer-flags`** (🇧🇩 🤝 🇩🇪, 1,8rem in jedem Footer) und die
+  Bottom-Bar-/Hero-Badge-Emojis auf `index.html`: bei dieser geringen
+  Größe würde das detailreiche Bild kaum noch als Medaillon erkennbar
+  sein und nur unscharf wirken, während die Emoji-Flaggen bei jeder
+  Grösse scharf bleiben. Kein Austausch ohne erkennbaren Gewinn.
+- **`ueber-uns.html`** trotz Themen-Nähe nicht angefasst — dieselbe
+  Begründung wie in Phase 2 (bereits vollständig zweisprachig, keine
+  einseitige Änderung ohne Amirs Bangla-Gegenstück) gilt zwar nur für
+  Text, nicht für Bilder, aber ohne expliziten Auftrag für diese Seite
+  wurde der Umfang bewusst auf die drei oben genannten, eindeutig
+  passenden Stellen beschränkt statt salopp „wo es noch passen könnte"
+  zu erweitern.
+
+`pruefen.sh`: Fehler 0 (weiterhin dieselben 3 Font-Hinweise). Alle
+JSON-LD-Blöcke sitewide erneut strukturell validiert (`json.loads`).
+Playwright bestätigt: beide Bild-Einbindungen laden fehlerfrei
+(`naturalWidth` > 0, `complete: true`), Bildpfade an jeder Verzeichnistiefe
+korrekt aufgelöst (kein toter Link).
+
+---
+
 ## Umgebung
 
 - Termux auf Android (Hauptgerät), Git Bash auf dem PC
