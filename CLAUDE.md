@@ -979,6 +979,25 @@ Diagnose verliert, die schon einmal gemacht wurde.
     (QR-Generatoren, Kartendienste, o. ä.) muss die Erreichbarkeit der API
     selbst unabhaengig geprueft werden, nicht nur die Bild-Syntax.**
 
+18. **Gerade Anführungszeichen in JS-Stringliteralen haben `amir/index.html`
+    beim ersten Testlauf zum Absturz gebracht -- exakt der Fehler, den die
+    Übergabe selbst schon in ihrem eigenen Fehlerlog-Eintrag vorhersagte.**
+    Zwei Tagesplan-Einträge enthielten „…?" -- eine typografische
+    öffnende Anführung „ gefolgt von einer **geraden** schließenden ", mitten
+    in einem mit geraden Anführungszeichen `"..."` begrenzten JS-String.
+    Die gerade " beendete den String vorzeitig, der Rest (" Jede Antwort...")
+    stand als nackter Code da -- Playwright meldete `Unexpected identifier
+    'Jede'`, die Seite blieb seitenweise unbedienbar (kein einziger Button
+    reagierte, weil das gesamte `<script>` nicht mehr parste). Fix: beide
+    Stellen auf durchgehend typografische Anführungszeichen „…" umgestellt.
+    **Lehre: eine im Handoff selbst dokumentierte Fehlerklasse ist kein
+    Grund, die Prüfung zu überspringen -- „wurde schon mal gefunden" schützt
+    nicht automatisch vor „wurde hier erneut eingebaut". Bei jeder
+    JS-Datei mit deutschen Anführungszeichen im Text vor dem Commit per
+    Playwright (`page.on("pageerror", ...)`) tatsächlich laden und auf
+    JS-Fehler prüfen, nicht nur `pruefen.sh` laufen lassen -- das deckt
+    HTML/CSS-Konventionen ab, aber keine JS-Syntaxfehler.**
+
 ---
 
 ## Phase 6 (18.09.2026): Neuer Ratgeber-Artikel "Schweinefleisch und Religion"
@@ -1365,6 +1384,111 @@ wurde:**
 validiert. Playwright bestätigt: beide neuen Bilder laden fehlerfrei,
 Tafel-Textur und Lektionstitel auf beiden Lektionsseiten klar sichtbar und
 lesbar, Farbcodierung Blau/Orange pro Lektion bleibt erhalten.
+
+---
+
+## Phase 10 (17.10.2026): Amir-Übergabeseite für die Bangladesch-Reise
+
+Eine andere, parallel arbeitende Claude-Session ("Agenten-Chats") hatte
+für Andrés Übergabe an Amir drei Dateien vorbereitet: ein Python-Skript,
+das einen Hinweisblock in `index.html` einbaut, ein Google-Apps-Script
+für PIN-gesicherte, fortsetzbare Chunk-Uploads nach Drive samt
+Logbuch-Sheet, und eine eigenständige Seite `amir/index.html` (Uhren
+Dhaka/Frankfurt, 21-Tage-Aufgabenplan, Briefing, Notizbuch). André bat
+darum, das zu prüfen und einzubauen — **mit der expliziten Vorgabe, den
+schnellsten Weg zu nehmen, keine lange Programmierarbeit.**
+
+**Entscheidung: Apps-Script-Backend durch ein Google Formular mit
+Datei-Upload-Frage ersetzt, nicht wie ursprünglich geplant selbst
+deployt.** Die mitgelieferte Vergleichstabelle der Übergabe nannte ein
+Google-Formular bereits selbst als "sehr einfach einzurichten" — passte
+exakt zur Vorgabe. Der Apps-Script-Weg hätte André durch Script-Editor,
+OAuth-Freigabe-Dialog und Web-App-Deployment geführt (~15-20 Minuten,
+mehrere Klick-Ebenen); ein Google-Formular mit einer Datei-Upload-Frage
+braucht dagegen nur ein paar Minuten in der normalen Forms-Oberfläche
+und erzeugt den Drive-Zielordner automatisch mit. Kein Code von mir
+nötig, kein Deployment, keine OAuth-Freigabe.
+
+**Was dadurch wegfällt (bewusster Kompromiss, nicht übersehen):** keine
+PIN-Prüfung mehr (Google Forms hat keinen eingebauten Zugriffsschutz —
+der Formular-Link selbst ist das Geheimnis, genau wie beim
+"Notfall"-Direktlink auf den Drive-Ordner, der in der Übergabe ohnehin
+schon ohne PIN vorgesehen war) und keine Offline-Warteschlange für
+Notizen (Google Forms braucht wie der ursprüngliche Apps-Script-Weg
+ohnehin eine Internetverbindung zum Absenden — der einzige echte
+Funktionsunterschied ist der serverseitige Retry bei Verbindungsabbruch,
+den die ursprüngliche Planung hatte und das Formular nicht hat).
+
+**Technischer Umbau von `amir/index.html`:**
+- `CONFIG.ENDPOINT`/`CONFIG.CHUNK` raus, `CONFIG.FORM_LINK` rein (Platzhalter
+  `HIER_FORMULAR_LINK`, analog zum bisherigen `HIER_DRIVE_ORDNER_LINK`).
+- Die komplette Chunk-Upload-Logik (`uploadOne`, `shrinkImage`, `b64`,
+  `call()`, PIN-Feld, `testEinrichtung`-Button) entfernt — ersetzt durch
+  einen einzelnen "Formular öffnen"-Button, der `CONFIG.FORM_LINK` in
+  einem neuen Tab öffnet, mit einer kurzen Anleitung, was im Formular
+  auszufüllen ist (Urlaubstag, Art, Text, Datei).
+- "Fotos und Videos senden" und "Notizbuch" zu einer Sektion
+  zusammengelegt, weil beides jetzt über dasselbe Formular läuft.
+- `Einstellungen` auf das Urlaubsende-Datum reduziert (treibt den
+  Tagesplan-Fortschrittsbalken) — PIN-Eingabe und "Verbindung testen"
+  entfallen ersatzlos.
+- Aufgaben-Erledigt-Status bleibt wie in der Vorlage rein lokal
+  (`localStorage`), unverändert — keine Backend-Abhängigkeit, kein
+  Umbau nötig.
+
+**Zwei Hard-Rule-3-Verstöße aus der Vorlage korrigiert, nicht blind
+übernommen:**
+- Das Python-Banner-Skript hätte den Hinweisblock mit **Inline-Styles**
+  direkt in `index.html` geschrieben — `pruefen.sh` meldet sitewide aktuell
+  0 Inline-Styles, das hätte die saubere Bilanz sofort gebrochen (Fehlerlog
+  #4, #8 sind dieselbe Fehlerklasse). Stattdessen neue Klasse
+  `.amir-banner` in `theme.css`, mit den bereits vorhandenen Projekt-
+  Variablen `var(--green-dark)`/`var(--gold)`/`var(--white)` statt neuer
+  Hex-Werte — fügt sich dadurch automatisch ins bestehende Farbschema statt
+  die in der Vorlage hart codierten `#00412F`/`#F5C400` zu duplizieren.
+- Die gelieferte `amir/index.html` hatte selbst zwei `style="margin-top:
+  14px"`-Attribute (vermutlich aus einer früheren, noch nicht
+  CLAUDE.md-konformen Session-Iteration übernommen) — durch eine lokale
+  Klasse `.row.mt` im Seiten-eigenen `<style>`-Block ersetzt.
+
+**Bewusst akzeptierter, dokumentierter Hinweis statt Fehler:** `amir/
+index.html` hat weiterhin ein eigenes `<style>`-Element statt Styles in
+`theme.css` auszulagern — `pruefen.sh` Punkt 5 toleriert genau **eine**
+Datei mit eigenem `<style>`-Block (gelbes `HINWEIS`, kein `FEHLER`) und
+dieser Budget-Platz war bislang ungenutzt (0 von 1). Für eine befristete,
+`noindex`/`nofollow`-Übergabeseite mit eigenem Mini-Design-System lohnt
+sich der Umbau nach `theme.css` nicht — würde die Hauptstylesheet mit
+Styles vollschreiben, die nach Amirs Rückkehr wieder verschwinden sollen.
+
+**Fehler gefunden, der nicht in der Vorlage lag (siehe Fehlerlog #18):**
+zwei Tagesplan-Texte mit geraden statt typografischen
+Anführungszeichen (`„…"` statt `„…"`) haben das komplette `<script>`-Tag
+am Parsen gehindert — erst durch tatsächliches Laden der Seite in
+Playwright gefunden, nicht durch `pruefen.sh` (das prüft nur HTML/CSS-
+Konventionen, keine JS-Syntax).
+
+**Fehlende Canonical- und Description-Hinweise ergänzt**, obwohl die
+Seite `noindex, nofollow` ist — `pruefen.sh` Punkt 2 (Canonical) gilt
+hart für jede Seite ohne Ausnahme, auch für Seiten, die nie indexiert
+werden sollen (Konsistenz-Grundsatz, nicht SEO-Zweck).
+
+**Was nur André selbst tun kann** (kein Google-Konto-Zugriff aus dieser
+Session heraus): ein Google-Formular mit den vier Feldern Urlaubstag
+(Kurzantwort), Art (Multiple Choice: Foto/Video/Notiz/Frage/Eindruck/
+Warnung), Notiz (Langantwort, optional) und Datei (Dateiupload-Frage)
+anlegen, den Freigabe-Link holen und in `amir/index.html` bei
+`CONFIG.FORM_LINK` eintragen (sowie optional den automatisch erzeugten
+Drive-Ordner-Link bei `CONFIG.DRIVE_LINK` für den Notfall-Button).
+Bis dahin zeigt der Formular-Button bewusst einen deaktivierten
+Hinweiszustand ("Formular noch nicht eingerichtet") statt eines toten
+Links.
+
+`pruefen.sh`: Fehler 0 (Hinweise: der eine tolerierte `<style>`-Block,
+fehlende Drittanbieter-Einwilligung bei Fonts/cdnjs — unverändert seit
+Monaten bekannt). Playwright bestätigt: `amir/index.html` lädt ohne
+JS-Fehler, Tagesplan zeigt für den 17.10.2026 korrekt „Urlaubstag 1 von
+22", Banner auf `index.html` rendert mit den Projektfarben ohne
+CSS-Kollision mit der bestehenden `.footer`/`.share`-Umgebung.
 
 ---
 
