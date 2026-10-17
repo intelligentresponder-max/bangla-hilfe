@@ -1200,3 +1200,13 @@ body.menu-open .mobile-menu { transform: translateX(0); }
 .toc li { margin: .35rem 0; }
 .toc a { color: var(--green); text-decoration: none; font-size: .92rem; }
 .toc a:hover { text-decoration: underline; }
+
+/* ── AMIR-UEBERGABE-HINWEIS (index.html, befristet) ── */
+.amir-banner {
+  max-width: 680px; margin: 1.5rem auto; padding: .9rem 1.1rem;
+  border-left: 4px solid var(--gold); background: var(--green-dark);
+  color: var(--white); border-radius: 0 .6rem .6rem 0;
+}
+.amir-banner strong { display: block; font-size: 1.05rem; margin-bottom: .2rem; }
+.amir-banner span { opacity: .9; }
+.amir-banner a { color: var(--gold); font-weight: 700; }
